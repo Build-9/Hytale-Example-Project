@@ -1,10 +1,19 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 plugins {
     id 'java'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.3'
 }
 
 ext {
-    hytaleHome = "${System.getProperty("user.home")}/AppData/Roaming/Hytale"
+    def userHomeDirectory = System.getProperty("user.home")
+    def osName = System.getProperty("os.name")
+    if(osName.toLowerCase() == "mac os x"){
+        hytaleHome = "${userHomeDirectory}/Library/Application Support/Hytale"
+    }
+    else if(osName.toLowerCase() == "windows"){
+        hytaleHome = "${userHomeDirectory}/AppData/Roaming/Hytale"
+    }
 }
 
 java {
@@ -64,6 +73,9 @@ idea.project.settings.runConfigurations {
         }
         if (load_user_mods.toBoolean()) {
             programParameters += " --mods=$hytaleHome/UserData/Mods"
+        }
+        if (use_insecure_auth.toBoolean()) {
+            programParameters += " --auth-mode=insecure"
         }
         workingDirectory = serverRunDir.absolutePath
     }
