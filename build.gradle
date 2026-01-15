@@ -1,4 +1,3 @@
-import org.codehaus.groovy.runtime.GStringImpl
 
 plugins {
     id 'java'
