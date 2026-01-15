@@ -1,10 +1,32 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 plugins {
     id 'java'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.3'
 }
 
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
+
 ext {
-    hytaleHome = "${System.getProperty("user.home")}/AppData/Roaming/Hytale"
+    if (os.isWindows()) {
+        hytaleHome = "${System.getProperty("user.home")}/AppData/Roaming/Hytale"
+    } else if (os.isLinux()) {
+        def nonFlatpakPathString = "${System.getProperty("user.home")}/.local/share/Hytale"
+        def nonFlatpakPath = project.file(nonFlatpakPathString)
+        if (nonFlatpakPath.exists()) {
+            hytaleHome = nonFlatpakPathString
+        } else {
+            def flatpakPathString = "${System.getProperty("user.home")}/.var/app/com.hypixel.HytaleLauncher/data/Hytale"
+            def flatpakPath = project.file(flatpakPathString)
+            if (flatpakPath.exists()) {
+                hytaleHome = flatpakPathString
+            } else {
+                throw new RuntimeException("Failed to find Linux Hytale install directory")
+            }
+        }
+    } else if (os.isMacOsX()) {
+        throw new RuntimeException("This template does not yet support mac os")
+    }
 }
 
 java {

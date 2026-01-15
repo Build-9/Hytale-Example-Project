@@ -21,7 +21,7 @@ Please ensure all the requirements are met before getting started.
 2. Have Intellij IDEA installed. Community edition is fine.
 3. Download Java 25 and set it as the SDK in IDEA.
 
-Currently this template only supports Windows!
+Currently this template only supports Windows and Linux!
 
 ## Configuring Template
 It is important to configure the project before using it as a template. Doing
@@ -94,4 +94,4 @@ demonstration purposes, and should **NOT** be included in your final build.
 
 The example plugin also includes a recipe defined by an asset pack. This recipe
 allows you to craft 10 dirt into 1 dirt using the crafting window. This is also
-an example and should not be removed before you release the plugin.
+an example and should be removed before you release the plugin.
