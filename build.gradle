@@ -64,6 +64,12 @@ tasks.register('updatePluginManifest') {
     def manifestFile = file('src/main/resources/manifest.json')
     doLast {
         if (!manifestFile.exists()) {
+            if (early_plugin.toBoolean()) {
+                // Early plugins do not require a manifest.json file.
+                // We still want to update the manifest if it exists, because an
+                // early plugin can also 'contain' and behave as a regular plugin.
+                return
+            }
             throw new GradleException("Could not find manifest.json at ${manifestFile.path}!")
         }
         def manifestJson = new groovy.json.JsonSlurper().parseText(manifestFile.text)
@@ -81,6 +87,17 @@ tasks.named('processResources') {
 def createServerRunArguments(String srcDir) {
     def programParameters = '--allow-op --disable-sentry --assets="' + "${hytaleHome}/install/$patchline/package/game/latest/Assets.zip" + '"'
     def modPaths = []
+    if (early_plugin.toBoolean()) {
+        /*
+         * To enable ClassTransformers, Hytale Server requires that we give it the path
+         * to a folder that contains ANY jar file.
+         * The jar file could be empty, or be the server jar itself for all it cares.
+         * At a point in the future this might get changed, but for now we have to do something like this.
+         * See EarlyPluginLoader class for more details.
+         */
+        def generatedJarFileParentPath = "${projectDir.absolutePath}/build/libs"
+        programParameters += " --accept-early-plugins --early-plugins=${generatedJarFileParentPath}"
+    }
     if (includes_pack.toBoolean()) {
         modPaths << srcDir
     }
@@ -101,6 +118,15 @@ idea.project.settings.runConfigurations {
         moduleName = project.idea.module.name + '.main'
         programParameters = createServerRunArguments(sourceSets.main.java.srcDirs.first().parentFile.absolutePath)
         workingDirectory = serverRunDir.absolutePath
+        if (early_plugin.toBoolean()) {
+            // Ensure that the Gradle task to build the jar is run before launching
+            // so that the early-plugins folder contains a jar file.
+            beforeRun {
+                'GradleTask'(org.jetbrains.gradle.ext.GradleTask) {
+                    task = jar
+                }
+            }
+        }
     }
 }
 
@@ -108,6 +134,7 @@ idea.project.settings.runConfigurations {
 tasks.register('generateVSCodeLaunch') {
     def vscodeDir = file("$projectDir/.vscode")
     def launchFile = file("$vscodeDir/launch.json")
+    def tasksFile = file("$vscodeDir/tasks.json")
     doLast {
         if (!vscodeDir.exists()) {
             vscodeDir.mkdirs()
@@ -126,6 +153,28 @@ tasks.register('generateVSCodeLaunch') {
                 ]
             ]
         ]
+        if (early_plugin.toBoolean()) {
+            // Ensure that the Gradle task to build the jar is run before launching
+            // so that the early-plugins folder contains a jar file.
+            launchConfig.configurations[0].preLaunchTask = "gradle: jar"
+
+            def tasksConfig = [
+                version: "2.0.0",
+                tasks: [
+                    [
+                        "label": "gradle: jar",
+                        "type": "shell",
+                        "command": "./gradlew",
+                        "args": ["jar"],
+                        "problemMatcher": ["\$gradle"],
+                        "windows": [
+                            "command": "gradlew.bat"
+                        ]
+                    ]
+                ]
+            ]
+            tasksFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(tasksConfig))
+        }
         launchFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(launchConfig))
     }
 }
