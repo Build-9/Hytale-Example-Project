@@ -4,6 +4,9 @@ plugins {
 }
 
 import org.gradle.internal.os.OperatingSystem
+import groovy.json.JsonOutput
+
+version = plugin_version
 
 ext {
     if (project.hasProperty('hytale_home')) {
@@ -57,25 +60,38 @@ if (!serverRunDir.exists()) {
     serverRunDir.mkdirs()
 }
 
-// Updates the manifest.json file with the latest properties defined in the
-// build.properties file. Currently we update the version and if packs are
-// included with the plugin.
-tasks.register('updatePluginManifest') {
-    def manifestFile = file('src/main/resources/manifest.json')
+// Generate the manifest.json file with the latest properties defined in the
+// build.properties file.
+tasks.register('generatePluginManifest') {
+    group = "hytale"
+    description = "Generates the manifest.json dynamically in the build directory."
+    def outputDir = file("${project.layout.buildDirectory.get().asFile}/resources/main")
+    def manifestFile = file("${outputDir}/manifest.json")
     doLast {
-        if (!manifestFile.exists()) {
-            throw new GradleException("Could not find manifest.json at ${manifestFile.path}!")
-        }
-        def manifestJson = new groovy.json.JsonSlurper().parseText(manifestFile.text)
-        manifestJson.Version = version
-        manifestJson.IncludesAssetPack = includes_pack.toBoolean()
-        manifestFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(manifestJson))
+        if (!outputDir.exists()) outputDir.mkdirs()
+        def manifestData = [
+            Group: project.findProperty('plugin_group'),
+            Name: project.findProperty('plugin_name'),
+            Version: project.findProperty('plugin_version'),
+            Description: project.findProperty('plugin_description'),
+            Authors: project.findProperty('plugin_authors')?.split(',')?.collect { [Name: it.trim()] } ?: [],
+            Website: project.findProperty('plugin_url'),
+            ServerVersion: project.findProperty('server_version') ?: "*",
+            Dependencies: new groovy.json.JsonSlurper().parseText(project.findProperty('plugin_dependencies') ?: "{}"),
+            OptionalDependencies: new groovy.json.JsonSlurper().parseText(project.findProperty('plugin_optional_dependencies') ?: "{}"),
+            DisabledByDefault: project.findProperty('disabled_by_default')?.toBoolean() ?: false,
+            Main: project.findProperty('plugin_main_class'),
+            IncludesAssetPack: project.findProperty('includes_pack')?.toBoolean() ?: false
+        ]
+
+        manifestFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(manifestData))
+        logger.lifecycle("Hytale Manifest generated at: ${manifestFile.path}")
     }
 }
 
 // Makes sure the plugin manifest is up to date.
 tasks.named('processResources') {
-    dependsOn 'updatePluginManifest'
+    finalizedBy 'generatePluginManifest'
 }
 
 def createServerRunArguments(String srcDir) {
@@ -128,4 +144,18 @@ tasks.register('generateVSCodeLaunch') {
         ]
         launchFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(launchConfig))
     }
+}
+
+// Runs the Hytale server directly from the terminal, automatically compiling 
+// your code and injecting the generated manifest from the build directory.
+task runHytale(type: JavaExec) {
+    group = "hytale"
+    description = "Run the Hytale server directly from Gradle with current settings."
+    mainClass = 'com.hypixel.hytale.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir = serverRunDir
+    standardInput = System.in
+    def buildResourcesDir = file("${project.layout.buildDirectory.get().asFile}/resources/main")
+    args = createServerRunArguments(buildResourcesDir.absolutePath).split(' ').collect { it.replace('"', '') }
+    dependsOn classes, processResources
 }
