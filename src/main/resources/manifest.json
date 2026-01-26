@@ -2,13 +2,13 @@
     "Group": "Wojo",
     "Name": "Wojo's Toolbelt",
     "Version": "0.0.1",
-    "Description": "An example plugin for HyTale!",
+    "Description": "A toolbelt plugin for HyTale! No longer do your tools and weapons need to takeup all your hotbar space.",
     "Authors": [
         {
-            "Name": "It's you!"
+            "Name": "Jacobwojoski
         }
     ],
-    "Website": "example.org",
+    "Website": "https://github.com/jacobwojoski/hytale.wojos-toolbelt",
     "ServerVersion": "*",
     "Dependencies": {
         
