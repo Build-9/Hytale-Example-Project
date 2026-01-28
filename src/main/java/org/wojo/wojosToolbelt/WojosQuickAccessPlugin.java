@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * event listeners.
  */
 public class WojosQuickAccessPlugin extends JavaPlugin {
-    private static WojosQuickAccessPlugin instance = null;
+    private static WojosQuickAccessPlugin _instance = null;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     
     private PacketFilter _inbound_filter;
@@ -23,7 +23,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
 
     public WojosToolbeltPlugin(@Nonnull JavaPluginInit init) {
         super(init);
-        instance = this;
+        _instance = this;
         LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
     }
 
@@ -60,7 +60,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     public static WojosQuickAccessPlugin get() {
-        return instance;
+        return _instance;
     }
 
     public ComponentType<EntityStore, QuickAccessComponent> getQuickAccessComponentType() {
