@@ -28,6 +28,8 @@ public class ToolbeltComponent implements Component<EntityStore> {
         return copy;
     }
 
+    // ====== Getters and setters ======
+
     public SLING_TYPE getSlingType() {
         return this._sling_type;
     }
