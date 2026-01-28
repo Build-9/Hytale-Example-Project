@@ -57,6 +57,6 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     public static WojosQuickAccessPlugin get() {
-        return instance
+        return instance;
     }
 }
