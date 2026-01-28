@@ -1,8 +1,7 @@
-package org.wojo.wojosToolbelt.commands;
+package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -12,14 +11,12 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.ui.ToolSelectionGui;
-
-import java.util.concurrent.CompletableFuture;
+// import org.wojo.wojosToolbelt.ui.ToolSelectionGui;
 
 public class OpenToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
     // Constructor
     public OpenToolbeltSelectionGuiCommand(){
         super("Open", "Opening the tool selection GUI");
-
         addAliases("o");
     };
 
@@ -30,10 +27,12 @@ public class OpenToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
         commandContext.sendMessage(Message.raw("Opening the Tool Selection GUI"));
 
         Player player = commandContext.senderAs(Player.class);
+        ToolSelectionGui guiPage = new ToolSelectionGui(playerRef);
 
-        CompletableFuture.runAsync(() -> {
-            player.getPageManager().openCustomPage(ref, store, new ToolSelectionGui(playerRef, CustomPageLifetime.CanDismiss));
-            playerRef.sendMessage(Message.raw("UI Page Shown"));
-        }, world);
+        player.getPageManager().openCustomPage(ref, store, guiPage);
+        playerRef.sendMessage(Message.raw("UI Page Shown"));
+
+//        CompletableFuture.runAsync(() -> {
+//        }, world);
     }
 }

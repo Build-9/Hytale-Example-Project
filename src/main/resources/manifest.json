@@ -1,6 +1,6 @@
 {
     "Group": "Wojo",
-    "Name": "Wojo's Toolbelt",
+    "Name": "WojosToolbelt",
     "Version": "0.0.2",
     "Description": "A toolbelt plugin for HyTale! No longer do your tools need to take up all of your hotbar space! If your holding a tool and press the same numbered key of the equipped item, the toolbelt popup opens!",
     "Authors": [
@@ -16,7 +16,10 @@
     "OptionalDependencies": {
         
     },
+    "Documents": [
+        "Common/UI/Custom/Pages/ToolSelectionUI.ui"
+    ],
     "DisabledByDefault": false,
-    "Main": "org.wojo.wojosToolbelt.plugin.WojosToolbeltPlugin",
+    "Main": "org.wojo.wojosToolbelt.WojosToolbeltPlugin",
     "IncludesAssetPack": true
 }

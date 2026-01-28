@@ -1,10 +1,13 @@
-package org.wojo.wojosToolbelt.plugin;
+package org.wojo.wojosToolbelt;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
+import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
+import com.hypixel.hytale.server.core.io.adapter.PacketWatcher;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import org.wojo.wojosToolbelt.commands.ExampleCommand;
-import org.wojo.wojosToolbelt.commands.WojosToolbeltCommandCollection;
+import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
+import org.wojo.wojosToolbelt.HotbarAdapter.HotbarToolbeltPacketAdapter;
 
 import javax.annotation.Nonnull;
 
@@ -15,6 +18,7 @@ import javax.annotation.Nonnull;
 public class WojosToolbeltPlugin extends JavaPlugin {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private PacketFilter inboundWatcher;
 
     public WojosToolbeltPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -24,8 +28,16 @@ public class WojosToolbeltPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         LOGGER.atInfo().log("Setting up plugin " + this.getName());
-        this.getCommandRegistry().registerCommand(new ExampleCommand(this.getName(), this.getManifest().getVersion().toString()));
-
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
+
+        HotbarToolbeltPacketAdapter handler = new HotbarToolbeltPacketAdapter();
+        this.inboundWatcher = PacketAdapters.registerInbound(handler);
+    }
+
+    @Override
+    protected void shutdown() {
+        if (this.inboundWatcher != null) {
+            PacketAdapters.deregisterInbound(this.inboundWatcher);
+        }
     }
 }

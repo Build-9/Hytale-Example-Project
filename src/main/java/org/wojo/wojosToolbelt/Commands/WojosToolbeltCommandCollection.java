@@ -1,4 +1,4 @@
-package org.wojo.wojosToolbelt.commands;
+package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 
@@ -15,6 +15,6 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 public class WojosToolbeltCommandCollection extends AbstractCommandCollection {
     public WojosToolbeltCommandCollection() {
         super("WojosToolbelt","All commands associated with Wojo's Toolbelt");
-        addSubCommand(new ToolbeltSelectionGuiCommandCollection());
+        this.addSubCommand(new ToolbeltSelectionGuiCommandCollection());
     }
 }

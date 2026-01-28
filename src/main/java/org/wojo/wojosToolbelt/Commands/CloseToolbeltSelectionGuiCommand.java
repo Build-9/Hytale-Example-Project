@@ -1,4 +1,4 @@
-package org.wojo.wojosToolbelt.commands;
+package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -29,9 +29,10 @@ public class CloseToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
         commandContext.sendMessage(Message.raw("Closing the Toolbelt Selection GUI"));
 
         Player player = commandContext.senderAs(Player.class);
-        CompletableFuture.runAsync(() -> {
-            player.getPageManager().setPage(ref, store, Page.None);
-            playerRef.sendMessage(Message.raw("UI Page Closed"));
-        }, world);
+        playerRef.sendMessage(Message.raw("UI Page Closed"));
+        player.getPageManager().setPage(ref, store, Page.None);
+
+//        CompletableFuture.runAsync(() -> {
+//        }, world);
     }
 }

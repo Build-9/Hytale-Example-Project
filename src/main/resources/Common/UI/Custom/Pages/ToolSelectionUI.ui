@@ -1,0 +1,18 @@
+$C = "../Common.ui";
+Group {
+    LayoutMode: CenterMiddle;
+    Background: #2a2a2a;
+    Anchor: (Width: 800, Height: 500);
+
+    $C.@TextButton #PickaxeButton {
+        Anchor: (Width: 150, Height: 150);
+        Text: "Pickaxe";
+    }
+    Group {
+        Anchor: (Width: 100, Height: 100);
+    }
+    $C.@TextButton #AxeButton {
+            Anchor: (Width: 150, Height: 150);
+            Text: "Axe";
+    }
+}

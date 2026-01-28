@@ -1,7 +1,6 @@
-package org.wojo.wojosToolbelt.commands;
+package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
-import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 public class ToolbeltSelectionGuiCommandCollection extends AbstractCommandCollection {
     public ToolbeltSelectionGuiCommandCollection() {
