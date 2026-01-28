@@ -1,5 +1,5 @@
 # Wojo's Toolbelts and Quck Access Slings
-Adds a few new items that, when used, allows the player to not take up all the players hotbar slots for weapons and tools at the cost of 2 hotbar slots.
+Adds a few new items that, when used, allows the player to use 2 hotbar slots to swap between different weapons/items on the same hotbar location.
 
 ## Design. 
 - When picking up the toolbelt/sling it will automatically get placed into hotbar slot 9. 
@@ -24,7 +24,8 @@ Adds a few new items that, when used, allows the player to not take up all the p
     -  max & mins of item types,
     -  Multiple Items at once
     -  Default Hotbar slot selection to pick where items are placed
-    -  Blacklist or whitelist items that can be added. 
+    -  Allow movement of QuickAccess item in the hotbar to change what button activates the GUI.
+    -  Blacklist or whitelist items that can be added to the QuickAccess
 - Handle Consumables
 - Handle all items (Allow player to pick items that sling can hold and)
 - Configurable Sling/Toolbelt (Allow server owners to make a custom item)
