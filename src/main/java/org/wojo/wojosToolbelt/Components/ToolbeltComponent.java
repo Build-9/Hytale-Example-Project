@@ -1,7 +1,6 @@
 package org.wojo.wojosToolbelt.Components;
 
 import com.hypixel.hytale.component.Component;
-import com.hypixel.hytale.protocol.EntityUIComponent;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.flock.FlockMembershipSystems;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
