@@ -8,7 +8,6 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.HotbarAdapter.HotbarToolbeltPacketAdapter;
-
 import javax.annotation.Nonnull;
 
 /**
@@ -16,11 +15,14 @@ import javax.annotation.Nonnull;
  * event listeners.
  */
 public class WojosQuickAccessPlugin extends JavaPlugin {
+    private static WojosQuickAccessPlugin instance = null;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    
     private PacketFilter _inbound_filter;
 
     public WojosToolbeltPlugin(@Nonnull JavaPluginInit init) {
         super(init);
+        instance = this;
         LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
     }
 
@@ -52,5 +54,9 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         if (this._inbound_hotbar_filter != null) {
             PacketAdapters.deregisterInbound(this._inbound_hotbar_filter);
         }
+    }
+
+    public static WojosQuickAccessPlugin get() {
+        return instance
     }
 }
