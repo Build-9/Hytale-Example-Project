@@ -29,53 +29,51 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     @Override
     public boolean test(PlayerRef playerRef, Packet packet) {
 
+        // 290 == SyncInteractionCain packet ID
         if (packet.getID() != 290 ){
             return false;
-        }else{
-            // Recast packet as type we want.
-            packet = (SyncInteractionChains) packet;
         }
+        
+        // Recast packet as type we care about.
+        packet = (SyncInteractionChains) packet;
+
         // TODO: Add check if player has QucikAccessComponent
+        // if (){return false;}
+        
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef != null && entityRef.isValid()) {
-            
-            // 290 == SyncInteractionCain packet ID
-            if (packet.getId() == 290) {
-                playerRef.sendMessage(Message.raw("Good Packet! : " + packet.getId() + " | " + packet.getClass().getName()));
-                if (packet instanceof SyncInteractionChains) {
+            playerRef.sendMessage(Message.raw("Good Packet! : " + packet.getId() + " | " + packet.getClass().getName()));
+    
+            // Check is user is trying to swap to item 9
+            for (SyncInteractionChain chain : syncPacketChains.updates) {
+               if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
+                       && chain.data != null // data exists
+                       && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
+                       &&!chain.initial // start of new chain
+                   ){
+                   playerRef.sendMessage(Message.raw("In interaction Chain"));
+                   // && chain.data.targetSlot == chain.activeHotbarSlot We dont care about active slot other then keeping it the same?
 
-                    // Check is user is trying to swap to item 9
-                    for (SyncInteractionChain chain : syncPacketChains.updates) {
-                       if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
-                               && chain.data != null // data exists
-                               && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
-                               &&!chain.initial // start of new chain
-                           ){
-                           playerRef.sendMessage(Message.raw("In interaction Chain"));
-                           // && chain.data.targetSlot == chain.activeHotbarSlot We dont care about active slot other then keeping it the same?
+                    // Interacting with world comp required us to be threadsafe so update on world thread not network thread.
+                    //    - This may not be needed as we dont actually set any world data.
+                    //    - we just get data and send a packet to client to update selected item.
+                    Store<EntityStore> store = entityRef.getStore();
+                    World world = store.getExternalData().getWorld();
+                    world.execute(() -> {
+                        // Revert Selected Hotbar Item
+                        revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
 
-                            // Interacting with world comp required us to be threadsafe so update on world thread not network thread.
-                            //    - This may not be needed as we dont actually set any world data.
-                            //    - we just get data and send a packet to client to update selected item.
-                            Store<EntityStore> store = entityRef.getStore();
-                            World world = store.getExternalData().getWorld();
-                            world.execute(() -> {
-                                // Revert Selected Hotbar Item
-                                revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
+                        // Open UI
+                        openQuickAccessUI(playerRef);
+                    }); // end Threadsafty
+                    
+                    // Block Packet as we don't want player to actually change to hotbar 9
+                    return true;
+               } // End chain type
+           } // End chain packet for loop
+        }// Bad entity Ref
 
-                                // Open UI
-                                openQuickAccessUI(playerRef);
-                            });
-                            
-                            // Block Packet as we don't want player to actually change to hotbar 9
-                            return true;
-                       }
-                   }
-                }
-            }
-        }else{
-            // Bad entity Ref
-        }
+        // Something went wrong or user wasnt pressing key 9, so dont block sync packet. 
         return false;
     }
 
@@ -97,6 +95,8 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     }
 
     // Open the Quick Access Gui 
+    // Params:
+    // - PlayerRef playerRef: Refrence to the player entity. 
     private void openQuickAccessUI(PlayerRef playerRef){
         playerRef.sendMessage(Message.raw("Showing UI Page"));
         // Open QuickAccess UI by using a command
