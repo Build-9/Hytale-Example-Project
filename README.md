@@ -50,24 +50,23 @@ The GUI will have a settings pannel to allow the user to change what Item is in 
     - Speed Reduction
 
 ## Code Design Overview
-- QucickAccessComponent
-    - Component that holds all the info needed
-- QuickAccessSystem (Ref CHange Events System)
-    - Handles Adding, Removing, and getting items from the Component whenever its updated.
-- PacketFilter
-    - Handle User Interaction for selecting hotbar 9, If they have component, Open the GUI & show info.
-- ItemPickupEvent
-    - When item is picked up add the QuickAcessComponent to the player
-- QuickAccessGUI
-    - GUI to swap out tool/item
-- ConfigPlayerGUI
-    - GUI to configure player specific settings for the mod. (Where items are stored hotbar location etc)
-- ConfigAdminGUI
-    - GUI to configure Admin settings for the mod. 
+- Components
+    - QuickAccessComponent: Component that holds all the info needed. Can be tied to a player, item, or block
+- Commands
+    - ComponentCommands: Commands to all & remove Components to player
+    - GUICommands: Commands to open and close GUI's
+- Systems
+    - QuickAccessSystem: Handles Adding, Removing, and getting items from the Component whenever its updated.
+- PacketAdapters
+    - HotbarHandleOpenGui: Check users hotbar interaction. If they press 9 and have QuickAccessItem open the GUI
+- Events
+    - InventoryChangeEvent: When QuickAccessItem is placed in hotbar slot 9, add QuickAcessComponent to the player.
+- GUI:
+    - SwapItemGUI: GUI used to swap out tool/item
 
 
 ### Special Thanks
-- Thanks to HytaleModding.dev website for some great info on how to set most of this up. [Modding Documentation Website](https://hytalemodding.dev/en)
+- Thanks to Hytalemodding.dev website for some great info on how to set most of this up. [Modding Documentation Website](https://hytalemodding.dev/en)
 - Thanks to TroubleDEV for some amazing youtube tutorials [TroubleDEV Youtube Link](https://www.youtube.com/channel/UC8IirsfaLXk7WFn55j1zs-g)
 - Thanks to TroubleDEV's Discord to helping me through various issues. 
 - Thanks to Plugin Template for code template. [Template Link](https://github.com/Build-9/Hytale-Example-Project)
