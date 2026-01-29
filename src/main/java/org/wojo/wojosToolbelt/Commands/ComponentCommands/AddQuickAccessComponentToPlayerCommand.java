@@ -31,12 +31,23 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
         qaComp.setSlingType(QuickAccessComponent.QUICK_ACCESS_ITEM_TYPE.CREATIVE_TOOL_SLING);
         qaComp.setMaxNumTotalSlingItems(500);
 
-        // Get list of tools player has & add to component list
+        List<ItemStack> validQaToolsAry = new ArrayList<>();
+        
+        // Get player items
         Player player = store.getComponent(ref, Player.getComponentType());
         Inventory inventory = player.getInventory();
+        ItemContainer storageContainer = inventory.getStorage();
         List<ItemStack> items = inventory.getCombinedEverything();
-        
 
+        // Search Items for tools
+        for (ItemStack stack : items){
+            Item item = stack.getItem();
+            if (item.hasTag("tool") || item.hasTag("Tool") || item.hasTag("TOOL")) {
+                validQaToolsAry.add(item);
+            }
+        }
+        
+        qaComp.setItemAry(validQaToolsAry);
         // TODO: This should prob be in command buffer somehow
         store.addComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType(), qaComp);
     }
