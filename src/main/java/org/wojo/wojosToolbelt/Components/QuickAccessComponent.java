@@ -28,8 +28,9 @@ public class QuickAccessComponent implements Component<EntityStore> {
     private QUICK_ACCESS_ITEM_TYPE _quick_access_item_type = QUICK_ACCESS_ITEM_TYPE.UNKNOWN;
     private int _max_num_total_items = 0;
     private List<FlockMembershipSystems.EntityRef> _items_in_quick_access = new ArrayList<FlockMembershipSystems.EntityRef>();
-    private List<int> _item_inventory_position = new ArrayList<int>(); // Used to save data between login/logout as using item refrence may not work.
+    private List<int,int> _item_inventory_position = new ArrayList<int>(); // Used to save data between login/logout as using item refrence may not work.
     // Use Ref Change System to convert _item_inventory_position to _items_in_quick_access
+    // Storage holds <InventoryType, InventoryPosition> of item
     // ========================= End Component Data =============================
     
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
