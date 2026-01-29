@@ -53,6 +53,16 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public List<FlockMembershipSystems.EntityRef> getStoredItemEntityListCopy(){
         return new ArrayList<>(this._items_in_quick_access);
     }
+    public void addItemToList(FlockMembershipSystems.EntityRef item){
+        _items_in_quick_access.add(item);
+    }
+    public void replaceItemsInList(List<FlockMembershipSystems.EntityRef> list){
+        _items_in_quick_access.clear();
+        _items_in_quick_access.addAll(list);
+    }
+    public void clearItemsInList(){
+        _items_in_quick_access.clear();
+    }
 
     public String getPrintableString(){
         return "Sling Type: " + this.getSlingType() +"\nMax Num Total Items: "+this.getMaxNumTotalSlingItems()+"\n"+this.getStoredItemEntityListCopy().toString();
