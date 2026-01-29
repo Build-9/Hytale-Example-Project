@@ -12,6 +12,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.DelayedEntitySystem;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -34,6 +35,6 @@ public class QuickAccessEntityTickingSystem extends DelayedEntitySystem<EntitySt
   @Nonnull
   @Override
   public Query<EntityStore> getQuery() {
-    return Query.and(QuickAccessComponent.getComponentType());
+    return Query.and(WojosQuickAccessPlugin.get().getQuickAccessComponentType());
   }
 }
