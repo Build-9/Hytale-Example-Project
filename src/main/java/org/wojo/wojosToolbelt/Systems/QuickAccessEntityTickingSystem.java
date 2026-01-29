@@ -10,6 +10,7 @@ package org.wojo.wojosToolbelt.Systems;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.DelayedEntitySystem;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -25,11 +26,20 @@ public class QuickAccessEntityTickingSystem extends DelayedEntitySystem<EntitySt
     this.quickAccessComponentType = quickAccessComponentType;
   }
 
-
   @Override
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                    @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
-      // Runs every 1 second per matching entity
+      // Runs every 10 second per matching entity
+    Player player = archetypeChunk.getComponent(index, Player.getComponentType());
+    QuickAccessComponent qaComp = archetypeChunk.getComponent(index, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+    Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+
+    String item = "Not a player";
+    if (player != null){
+      item = player.getDisplayName();
+    }
+
+    WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access tick for "+item);
   }
   
   @Nonnull
