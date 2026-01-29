@@ -27,6 +27,10 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     private PacketFilter _inbound_hotbar_filter;
     private ComponentType<EntityStore, QuickAccessComponent> _quick_access_component;
 
+    // Threadsafe accessor to check if a given player has a QuickAccessComponent.
+    //     Needed by network thread as getting the actual comp requires using the world thread. 
+    public static ConcurrentHashMap<PlayerRef, Boolean> hasQuickAccessComponentMap = new ConcurrentHashMap<>();
+
     public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         _instance = this;
