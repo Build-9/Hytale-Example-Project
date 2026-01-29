@@ -7,6 +7,7 @@ import com.hypixel.hytale.protocol.Packet;
 import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChain;
 import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -38,7 +39,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         }
         
         // Recast packet as type we care about.
-        packet = (SyncInteractionChains) packet;
+        SyncInteractionChains syncPacket = (SyncInteractionChains) packet;
         
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef != null && entityRef.isValid()) {
@@ -54,10 +55,10 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                 return false;
             }
 
-            playerRef.sendMessage(Message.raw("Good Packet! : " + packet.getId() + " | " + packet.getClass().getName()));
+            playerRef.sendMessage(Message.raw("Good Packet! : " + syncPacket.getId() + " | " + syncPacket.getClass().getName()));
     
             // Check is user is trying to swap to item 9
-            for (SyncInteractionChain chain : syncPacketChains.updates) {
+            for (SyncInteractionChain chain : syncPacket.updates) {
                if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
                        && chain.data != null // data exists
                        && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
@@ -69,7 +70,6 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                     // Interacting with world comp required us to be threadsafe so update on world thread not network thread.
                     //    - This may not be needed as we dont actually set any world data.
                     //    - we just get data and send a packet to client to update selected item.
-                    Store<EntityStore> store = entityRef.getStore();
                     World world = store.getExternalData().getWorld();
                     world.execute(() -> {
                         // Revert Selected Hotbar Item
@@ -94,9 +94,19 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     // - originalHotbarSlot: Hotbar slot the player was swapping from when pressing (open Gui button)
     // - playerRef: Reference to the player entity that hit the open GUI button.
     private void revertSelectedHotbarItem(int originalHotbarSlot, PlayerRef playerRef) {
+        Ref<EntityStore> entityRef = playerRef.getReference();
+        if (entityRef == null || !entityRef.isValid()){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad entity ref when reverting sleected hotbar item.");
+            return;
+        }
+        Store<EntityStore> store = entityRef.getStore();
         // Update server-side state
-        Player playerComponent = playerRef.getReference().getStore().getComponent(playerRef, Player.getComponentType());
-        playerComponent.getInventory().setActiveHotbarSlot((byte) originalSlot);
+        Player player = store.getComponent(entityRef, Player.getComponentType());
+        if (player == null || player.getInventory() == null){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad player when getting component");
+            return;
+        }
+            player.getInventory().setActiveHotbarSlot((byte) originalHotbarSlot);
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
