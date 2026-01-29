@@ -16,10 +16,17 @@ Adds a few new items that, when used, allows the player to use 2 hotbar slots to
     - Holds all tools and weapons in inventory for quick access
 
 ### TODO: (In no particular order)
-- Tiered Slings & Toolbelts
+- Tiered Slings & Toolbelts  
     - Builders Toolbelt (Blocks)
     - Weapon Slings (1 Handed, 2 Handed, Ranged, Magic)
-    - Consumables Sling (Food or Weapons) 
+    - Consumables Sling (Food or Weapons)
+    - Possible Quick Access Items (Unofficial)
+        - Crude Toolbelt (2 Tools)
+        - Creative Toolbelt (10 Tools)
+        - Crude Sling (2 Weapons)
+        - Creative Sling (10 Weapons)
+        - Builders Toolbelt (10 Blocks)
+        - Consumables Sling (10 Consumables)
 - Config
     -  max & mins of item types,
     -  Multiple Items at once
