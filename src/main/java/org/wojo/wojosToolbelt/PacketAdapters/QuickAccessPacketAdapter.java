@@ -1,20 +1,22 @@
-package org.wojo.wojosToolbelt.HotbarAdapter;
+package org.wojo.wojosToolbelt.PacketAdapters;
 
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.Packet;
 import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChain;
 import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
-import com.hypixel.hytale.protocol.packets.inventory.InventoryAction;
-import com.hypixel.hytale.protocol.packets.inventory.SwitchHotbarBlockSet;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import org.bouncycastle.util.Pack;
 
 // Send Packet to player to tell them they are actually holding the original slected item not hotbar 9
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
 import com.hypixel.hytale.server.core.inventory.Inventory;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 // Update the hotbar interaction to check if the player it swaping to the same item tey have equipped.
 // If they are then open UI.
@@ -23,6 +25,7 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter {
     private static final int ABILITY_SLOT = 8;  // Slot index 8 = Key "9"
 
+    static int counter = 0;
     // Returns boolean - "blockPacket"
     //    - True: Block Packet
     //    - False: Let Packet Through
@@ -30,18 +33,27 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     public boolean test(PlayerRef playerRef, Packet packet) {
 
         // 290 == SyncInteractionCain packet ID
-        if (packet.getID() != 290 ){
+        if (packet.getId() != 290 ){
             return false;
         }
         
         // Recast packet as type we care about.
         packet = (SyncInteractionChains) packet;
-
-        // TODO: Add check if player has QucikAccessComponent
-        // if (){return false;}
         
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef != null && entityRef.isValid()) {
+
+            // TODO: Add check if player has QucikAccessComponent
+            Store<EntityStore> store = entityRef.getStore();
+            if (store.getComponent(entityRef, WojosQuickAccessPlugin.get().getQuickAccessComponentType()) == null){
+                // Try not to spam log
+                if (counter % 10 == 0) {
+                    WojosQuickAccessPlugin.LOGGER.atInfo().log("Player Does not have a Quick AccessComponent so letting packets through");
+                }
+                counter++;
+                return false;
+            }
+
             playerRef.sendMessage(Message.raw("Good Packet! : " + packet.getId() + " | " + packet.getClass().getName()));
     
             // Check is user is trying to swap to item 9
@@ -83,7 +95,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     // - playerRef: Reference to the player entity that hit the open GUI button.
     private void revertSelectedHotbarItem(int originalHotbarSlot, PlayerRef playerRef) {
         // Update server-side state
-        Player playerComponent = store.getComponent(playerRef, Player.getComponentType());
+        Player playerComponent = playerRef.getReference().getStore().getComponent(playerRef, Player.getComponentType());
         playerComponent.getInventory().setActiveHotbarSlot((byte) originalSlot);
         
         // Send packet to force client to the correct slot

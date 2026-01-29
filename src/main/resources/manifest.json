@@ -20,6 +20,6 @@
         "Common/UI/Custom/Pages/ToolSelectionUI.ui"
     ],
     "DisabledByDefault": false,
-    "Main": "org.wojo.wojosToolbelt.WojosToolbeltPlugin",
+    "Main": "org.wojo.wojosToolbelt.WojosQuickAccessPlugin",
     "IncludesAssetPack": true
 }

@@ -1,13 +1,19 @@
 package org.wojo.wojosToolbelt;
 
+import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
-import com.hypixel.hytale.server.core.io.adapter.PacketWatcher;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.wojo.wojosToolbelt.Commands.ComponentCommands.AddQuickAccessComponentToPlayerCommand;
+import org.wojo.wojosToolbelt.Commands.ComponentCommands.PrintQuickAccessComponentInfo;
+import org.wojo.wojosToolbelt.Commands.ComponentCommands.RemoveQuickAccessComponentFromPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
-import org.wojo.wojosToolbelt.HotbarAdapter.HotbarToolbeltPacketAdapter;
+import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
+import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import javax.annotation.Nonnull;
 
 /**
@@ -16,12 +22,12 @@ import javax.annotation.Nonnull;
  */
 public class WojosQuickAccessPlugin extends JavaPlugin {
     private static WojosQuickAccessPlugin _instance = null;
-    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     
-    private PacketFilter _inbound_filter;
+    private PacketFilter _inbound_hotbar_filter;
     private ComponentType<EntityStore, QuickAccessComponent> _quick_access_component;
 
-    public WojosToolbeltPlugin(@Nonnull JavaPluginInit init) {
+    public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         _instance = this;
         LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
@@ -37,9 +43,12 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
     private void registerCommands(){
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
+        this.getCommandRegistry().registerCommand(new AddQuickAccessComponentToPlayerCommand());
+        this.getCommandRegistry().registerCommand(new RemoveQuickAccessComponentFromPlayerCommand());
+        this.getCommandRegistry().registerCommand(new PrintQuickAccessComponentInfo());
     }
     private void registerPacketAdapters(){
-        this._inbound_hotbar_filter = PacketAdapters.registerInbound(new QuickAccessPacketAdapter());
+        this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
     }
     
     @Override
