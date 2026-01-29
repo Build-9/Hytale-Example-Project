@@ -18,6 +18,21 @@ public class QuickAccessComponent implements Component<EntityStore> {
         QuickAccessComponent._quick_access_component_type = type;
     }
     
+    public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
+        .builder(QuickAccessComponent.class, QuickAccessComponent::new)
+        .append(
+            new KeyedCodec<>("_quick_access_item_type", CODEC.int),
+            (component, value) -> component._quick_access_item_type = value,
+            component -> component._quick_access_item_type
+        )
+        .add()
+        .append(
+            new KeyedCodec<>("_max_num_total_items", CODEC.int),
+            (component, value) -> component._max_num_total_items = value,
+            component -> component._max_num_total_items
+        )
+        .add()
+        .build();
     
     public enum QUICK_ACCESS_ITEM_TYPE {
         UNKNOWN,
