@@ -55,6 +55,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
         copy._quick_access_item_type = this._quick_access_item_type;
         copy._max_num_total_items = this._max_num_total_items;
         copy._items_in_quick_access.addAll(this._items_in_quick_access);
+        copy._item_inventory_position.addAll(this._item_inventory_position);
         return copy;
     }
 
