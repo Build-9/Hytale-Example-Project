@@ -73,12 +73,14 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
 
             // Check is user is trying to swap to item 9
             for (SyncInteractionChain chain : syncPacket.updates) {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("Looping Sync interaction chain");
+
                if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
                        && chain.data != null // data exists
                        && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
-                       &&!chain.initial // start of new chain
+                       && chain.initial // start of new chain
                    ){
-                   playerRef.sendMessage(Message.raw("In interaction Chain"));
+                   WojosQuickAccessPlugin.LOGGER.atInfo().log("In interaction Chain");
                    // && chain.data.targetSlot == chain.activeHotbarSlot We dont care about active slot other then keeping it the same?
 
                     // Interacting with world comp required us to be threadsafe so update on world thread not network thread.
@@ -88,10 +90,11 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                         world.execute(() -> {
                             // Revert Selected Hotbar Item
                             revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
-                        });
 
-                        // Open UI
-                        openQuickAccessUI(playerRef);
+
+                            // Open UI
+                            openQuickAccessUI(playerRef);
+                        });
 
                     // Block Packet as we don't want player to actually change to hotbar 9
                    return true;
