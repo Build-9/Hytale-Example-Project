@@ -38,7 +38,11 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
+        // TODO: Replace this with the getting from the QuickAccessComponent class.
         this._quick_access_component = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessComponent::new);
+        
+        var compType = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessComponent::new);
+        QuickAccessComponent.setComponentType(compType);
     }
     private void registerSystems(){
         this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
