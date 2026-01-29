@@ -50,5 +50,8 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
         qaComp.setItemAry(validQaToolsAry);
         // TODO: This should prob be in command buffer somehow
         store.addComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType(), qaComp);
+
+        // Verify Hashmap is up to date for all items with a QuickAccessComponent 
+        WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef, true);
     }
 }
