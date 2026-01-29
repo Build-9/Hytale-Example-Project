@@ -18,14 +18,38 @@ import javax.annotation.Nonnull;
 
 public class ToolSelectionGui extends BasicCustomUIPage {
 
+    private class ItemDisplayData {
+        int entityListId = 0; // Position in QuickAccessComponent::_items_in_quick_access list
+        String itemName = "";
+        String itemIconPath = "";
+        boolean isDisplayed = false;
+    }
+    
+    private List<ItemDisplayData> _display_data;
+    private _num_displayed_items = 0;
+    
     public ToolSelectionGui(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismissOrCloseThroughInteraction);
+
+        Store store = playerRef.getStore();
+        Ref<EntityRef> ref = playerRef.getRefrence();
+
+        if(store != null & ref != null){
+            QuickAccessComponent _qa_comp = store.getComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+            List<FlockMembershipSystems.EntityRef> item_ary = _qa_comp.getStoredItemEntityListCopy();
+
+            // TODO: Build DisplayData from comp
+            _display_data = new ArrayList<>();
+        }
     }
 
     @Override
     public void build(@Nonnull UICommandBuilder uiCommandBuilder) {
         // Path is relative to:
         //      src/main/resources/Common/UI/Custom
-       uiCommandBuilder.append("Pages/ToolSelectionUI.ui");
+        uiCommandBuilder.append("Pages/ToolSelectionUI.ui");
+        // TODO: Load different displays bassed on number of components?
     }
+
+    // TODO: Handle button press interaction on GUI.
 }
