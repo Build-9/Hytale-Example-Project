@@ -18,6 +18,18 @@ public class QuickAccessComponent implements Component<EntityStore> {
         QuickAccessComponent._quick_access_component_type = type;
     }
     
+    public enum QUICK_ACCESS_ITEM_TYPE {
+        UNKNOWN,
+        CREATIVE_TOOL_SLING
+    }
+
+    // ==========================================================================
+    // --------------------------- Component Data -------------------------------
+    private QUICK_ACCESS_ITEM_TYPE _quick_access_item_type = QUICK_ACCESS_ITEM_TYPE.UNKNOWN;
+    private int _max_num_total_items = 0;
+    private List<FlockMembershipSystems.EntityRef> _items_in_quick_access = new ArrayList<FlockMembershipSystems.EntityRef>();
+    // ========================= End Component Data =============================
+    
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
         .builder(QuickAccessComponent.class, QuickAccessComponent::new)
         .append(
@@ -34,15 +46,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
         .add()
         .build();
     
-    public enum QUICK_ACCESS_ITEM_TYPE {
-        UNKNOWN,
-        CREATIVE_TOOL_SLING
-    }
-
-    private QUICK_ACCESS_ITEM_TYPE _quick_access_item_type = QUICK_ACCESS_ITEM_TYPE.UNKNOWN;
-    private int _max_num_total_items = 0;
-    private List<FlockMembershipSystems.EntityRef> _items_in_quick_access = new ArrayList<FlockMembershipSystems.EntityRef>();
-
     @NullableDecl
     @Override
     public Component<EntityStore> clone() {
