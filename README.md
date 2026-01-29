@@ -1,19 +1,18 @@
 # Wojo's Toolbelts and Quck Access Slings
 Adds a few new items that, when used, allows the player to use 2 hotbar slots to swap between different weapons/items on the same hotbar location.
+By default the QuickAccessItem needs to be placed in hotbar slot 9 to work. Pressing 9 will then open a GUI to select a different item.
+The GUI will have a settings pannel to allow the user to change what Item is in each slot. 
 
 ## Design. 
-- When picking up the toolbelt/sling it will automatically get placed into hotbar slot 9. 
+- When picking up the toolbelt/sling it will automatically get placed into hotbar slot 9 & have tooltip.
 - The player will be forced to have another item selected if 9 was initially selected.
+- Item can be moved from hotbar slot 9 to stop interaction and added back to bring back interaction.
+- When item placed in hotbar slot 9, Add items Component to player. When removed, remove Component from player.
 - Pressing 9 will instead bring a popup for the user to change out whats in hotbar slot 1 with the selected item.
-- Only 1 can be equiped at a time. Picking up a new QuickAccess item will replace whats equpped 
 
 ## New Items
-- Creative Toolbelt
-    - Holds all Tools in inventory for quick access
-- Creative Weapon Sling
-    - Hold all Weapons in inventory for quick acess
-- Creative Tool-Sling
-    - Holds all tools and weapons in inventory for quick access
+- Crude Toolbelt
+    - Holds max of 2 tools from inventory for quick access. (Update crude to be 3 after testing)
 
 ### TODO: (In no particular order)
 - Tiered Slings & Toolbelts  
@@ -27,7 +26,7 @@ Adds a few new items that, when used, allows the player to use 2 hotbar slots to
         - Creative Sling (10 Weapons)
         - Builders Toolbelt (10 Blocks)
         - Consumables Sling (10 Consumables)
-- Config
+- Config 
     -  max & mins of item types,
     -  Multiple Items at once
     -  Default Hotbar slot selection to pick where items are placed
@@ -37,6 +36,7 @@ Adds a few new items that, when used, allows the player to use 2 hotbar slots to
 - Handle all items (Allow player to pick items that sling can hold and)
 - Configurable Sling/Toolbelt (Allow server owners to make a custom item)
 - Gui to
+    - View Info about mod
     - Changing location of items in toolbelt
     - Change Hotbar location for toolbelt
     - Change Quickaccess GUI Styles
