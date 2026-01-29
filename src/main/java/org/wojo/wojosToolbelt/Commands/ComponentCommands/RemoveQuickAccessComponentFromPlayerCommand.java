@@ -32,8 +32,8 @@ public class RemoveQuickAccessComponentFromPlayerCommand extends AbstractPlayerC
             commandContext.sendMessage(Message.raw("Player Does not have a QA Comp!"));
         }
 
+        // Verify Hashmap is up to date for all items with a QuickAccessComponent 
+        WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef, false);
         store.removeComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
-
-
     }
 }
