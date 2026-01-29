@@ -37,6 +37,8 @@ public class QuickAccessEntityTickingSystem extends DelayedEntitySystem<EntitySt
     String item = "Not a player";
     if (player != null){
       item = player.getDisplayName();
+      // Verify Hashmap is up to date for all items with a QuickAccessComponent 
+      WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef, true);
     }
 
     WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access tick for "+item);
