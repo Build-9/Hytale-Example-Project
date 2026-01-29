@@ -15,7 +15,8 @@ The GUI will have a settings pannel to allow the user to change what Item is in 
     - Holds max of 2 tools from inventory for quick access. (Update crude to be 3 after testing)
 
 ### TODO: (In no particular order)
-- Tiered Slings & Toolbelts  
+- [ ] Allow player to choose what items go where.
+- [ ] Tiered Slings & Toolbelts  
     - Builders Toolbelt (Blocks)
     - Weapon Slings (1 Handed, 2 Handed, Ranged, Magic)
     - Consumables Sling (Food or Weapons)
@@ -26,23 +27,23 @@ The GUI will have a settings pannel to allow the user to change what Item is in 
         - Creative Sling (10 Weapons)
         - Builders Toolbelt (10 Blocks)
         - Consumables Sling (10 Consumables)
-- Config 
+- [ ] Config 
     -  max & mins of item types,
     -  Multiple Items at once
     -  Default Hotbar slot selection to pick where items are placed
     -  Allow movement of QuickAccess item in the hotbar to change what button activates the GUI.
     -  Blacklist or whitelist items that can be added to the QuickAccess
-- Handle Consumables
-- Handle all items (Allow player to pick items that sling can hold and)
-- Configurable Sling/Toolbelt (Allow server owners to make a custom item)
-- Gui to
+- [ ] Handle Consumables
+- [ ] Handle all items (Allow player to pick items that sling can hold and)
+- [ ] Configurable Sling/Toolbelt (Allow server owners to make a custom item)
+- [ ] Guis to
     - View Info about mod
     - Changing location of items in toolbelt
     - Change Hotbar location for toolbelt
     - Change Quickaccess GUI Styles
-- Add visible Item to player model when equiped
-- Animations to add/remove items from sling
-- Add possible cost to swap items
+- [ ] Add visible Item to player model when equiped
+- [ ] Animations to add/remove items from sling
+- [ ] Add possible cost to swap items
     - Stamina Cost
     - Stamina Recharge Delay
     - Swap delay length (Animation)
