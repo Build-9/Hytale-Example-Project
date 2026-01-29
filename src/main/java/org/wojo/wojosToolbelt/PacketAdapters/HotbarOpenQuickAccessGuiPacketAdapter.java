@@ -53,13 +53,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             Store<EntityStore> store = entityRef.getStore();
             World world = store.getExternalData().getWorld();
 
-            world.execute(() -> {
-                QuickAccessComponent qaComp = store.getComponent(entityRef, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
-                boolean hasQa = qaComp != null;
-                quickAccessMap.put(playerRef, hasQa);
-            }); // End threadsafty
-
-            if ( quickAccessMap.get(playerRef) == null || quickAccessMap.get(playerRef) == false){
+            if ( WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef) == null || WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef) == false){
                 // Try not to spam log
                 if (counter % 10 == 0) {
                     WojosQuickAccessPlugin.LOGGER.atInfo().log("Player Does not have a Quick AccessComponent so letting packets through");
@@ -80,21 +74,15 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                        && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
                        && chain.initial // start of new chain
                    ){
-                   WojosQuickAccessPlugin.LOGGER.atInfo().log("In interaction Chain");
-                   // && chain.data.targetSlot == chain.activeHotbarSlot We dont care about active slot other then keeping it the same?
+                    WojosQuickAccessPlugin.LOGGER.atInfo().log("In interaction Chain");
 
-                    // Interacting with world comp required us to be threadsafe so update on world thread not network thread.
-                    //    - This may not be needed as we dont actually set any world data.
-                    //    - we just get data and send a packet to client to update selected item.
-
-                        world.execute(() -> {
-                            // Revert Selected Hotbar Item
-                            revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
-
-
-                            // Open UI
-                            openQuickAccessUI(playerRef);
-                        });
+                    // Interacting with following comps required us to be threadsafe so update on world thread not network thread.
+                    world.execute(() -> {
+                        // Revert Selected Hotbar Item
+                        revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
+                        // Open UI
+                        openQuickAccessUI(playerRef);
+                    });
 
                     // Block Packet as we don't want player to actually change to hotbar 9
                    return true;
@@ -123,7 +111,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad player when getting component");
             return;
         }
-            player.getInventory().setActiveHotbarSlot((byte) originalHotbarSlot);
+        player.getInventory().setActiveHotbarSlot((byte) originalHotbarSlot);
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
