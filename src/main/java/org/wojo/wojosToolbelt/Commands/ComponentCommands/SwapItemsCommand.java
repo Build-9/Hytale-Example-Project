@@ -5,7 +5,7 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
   
     // Constructor
     public SwapItemsCommand(){
-        super("WQA_SwapItem", "Swap an item in the inventory into the hotbar");
+        super("WQA_SwapItem", "Swap an item with given UUID into hotbar slot 1");
         addAliases("wqa_SI");
         
         this._item_UUID = this.withRequiredArg("uuid", "Item UUID - Get an items UUID by holding item and running WQA_GetItemUUID", ArgTypes.STRING);
@@ -19,13 +19,11 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
             return;
         }
         Item item = null;
-        // TODO: Find item with given UUID
+        // TODO: Find item in inventory with given UUID
         if (item == null){
             commandContext.sendMessage(Message.raw("ERROR: No valid item found to add to QuickAccessComponent."));
         }
-        // TODO: get copy of data from component
-        // TODO: Create new Component from copy, 
-        // TODO: Add new item to component
-        // TODO: Update Player Component
+        // TODO: move current item from players hotbar slot 1 to somewhere in inventory
+        // TODO: move found item into hotbar slot 1
     }
 }
