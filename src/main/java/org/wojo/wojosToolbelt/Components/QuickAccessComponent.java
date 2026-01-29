@@ -11,10 +11,10 @@ import java.util.List;
 
 public class QuickAccessComponent implements Component<EntityStore> {
     private static final ComponentType<EntityStore, QuickAccessComponent> _quick_access_component_type;
-    public ComponentType<EntityStore, QuickAccessComponent> getComponentType(){
+    public static ComponentType<EntityStore, QuickAccessComponent> getComponentType(){
         return _quick_access_component_type;
     }
-    public void setComponentType(ComponentType<EntityStore, QuickAccessComponent> type){
+    public static void setComponentType(ComponentType<EntityStore, QuickAccessComponent> type){
         QuickAccessComponent._quick_access_component_type = type;
     }
     
