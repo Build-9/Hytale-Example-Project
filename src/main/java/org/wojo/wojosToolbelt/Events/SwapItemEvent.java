@@ -8,15 +8,15 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 
-public record SwapWeaponEvent(
+public record SwapItemEvent(
         @Nonnull Ref<EntityStore> playerRef,
         String oldItemUUID,
         String newItemUUID
 
 ) implements IEvent<Void> { // No Return
     public static void dispatch(Ref<EntityStore> playerRef, String oldItemUUID, String> newItemUUID) {
-        IEventDispatcher<SwapWeaponEvent, SwapWeaponEvent> dispatcher =
-                HytaleServer.get().getEventBus().dispatchFor(SwapWeaponEvent.class);
+        IEventDispatcher<SwapItemEvent, SwapItemEvent> dispatcher =
+                HytaleServer.get().getEventBus().dispatchFor(SwapItemEvent.class);
 
         if (dispatcher.hasListener()) {
             dispatcher.dispatch(new SwapWeaponEvent(playerRef, oldItemUUID, newItemUUID));
