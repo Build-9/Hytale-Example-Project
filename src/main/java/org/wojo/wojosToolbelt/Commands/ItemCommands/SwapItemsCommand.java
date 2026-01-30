@@ -18,6 +18,7 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 // WQA_SwapItem <hotbar Position> <UUID> :: swap item in inventory with set UUID into given hotbar position
 public class SwapItemsCommand extends AbstractPlayerCommand {
     private RequiredArg<String> _item_UUID;
+    private OptionalArg<Integer> _hotbar_position;
   
     // Constructor
     public SwapItemsCommand(){
@@ -25,6 +26,7 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
         addAliases("wqa_SI");
         
         this._item_UUID = this.withRequiredArg("uuid", "Item UUID - Get an items UUID by holding item and running WQA_GetItemUUID", ArgTypes.STRING);
+        this._hotbar_position = this.withOptionalArg("hotbar", "Integer (0-8) - Position in hotbar to swap item into", ArgTypes.INTEGER);
     };
   
     @Override
@@ -32,12 +34,13 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Trying to swap to item.\n - UUID: "+commandContext.get(this._item_UUID));
 
         Item item = null;
-        // TODO: Find item in inventory with given UUID
-
         if (item == null){
             commandContext.sendMessage(Message.raw("ERROR: No valid item found to add to QuickAccessComponent."));
         }
-        // TODO: move current item from players hotbar slot 1 to somewhere in inventory
-        // TODO: move found item into hotbar slot 1
+        
+        // TODO: Get Item ID, Hotbar Pos, Inventory from component
+        // TODO: Get item ID of item in hotbar (Empty) if empty
+        // TODO: Swap Item in inventory
+        // TODO: Create new component with new info & update component
     }
 }
