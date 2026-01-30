@@ -92,7 +92,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
 
     // -- Debug Output --
     public String getPrintableString(){
-        return "Sling Type: " + this.getSlingType() +"\nMax Num Total Items: "+this.getMaxNumTotalSlingItems()+"\n"+this.getStoredItemEntityListCopy().toString();
+        return "Sling Type: " + this.getSlingType() +"\nMax Num Total Items: "+this.getMaxNumTotalSlingItems();
     }
 
     // ================ Component Type info ==================

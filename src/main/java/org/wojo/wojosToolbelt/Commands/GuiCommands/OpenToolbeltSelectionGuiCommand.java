@@ -1,4 +1,4 @@
-package org.wojo.wojosToolbelt.Commands;
+package org.wojo.wojosToolbelt.Commands.GuiCommands;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

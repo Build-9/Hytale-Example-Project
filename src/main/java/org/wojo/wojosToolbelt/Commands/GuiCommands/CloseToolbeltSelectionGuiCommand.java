@@ -1,4 +1,4 @@
-package org.wojo.wojosToolbelt.Commands;
+package org.wojo.wojosToolbelt.Commands.GuiCommands;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -11,8 +11,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-
-import java.util.concurrent.CompletableFuture;
 
 public class CloseToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
     // Constructor

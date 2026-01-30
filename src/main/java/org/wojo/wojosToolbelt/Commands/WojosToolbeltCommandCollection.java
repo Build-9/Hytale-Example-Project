@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
+import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCollection;
 
 // ToolbeltSelectionGuiCommandCollection (WojosToolbelt)
 //                  |       (Commands to interact with tool selector)
