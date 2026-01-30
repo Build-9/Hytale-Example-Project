@@ -10,16 +10,16 @@ import javax.annotation.Nonnull;
 
 public record SwapWeaponEvent(
         @Nonnull Ref<EntityStore> playerRef,
-        Ref<EntityStore> itemSwappedFrom,
-        Ref<EntityStore> newlyEquippedItem
+        String oldItemUUID,
+        String newItemUUID
 
 ) implements IEvent<Void> { // No Return
-    public static void dispatch(Ref<EntityStore> playerRef, Ref<EntityStore> itemSwappedFrom, Ref<EntityStore> newlyEquippedItem) {
+    public static void dispatch(Ref<EntityStore> playerRef, String oldItemUUID, String> newItemUUID) {
         IEventDispatcher<SwapWeaponEvent, SwapWeaponEvent> dispatcher =
                 HytaleServer.get().getEventBus().dispatchFor(SwapWeaponEvent.class);
 
         if (dispatcher.hasListener()) {
-            dispatcher.dispatch(new SwapWeaponEvent(playerRef, itemSwappedFrom, newlyEquippedItem));
+            dispatcher.dispatch(new SwapWeaponEvent(playerRef, oldItemUUID, newItemUUID));
         }
     }
 }
