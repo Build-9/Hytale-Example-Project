@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -18,6 +19,7 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 // WQA_SwapItem <hotbar Position> <UUID> :: swap item in inventory with set UUID into given hotbar position
 public class SwapItemsCommand extends AbstractPlayerCommand {
     private RequiredArg<String> _item_UUID;
+    private OptionalArg<Integer> _hotbar_position;
   
     // Constructor
     public SwapItemsCommand(){
@@ -25,6 +27,7 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
         addAliases("wqa_SI");
         
         this._item_UUID = this.withRequiredArg("uuid", "Item UUID - Get an items UUID by holding item and running WQA_GetItemUUID", ArgTypes.STRING);
+        this._hotbar_position = this.withOptionalArg("position","Hotbar slot to swap item into, (1-9)", ArgTypes.INTEGER);
     };
   
     @Override
@@ -32,12 +35,13 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Trying to swap to item.\n - UUID: "+commandContext.get(this._item_UUID));
 
         Item item = null;
-        // TODO: Find item in inventory with given UUID
-
-        if (item == null){
-            commandContext.sendMessage(Message.raw("ERROR: No valid item found to add to QuickAccessComponent."));
-        }
-        // TODO: move current item from players hotbar slot 1 to somewhere in inventory
-        // TODO: move found item into hotbar slot 1
+        // TODO: get QA component
+        // TODO: get item position from QA Component
+        // TODO: Validate item is at position
+        // TODO: Throw warning & Find Item if doesnt exist at position?
+        // TODO: Verify we found item
+        // TODO: Swap Item Positions
+        // TODO: Update Local component
+        // TODO: Update Stored Component
     }
 }
