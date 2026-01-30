@@ -5,7 +5,7 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.function.Consumer;
 
-public class SwapWeaponHandler implements Consumer<SwapWeaponEvent> {
+public class SwapItemHandler implements Consumer<SwapItemEvent> {
     @Override
     public void accept(SwapWeaponEvent event) {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("A player weapon Swap has just happened! We got the event! User swapped from "+event.oldItemUUID+" to "+newItemUUID);
