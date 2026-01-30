@@ -26,8 +26,11 @@ public class QuickAccessComponent implements Component<EntityStore> {
     private String _quick_access_item_type = QUICK_ACCESS_ITEM_TYPES[0];
     private int _max_num_total_items = 0;
 
-    // Can't get item ref's of things in containers. Need a different way to get the info
-    private String[] _item_uuids = new String[20]; // Used to save data between login/logout as using item refrence may not work. //TODO: Get max possible from config
+    // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
+    // - The following should be its own data structure but can't store/load custom structures in BuilderCodec (As far as I can tell)
+    private String[] _item_uuids = new String[20];     // TODO: Get max possible from config
+    private Integer[] _inv_position = new Integer[20]; // Position in inv
+    private Ingeger[] _inv_type = new Integer[20];     // Inventory location (Backpack, Utility, Hotbar, Etc) 
 
     // ========================= End Component Data =============================
 
