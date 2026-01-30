@@ -50,7 +50,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
     }
     private void registerEvents(){
-        getEventRegistry().register(SwapWeaponEvent.class, new SwapWeaponHandler());
+        getEventRegistry().register(SwapItemEvent.class, new SwapItemHandler());
     }
     private void registerCommands(){
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
