@@ -54,12 +54,13 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids, Integer[] inv_position, Integer[] inv_type){
+    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids, Integer[] inv_position, Integer[] inv_type, String equiped_item_uuid){
         this._quick_access_item_type = item_type;
         this._max_num_total_items = max_items;
         this._item_uuids = item_uuids.clone();
         this._inv_position = inv_position.clone();
         this._inv_type - inv_type.clone();
+        this._equiped_item_uuid = equiped_item_uuid;
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -114,7 +115,12 @@ public class QuickAccessComponent implements Component<EntityStore> {
 
     // -- Debug Output --
     public String getPrintableString(){
-        return "Sling Type: " + this.getSlingType() +"\nMax Num Total Items: "+this.getMaxNumTotalSlingItems();
+        return "Sling Type: " + this.getSlingType() +
+            "\nMax Num Total Items: "+this.getMaxNumTotalSlingItems() + 
+            "\nItem UUIDS: "+ this._item_uuids+
+            "\nInv Pos: "+ this._inv_position+
+            "\nInv Type: "+ this._inv_type+
+            "\nEquipped Item: "+this._equiped_item_uuid;
     }
 
     // ================ Component Type info ==================
