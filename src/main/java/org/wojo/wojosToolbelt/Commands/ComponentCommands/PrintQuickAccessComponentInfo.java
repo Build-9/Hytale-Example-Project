@@ -26,7 +26,7 @@ public class PrintQuickAccessComponentInfo extends AbstractPlayerCommand {
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
 
         commandContext.sendMessage(Message.raw("Printing QuickAccess component of player!"));
-        QuickAccessComponent qacomp = store.getComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+        QuickAccessComponent qacomp = store.getComponent(ref, QuickAccessComponent.getComponentType());
         if (qacomp == null){
             commandContext.sendMessage(Message.raw("Player Does not have a QA Comp!"));
         }else{

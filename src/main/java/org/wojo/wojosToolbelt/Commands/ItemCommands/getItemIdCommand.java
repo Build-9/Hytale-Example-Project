@@ -1,3 +1,5 @@
+package org.wojo.wojosToolbelt.Commands.ItemCommands;
+
 // Get a UUID for the held item
 public class getItemIdCommand extends AbstractPlayerCommand {
   

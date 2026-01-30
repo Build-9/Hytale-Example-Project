@@ -11,6 +11,7 @@ import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.DelayedEntitySystem;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -19,26 +20,27 @@ import javax.annotation.Nonnull;
 
 public class QuickAccessEntityTickingSystem extends DelayedEntitySystem<EntityStore> {
 
-  private final ComponentType<EntityStore, QuickAccessComponent> quickAccessComponentType;
-
   public QuickAccessEntityTickingSystem(ComponentType<EntityStore, QuickAccessComponent> quickAccessComponentType) {
     super(10.0f); // Don't need super rapid updates (TODO: Update this value)
-    this.quickAccessComponentType = quickAccessComponentType;
   }
 
   @Override
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                    @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
-      // Runs every 10 second per matching entity
+
+    // Runs every 10 second per matching entity
     Player player = archetypeChunk.getComponent(index, Player.getComponentType());
-    QuickAccessComponent qaComp = archetypeChunk.getComponent(index, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+    QuickAccessComponent qaComp = archetypeChunk.getComponent(index, QuickAccessComponent.getComponentType());
     Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
 
     String item = "Not a player";
     if (player != null){
-      item = player.getDisplayName();
-      // Verify Hashmap is up to date for all items with a QuickAccessComponent 
-      WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef, true);
+      Ref<EntityStore> playerRef = player.getReference();
+      if (playerRef != null) {
+        item = player.getDisplayName();
+        // Verify Hashmap is up to date for all items with a QuickAccessComponent
+        WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(player.getReference(), true);
+      }
     }
 
     WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access tick for "+item);
@@ -47,6 +49,6 @@ public class QuickAccessEntityTickingSystem extends DelayedEntitySystem<EntitySt
   @Nonnull
   @Override
   public Query<EntityStore> getQuery() {
-    return Query.and(WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+    return Query.and(QuickAccessComponent.getComponentType());
   }
 }

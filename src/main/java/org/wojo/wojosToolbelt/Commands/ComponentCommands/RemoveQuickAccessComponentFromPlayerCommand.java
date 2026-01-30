@@ -27,13 +27,13 @@ public class RemoveQuickAccessComponentFromPlayerCommand extends AbstractPlayerC
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         commandContext.sendMessage(Message.raw("Removing QuickAccess component from player!"));
 
-        QuickAccessComponent qacomp = store.getComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+        QuickAccessComponent qacomp = store.getComponent(ref, QuickAccessComponent.getComponentType());
         if (qacomp == null){
             commandContext.sendMessage(Message.raw("Player Does not have a QA Comp!"));
         }
 
         // Verify Hashmap is up to date for all items with a QuickAccessComponent 
-        WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef, false);
-        store.removeComponent(ref, WojosQuickAccessPlugin.get().getQuickAccessComponentType());
+        WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(playerRef.getReference(), false);
+        store.removeComponent(ref, QuickAccessComponent.getComponentType());
     }
 }

@@ -1,20 +1,25 @@
 package org.wojo.wojosToolbelt;
 
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.AddQuickAccessComponentToPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.PrintQuickAccessComponentInfo;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.RemoveQuickAccessComponentFromPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Events.SwapWeaponEvent;
+import org.wojo.wojosToolbelt.Handlers.SwapWeaponHandler;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import javax.annotation.Nonnull;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class serves as the entrypoint for your plugin. Use the setup method to register into game registries or add
@@ -29,7 +34,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
 
     // Threadsafe accessor to check if a given player has a QuickAccessComponent.
     //     Needed by network thread as getting the actual comp requires using the world thread. 
-    public static ConcurrentHashMap<PlayerRef, Boolean> hasQuickAccessComponentMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Ref<EntityStore>, Boolean> hasQuickAccessComponentMap = new ConcurrentHashMap<>();
 
     public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -38,9 +43,6 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
-        // TODO: Replace this with the getting from the QuickAccessComponent class.
-        this._quick_access_component = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessComponent::new);
-        
         var compType = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessComponent::new);
         QuickAccessComponent.setComponentType(compType);
     }
@@ -48,6 +50,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
     }
     private void registerEvents(){
+        getEventRegistry().register(SwapWeaponEvent.class, new SwapWeaponHandler());
     }
     private void registerCommands(){
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
@@ -80,7 +83,4 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         return _instance;
     }
 
-    public ComponentType<EntityStore, QuickAccessComponent> getQuickAccessComponentType() {
-        return _quick_access_component;
-    }
 }

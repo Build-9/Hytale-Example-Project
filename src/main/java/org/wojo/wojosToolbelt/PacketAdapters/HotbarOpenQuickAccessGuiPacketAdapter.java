@@ -31,7 +31,6 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     private static final int ABILITY_SLOT = 8;  // Slot index 8 = Key "9"
 
     static int counter = 0;
-    ConcurrentHashMap<PlayerRef, Boolean> quickAccessMap = new ConcurrentHashMap<>();
 
     // Returns boolean - "blockPacket"
     //    - True: Block Packet
