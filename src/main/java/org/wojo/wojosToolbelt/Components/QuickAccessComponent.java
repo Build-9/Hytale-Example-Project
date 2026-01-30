@@ -15,15 +15,28 @@ import java.util.List;
 
 public class QuickAccessComponent implements Component<EntityStore> {
 
+    // =========================================================================
+    // --------------------------- Config Values -------------------------------
+    // Way to use int as enums so builder codec can work.
+    public class QUICK_ACCESS_ITEM_TYPES {
+        static final int UNKNOWN = 0;
+        static final int CRUDE_TOOLBELT = 1;
+        static final int CREATIVE_TOOLBELT = 3;
+        private QUICK_ACCESS_ITEM_TYPES() {}; // Private constructor
+    }
+    
     // Int to string conversion
     public static final String[] QUICK_ACCESS_ITEM_TYPES = {
         "UNKNOWN",
         "CRUDE_TOOLBELT"
     };
 
+    // Max number of items the best Utility Item can hold TODO: Move this to config
+    private final int MAX_ITEMS_EVER = 20;             
+
     // ==========================================================================
     // --------------------------- Component Data -------------------------------
-    private String _quick_access_item_type = QUICK_ACCESS_ITEM_TYPES[0];
+    private int _quick_access_item_type = 0;
     private int _max_num_total_items = 0;
 
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
@@ -37,7 +50,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(String item_type, int max_items, String[] item_uuids){
+    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids){
         this._quick_access_item_type = item_type;
         this._max_num_total_items = max_items;
         this._item_uuids = item_uuids.clone();
@@ -75,10 +88,10 @@ public class QuickAccessComponent implements Component<EntityStore> {
 
     // ============ Getters and Setters ============
 
-    public String getSlingType() {
+    public int getSlingType() {
         return this._quick_access_item_type;
     }
-    public void setSlingType(String type){
+    public void setSlingType(int type){
         this._quick_access_item_type = type;
     }
 
