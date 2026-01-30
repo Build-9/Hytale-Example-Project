@@ -22,14 +22,16 @@ public class QuickAccessComponent implements Component<EntityStore> {
         static final int UNKNOWN = 0;
         static final int CRUDE_TOOLBELT = 1;
         static final int CREATIVE_TOOLBELT = 3;
+
+        // Int to string conversion
+        public static final String[] QUICK_ACCESS_ITEM_TYPE_STRING = {
+            "UNKNOWN",
+            "CRUDE_TOOLBELT",
+            "CREATIVE_TOOLBELT"
+        };
+        
         private QUICK_ACCESS_ITEM_TYPES() {}; // Private constructor
     }
-    
-    // Int to string conversion
-    public static final String[] QUICK_ACCESS_ITEM_TYPES = {
-        "UNKNOWN",
-        "CRUDE_TOOLBELT"
-    };
 
     // Max number of items the best Utility Item can hold TODO: Move this to config
     private final int MAX_ITEMS_EVER = 20;             
@@ -50,10 +52,12 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids){
+    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids, Integer[] inv_position, Integer[] inv_type){
         this._quick_access_item_type = item_type;
         this._max_num_total_items = max_items;
         this._item_uuids = item_uuids.clone();
+        this._inv_position = inv_position.clone();
+        this._inv_type - inv_type.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -87,11 +91,11 @@ public class QuickAccessComponent implements Component<EntityStore> {
     }
 
     // ============ Getters and Setters ============
-
-    public int getSlingType() {
+    // --- QAItemComp Type ---
+    public int getItemType() {
         return this._quick_access_item_type;
     }
-    public void setSlingType(int type){
+    public void setItemType(int type){
         this._quick_access_item_type = type;
     }
 
