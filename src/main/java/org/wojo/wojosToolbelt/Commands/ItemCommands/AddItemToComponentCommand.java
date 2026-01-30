@@ -35,10 +35,9 @@ public class AddItemToComponentCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw("Invalid Input Args. Must unclude UUID argument"));
             return;
         }
-        // Add the following in the system?
-        // TODO: get copy of data from component
-        // TODO: Create new Component from copy, 
-        // TODO: Add new item UUID to component
+        // TODO: get local cpy of players qa_component
+        // TODO: find item in player inventory
+        // TODO: add uuid, position, inventory to component
         // TODO: Update QuickAccessComponent on player
     }
 }
