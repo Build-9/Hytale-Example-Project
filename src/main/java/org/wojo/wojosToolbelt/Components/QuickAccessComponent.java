@@ -43,9 +43,11 @@ public class QuickAccessComponent implements Component<EntityStore> {
 
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
     // - The following should be its own data structure but can't store/load custom structures in BuilderCodec (As far as I can tell)
+    // - Position in array corresponds to what button is used to grab the item
     private String[] _item_uuids = new String[20];     // TODO: Get max possible from config
     private Integer[] _inv_position = new Integer[20]; // Position in inv
-    private Ingeger[] _inv_type = new Integer[20];     // Inventory location (Backpack, Utility, Hotbar, Etc) 
+    private Integer[] _inv_type = new Integer[20];     // Inventory location (Backpack, Utility, Hotbar, Etc) 
+    private String _equiped_item_uuid = "";            // Item Currently Equpped, Will get swapped into uuid array with whatever value is pressed.
 
     // ========================= End Component Data =============================
 
