@@ -16,7 +16,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 // Swap an item with a given UUID to a specific hotbar location
-// WQA_SwapItem <hotbar Position> <UUID> :: swap item in inventory with set UUID into given hotbar position
+// WQA_SwapItem <UUID> <hotbar Position> :: swap item in inventory with set UUID into given hotbar position
 public class SwapItemsCommand extends AbstractPlayerCommand {
     private RequiredArg<String> _item_UUID;
     private OptionalArg<Integer> _hotbar_position;
@@ -37,11 +37,8 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
         Item item = null;
         // TODO: get QA component
         // TODO: get item position from QA Component
-        // TODO: Validate item is at position
-        // TODO: Throw warning & Find Item if doesnt exist at position?
-        // TODO: Verify we found item
+        // TODO: Validate item is at position & Throw warning & Find Item if doesnt exist at position?
         // TODO: Swap Item Positions
-        // TODO: Update Local component
-        // TODO: Update Stored Component
+        // TODO: Update Stored Component with new item data
     }
 }
