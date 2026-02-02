@@ -15,7 +15,8 @@ public class QuickAccessConfig {
         RARE,
         EPIC,
         LEGENDARY,
-        MYTHIC
+        MYTHIC,
+        CREATIVE
     }
 
     public static final enum ITEM_TYPE {
@@ -29,20 +30,20 @@ public class QuickAccessConfig {
     
     
     // Toolbelts can only Items with tool tag
-    static final Integer[] TOOLBELT_ARRAY = {3,3,3,3,3,3};
+    static final Integer[] TOOLBELT_ARRAY = {3,3,3,3,3,3,3};
 
     // Builders pouch can hold any building block
-    static final Integer[] BUILDERS_POUCH_ARRAY = {3,3,3,3,3,3};
+    static final Integer[] BUILDERS_POUCH_ARRAY = {3,3,3,3,3,3,3};
 
     // Slings can only hold weapons
-    static final Integer[] WEAPON_SLING_ARRAY = {3,3,3,3,3,3};
+    static final Integer[] WEAPON_SLING_ARRAY = {3,3,3,3,3,3,3};
 
     // Bandoleers can only hold consumables (Food, Bombs, Potions, but cant hold arrows)
-    static final Integer[] BANDOLIER_ARRAY = {3,3,3,3,3,3};
+    static final Integer[] BANDOLIER_ARRAY = {3,3,3,3,3,3,3};
     
     // Quivers can only hold arrows
-    static final Integer[] QUIVER_ARRAY = {3,3,3,3,3,3};
+    static final Integer[] QUIVER_ARRAY = {3,3,3,3,3,3,3};
 
     // Creative can hold anything
-    static final Integer[] CREATIVE_ARRAY = {3,3,3,3,3,3}    
+    static final Integer[] CREATIVE_ARRAY = {3,3,3,3,3,3,3}    
 }
