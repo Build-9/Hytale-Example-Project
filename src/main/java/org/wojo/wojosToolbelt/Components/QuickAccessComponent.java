@@ -14,74 +14,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuickAccessComponent implements Component<EntityStore> {
-
-    // =========================================================================
-    // --------------------------- Config Values -------------------------------
-    // Way to use int as enums so builder codec can work.
-    public class QUICK_ACCESS_ITEM_TYPES {
-        public static final int UNKNOWN = 0;
-        public static final int CRUDE_TOOLBELT = 1;
-        public static final int CREATIVE_TOOLBELT = 3;
-
-        // Int to string conversion
-        public static final String[] QUICK_ACCESS_ITEM_TYPE_STRING = {
-            "UNKNOWN",
-            "CRUDE_TOOLBELT",
-            "CREATIVE_TOOLBELT"
-        };
-        
-        private QUICK_ACCESS_ITEM_TYPES() {}; // Private constructor
-    }
-
-    // Max number of items the best Utility Item can hold TODO: Move this to config
-    private final int MAX_ITEMS_EVER = 20;             
-
     // ==========================================================================
     // --------------------------- Component Data -------------------------------
-    private int _quick_access_item_type = 0;
-    private int _max_num_total_items = 0;
+    private int _quick_access_item_tier = 0;        // Tier of Quick Access Item
+    private int _quick_access_item_type = 0;        // Type of Quick Access Item this is.
+    private int _quick_access_max_total_items = 0;           // Max number of total items this QuickAccess Component can store
+    private int _quick_access_item_location = 0;    // Hotbar position that opens gui
+    private int _quick_access_target_location = 0;  // Hotbar position to swap item into
 
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
-    // - The following should be its own data structure but can't store/load custom structures in BuilderCodec (As far as I can tell)
-    // - Position in array corresponds to what button is used to grab the item. Position ties to the same item in every array. 
-    //     - _item_uuids[0] = "Crude_Pickage" // Item id for item we care about
-    //     - _inv_position = 10 // Position of pick in inventory, 
-    //     - _inv_type = 0 // Pick is stored in hotbar
+    // - First design will use Item ID so multiple of the same item will return first instance.
+    // - TODO: Use actual UUID for items added so player can select specific item in inventory 
     private String[] _item_uuids = new String[20];     // TODO: Get max possible from config
-    private Integer[] _inv_position = new Integer[20]; // Position in inv
-    private Integer[] _inv_type = new Integer[20];     // Inventory location (Backpack, Utility, Hotbar, Etc) 
-    private String _equiped_item_uuid = "";            // Item Currently Equpped, Will get swapped into uuid array with whatever value is pressed.
-
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_type, int max_items, String[] item_uuids, Integer[] inv_position, Integer[] inv_type, String equiped_item_uuid){
+    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids){
+        this._quick_access_item_tier = item_tier;
         this._quick_access_item_type = item_type;
-        this._max_num_total_items = max_items;
-        this._item_uuids = item_uuids.clone();
-        this._inv_position = inv_position.clone();
-        this._inv_type - inv_type.clone();
-        this._equiped_item_uuid = equiped_item_uuid;
+        this._quick_access_max_total_items = max_items;
+        this._quick_access_gui_button = gui_button;
+        this._quick_access_target_location = target_location;
+        this._quick_access_item_uuids = item_uuids.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
         .builder(QuickAccessComponent.class, QuickAccessComponent::new)
         .append(
-            new KeyedCodec<>("_quick_access_item_type", Codec.STRING),
+            new KeyedCodec<>("QuickAccessItemTier", Codec.INTEGER),
+            (component, value) -> component._quick_access_item_tier = value,
+            component -> component._quick_access_item_tier
+        ).add()
+        .append(
+            new KeyedCodec<>("QuickAccessItemType", Codec.INTEGER),
             (component, value) -> component._quick_access_item_type = value,
             component -> component._quick_access_item_type
         ).add()
         .append(
-            new KeyedCodec<>("_max_num_total_items", Codec.INTEGER),
-            (component, value) -> component._max_num_total_items = value,
-            component -> component._max_num_total_items
+            new KeyedCodec<>("QuickAccessMaxTotalItems", Codec.INTEGER),
+            (component, value) -> component._quick_access_max_total_items = value,
+            component -> component._quick_access_max_total_items
         ).add()
         .append(
-            new KeyedCodec<>("_item_uuids", Codec.STRING_ARRAY),
-            (component, value) -> component._item_uuids = value,
-            component -> component._item_uuids
+            new KeyedCodec<>("QuickAccessGuiButton", Codec.INTEGER),
+            (component, value) -> component._quick_access_gui_button = value,
+            component -> component._quick_access_gui_button
+        ).add()
+        .append(
+            new KeyedCodec<>("QuickAccessTargetLocation", Codec.INTEGER),
+            (component, value) -> component._quick_access_target_location = value,
+            component -> component._quick_access_target_location
+        ).add()
+        .append(
+            new KeyedCodec<>("quick_access_item_uuids", Codec.STRING_ARRAY),
+            (component, value) -> component._quick_access_item_uuids = value,
+            component -> component._quick_access_item_uuids
         )
         .add()
         .build();
@@ -90,13 +79,24 @@ public class QuickAccessComponent implements Component<EntityStore> {
     @Override
     public Component<EntityStore> clone() {
         QuickAccessComponent copy = new QuickAccessComponent();
+        copy._quick_access_item_tier = this._quick_access_item_tier;
         copy._quick_access_item_type = this._quick_access_item_type;
-        copy._max_num_total_items = this._max_num_total_items;
-        copy._item_uuids = this._item_uuids.clone();
+        copy._quick_access_max_total_items = this._quick_access_max_total_items;
+        copy._quick_access_gui_button = this._quick_access_gui_button;
+        copy._quick_access_target_location = this._quick_access_target_location;
+        copy._quick_access_item_uuids = this._quick_access_item_uuids.clone();
         return copy;
     }
 
     // ============ Getters and Setters ============
+    // --- QAItemComp Tier ---
+    public int getItemTier() {
+        return this._quick_access_item_tier;
+    }
+    public int setItemTier(int tier) {
+        this._quick_access_item_tier = tier;
+    }
+    
     // --- QAItemComp Type ---
     public int getItemType() {
         return this._quick_access_item_type;
@@ -105,25 +105,56 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_item_type = type;
     }
 
-    // --- Config Accessors ---
-    public int getMaxNumTotalSlingItems(){
-        return this._max_num_total_items;
+    // --- QAItemComp MaxItems ---
+    public int getMaxTotalItems(){
+        return this._quick_access_max_total_items;
     }
-    public void setMaxNumTotalSlingItems(int max){
-        this._max_num_total_items = max;
+    public void setMaxTotalItems(int max){
+        this._quick_access_max_total_items = max;
+    }
+
+    // --- QAItemComp Gui Button ---
+    public int getGuiButton(){
+        return this._quick_access_gui_button
+    }
+    public void setGuiButton(int hotbar_button){
+        this._quick_access_gui_button = hotbar_button;
+    }
+
+    // --- QAItemComp TargetLocation ---
+    
+    public int getSwapTargetLocation(){
+        return this._quick_access_target_location
+    }
+    public void setSwapTargetLocation(int hotbar_button){
+        this._quick_access_target_location = hotbar_button;
     }
 
     // -- Array Accessors ---
-    // TODO: need to redo these
+    public String[] getItemIdArray(){
+        return this._quick_access_item_uuids;
+    }
+    public void setItemIdArray(String[] item_uuids){
+        this._quick_access_item_uuids = item_uuids.clone();
+    }
 
     // -- Debug Output --
     public String getPrintableString(){
-        return "Quick Access Type: " + this.getSlingType() +
-            "\nMax Num Total Items: "+this.getMaxNumTotalSlingItems() + 
-            "\nItem UUIDS: "+ this._item_uuids+
-            "\nInv Pos: "+ this._inv_position+
-            "\nInv Type: "+ this._inv_type+
-            "\nEquipped Item: "+this._equiped_item_uuid;
+        String debugResult = String.format(
+            "Quick Access Item Type: %d \n"+
+            "- Quick Access Tier: %d \n" +
+            "- Max Num Total Items: %d \n" + 
+            "- GUI Button: %d \n"+
+            "- Target Location: %d \n"
+            this.getItemType(),
+            this.getItemTier(),
+            this.getMaxTotalItems(),
+            this.getGuiButton(),
+            this.getSwapTargetLocation();
+
+        debugResult += "- Item Array: "+this._quick_access_item_uuids.toString()+"\n";
+
+        return debugResult;
     }
 
     // ================ Component Type info ==================
