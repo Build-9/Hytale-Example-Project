@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 public record SwapItemEvent(
         @Nonnull Ref<EntityStore> playerRef,
-        String oldItemUUID,
+        String oldItemUUID, // Optional arg as item can be found through QAComp as location swapping to. 
         String newItemUUID
 
 ) implements IEvent<Void> { // No Return
