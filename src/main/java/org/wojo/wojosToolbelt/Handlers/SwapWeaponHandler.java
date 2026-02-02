@@ -10,6 +10,10 @@ public class SwapItemHandler implements Consumer<SwapItemEvent> {
     public void accept(SwapItemEvent event) {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("A player weapon Swap has just happened! We got the event! User swapped from "+event.oldItemUUID+" to "+newItemUUID);
 
-        // TODO: If we have penalties to a weapon swap they would happen here. (Like Take player stamina)
+        // TODO: If we have penalties to a weapon swap they would happen here. (Like Take player stamina, Or Animation, or Particles)
+        
+        // Find NewItemUUID In player Inventory & get position
+        // Get Hotbar Position
+        // Swap Item into hotbar using invenotry.swapItem method
     }
 }
