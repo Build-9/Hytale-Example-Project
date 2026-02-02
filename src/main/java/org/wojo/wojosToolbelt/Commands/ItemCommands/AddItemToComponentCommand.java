@@ -35,9 +35,8 @@ public class AddItemToComponentCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw("Invalid Input Args. Must unclude UUID argument"));
             return;
         }
-        // Add the following in the system?
-        // TODO: Find Item in player inventory (Only search Inv, Hotbar, Backpack slots)
-        // TODO: Add item UUID, Inv Location, & Inventory Type to component at desired array position (default 0)
+        // Get Copy of Component
+        // TODO: Add item UUID, to component at desired array position (Position correlates to button thats used to equip item)
         // TODO: Update QuickAccessComponent on player
     }
 }
