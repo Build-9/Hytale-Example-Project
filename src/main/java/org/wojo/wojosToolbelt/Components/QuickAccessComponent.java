@@ -19,9 +19,9 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // --------------------------- Config Values -------------------------------
     // Way to use int as enums so builder codec can work.
     public class QUICK_ACCESS_ITEM_TYPES {
-        static final int UNKNOWN = 0;
-        static final int CRUDE_TOOLBELT = 1;
-        static final int CREATIVE_TOOLBELT = 3;
+        public static final int UNKNOWN = 0;
+        public static final int CRUDE_TOOLBELT = 1;
+        public static final int CREATIVE_TOOLBELT = 3;
 
         // Int to string conversion
         public static final String[] QUICK_ACCESS_ITEM_TYPE_STRING = {
