@@ -36,10 +36,9 @@ public class AddItemToComponentCommand extends AbstractPlayerCommand {
             return;
         }
         // Add the following in the system?
-        // TODO: get copy of data from component
-        // TODO: Create new Component from copy,
+        // TODO: clone component
         // TODO: Find Item in inventory
         // TODO: Add new item UUID, Location, Inventory Type to component
-        // TODO: Update QuickAccessComponent on player
+        // TODO: Update QuickAccessComponent clone on player
     }
 }
