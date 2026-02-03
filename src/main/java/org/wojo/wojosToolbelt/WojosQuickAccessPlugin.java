@@ -56,10 +56,17 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         getEventRegistry().register(AddItemEvent.class, new AddItemHandler());
     }
     private void registerCommands(){
+        // TODO: Update the command collection to properly hold everything
+        
+        // Component Commands
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
         this.getCommandRegistry().registerCommand(new AddQuickAccessComponentToPlayerCommand());
         this.getCommandRegistry().registerCommand(new RemoveQuickAccessComponentFromPlayerCommand());
         this.getCommandRegistry().registerCommand(new PrintQuickAccessComponentInfo());
+
+        // Item Commands
+        this.getCommandRegistry().registerCommand(new AddItemToComponentCommand());
+        this.getCommandRegistry().registerCommand(new SwapItemsCommand());
     }
     private void registerPacketAdapters(){
         this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
@@ -85,5 +92,4 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     public static WojosQuickAccessPlugin get() {
         return _instance;
     }
-
 }
