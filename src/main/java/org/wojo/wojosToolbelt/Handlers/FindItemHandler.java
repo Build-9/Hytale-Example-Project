@@ -35,38 +35,35 @@ public class FindItemHandler implements Consumer<FindItemEvent> {
         if (qaComp != null && playerComp != null){
             qaComp.getItemInArray(qaComp.getSwapTargetLocation());
 
+            int srcInventoryType = Inventory.STORAGE_SECTION_ID;
             ItemContainer mainInventory = playerComp.getInventory().getStorage();
+            
+            int targetInventoryType = Inventory.STORAGE_SECTION_HOTBAR_ID;
             ItemContainer hotbar = playerComp.getInventory().getHotbar();
 
-            int inventoryType = Inventory.STORAGE_SECTION_ID;
-            AtomicBoolean foundItem = new AtomicBoolean(false);
-            AtomicInteger foundPosition = new AtomicInteger();
 
-            // Only search main inventory for items to swap in & get needed postion info
+            // Search main inventory for item we wanted to swap into the hotbar
             mainInventory.forEach( (position, itemStack ) -> {
-                if (itemStack.getItemId().equals(newItem)){
-                    foundItem.set(true);
-                    foundPosition.set(position);
+                if (itemStack.getItemId().equals(newItem)) {
+                    int foundPositionInt = foundPosition.intValue();
+                    short foundPositionShort = (short) foundPositionInt;
 
-                    // TODO: dispatch SwapitemEvent
-                    if (foundItem.get()){
-                        int foundPositionInt = foundPosition.intValue();
-                        short foundPositionShort = (short) foundPositionInt;
+                    int targetPositionInt = qaComp.getSwapTargetLocation();
+                    short targetPositionShort = (short) targetPositionInt;
 
-                        int targetPositionInt = qaComp.getSwapTargetLocation();
-                        short targetPositionShort = (short) targetPositionInt;
-
-
-
-                    }
-                };
-
+                    // Dispatch SwapItemEvent
+                    SwapItemEvent.dispatch(
+                        player,
+                        srcInventoryType, foundPositionShort,
+                        targetInventoryType, targetPositionInt           
+                    );
+                    
+                    // Edits Lambda, Allows us to search other inventory types if we want.
+                    return;
+                }
             });
 
-
-
-
-
+            // TODO: Add backpack search here? Only search other areas if its a creative qa component?
         }
     }
 }
