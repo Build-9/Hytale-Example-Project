@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 public class FindItemHandler implements Consumer<FindItemEvent> {
     @Override
     public void accept(FindItemEvent event) {
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("EVENT: (Swap Weapon Event) - A player weapon Swap has just happened! We got the event! User swapped from "+event.oldItemUUID()+" to "+event.newItemUUID());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("EVENT: (Find Item Event) - A player weapon Swap has just happened! We got the event! User swapped from "+event.oldItemUUID()+" to "+event.newItemUUID());
 
         // TODO: If we have penalties to a weapon swap they would happen here. (Like Take player stamina, Or Animation, or Particles)
 
@@ -45,6 +45,9 @@ public class FindItemHandler implements Consumer<FindItemEvent> {
             // Search main inventory for item we wanted to swap into the hotbar
             mainInventory.forEach( (position, itemStack ) -> {
                 if (itemStack.getItemId().equals(newItem)) {
+                    String debugOutput = String.formated("EVENT: (Find Item Event) - Found item %s in the %s inventory!", itemStack.getItemId(), playerComp.getUsername());
+                    WojosQuickAccessPlugin.LOGGER.atInfo().log(debugOutput);
+                    
                     int foundPositionInt = foundPosition.intValue();
                     short foundPositionShort = (short) foundPositionInt;
 
@@ -55,14 +58,16 @@ public class FindItemHandler implements Consumer<FindItemEvent> {
                     SwapItemEvent.dispatch(
                         player,
                         srcInventoryType, foundPositionShort,
-                        targetInventoryType, targetPositionInt           
+                        targetInventoryType, targetPositionShort           
                     );
                     
                     // Edits Lambda, Allows us to search other inventory types if we want.
                     return;
                 }
             });
-
+            String debugOutput = String.formated("EVENT: (Find Item Event) - Failed to find item %s in the %s inventory!", itemStack.getItemId(), playerComp.getUsername());
+            WojosQuickAccessPlugin.LOGGER.atInfo().log(debugOutput);
+            
             // TODO: Add backpack search here? Only search other areas if its a creative qa component?
         }
     }
