@@ -3,7 +3,7 @@ package org.wojo.wojosToolbelt.Config;
 public class QuickAccessConfig {
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files. 
-    public static final int MAX_QA_ITEMS = 500;
+    public static final int MAX_QA_ITEMS = 20;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
     public static final int MAX_SEARCHABLE_CONTAINERS = 50; // Max number of different inventory types on a player that an item search could look for swap item.
@@ -51,29 +51,38 @@ public class QuickAccessConfig {
         }
     }
 
-    // TODO: Tie this to the QuickAccess Item Type
     // What inventories can be searched for item to swap into hotbar. (Default only checks player inventory | Hotbar, Backpack & Utility are also possible additional options)
     static final Integer[] SEARCHABLE_CONTAINERS = {Inventory.STORAGE_SECTION_ID};
+
+    // GUI's are premade instead of dynamic. The currently defined GUI's are as follows. 
+    static final Integer[] STORAGE_ITEM_GUIS =      {2};
+
+    // ============= Quick Access Item Type Arrays =============
+    // The following are configs that correspond to the number of items the QA storage can hold bassed on the item tier
+    // EX: {0,1,3,10,15,16,17,20} -> Unknown(0), Crude(1), Common(3), Rare(10), Epic(15), Legendary(16), Mythic(17), Creative(20)
+    // As stated above, there's only a set number of UI files made so if the number is larger then the largest desiged UI file it will not display
+    //    - the additional items. Its best to have the numbers correspond to one of the desiged UI files so there's not invalid buttons that the user
+    //    - can see and interact with. 
     
     // Toolbelts can only Items with tool tag
-    static final Integer[] TOOLBELT_ARRAY =         {0,3,3,3,3,3,3,3};
+    static final Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
 
     // Builders pouch can hold any building block
-    static final Integer[] BUILDERS_POUCH_ARRAY =   {0,3,3,3,3,3,3,3};
+    static final Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
 
     // Slings can only hold weapons
-    static final Integer[] WEAPON_SLING_ARRAY =     {0,3,3,3,3,3,3,3};
+    static final Integer[] WEAPON_SLING_ARRAY =     {2,2,2,2,2,2,2,2};
 
     // Bandoleers can only hold consumables (Food, Bombs, Potions, but cant hold arrows)
-    static final Integer[] BANDOLIER_ARRAY =        {0,3,3,3,3,3,3,3};
+    static final Integer[] BANDOLIER_ARRAY =        {2,2,2,2,2,2,2,2};
     
     // Quivers can only hold arrows
-    static final Integer[] QUIVER_ARRAY =           {0,3,3,3,3,3,3,3};
+    static final Integer[] QUIVER_ARRAY =           {2,2,2,2,2,2,2,2};
 
     // Creative can hold anything
-    static final Integer[] CREATIVE_ARRAY =         {0,3,3,3,3,3,3,3};
+    static final Integer[] CREATIVE_ARRAY =         {2,2,2,2,2,2,2,2};
 
     // TODO: Add map to allow server owners to whitelist or blacklist specific Item ID's as specific types. 
-    //    This allows easy way to add Modded items as a type and allow items to be used in multiple quick access items. 
+    //    This allows an easy way to add modded items to an item type and or allow specific items to be used in multiple quick access items. 
     // ITEM_ACCESS_MAP<String, boolean[ITEM_TYPE.length()]> = new ConcurrentHashMap(String, new Array());
 }
