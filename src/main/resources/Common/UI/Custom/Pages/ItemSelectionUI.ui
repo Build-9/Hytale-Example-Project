@@ -4,15 +4,15 @@ Group {
     Background: #2a2a2a;
     Anchor: (Width: 800, Height: 500);
 
-    $C.@TextButton #PickaxeButton {
+    $C.@TextButton #Item1Button {
         Anchor: (Width: 150, Height: 150);
-        Text: "Pickaxe";
+        Text: "Item 1";
     }
     Group {
         Anchor: (Width: 100, Height: 100);
     }
-    $C.@TextButton #AxeButton {
+    $C.@TextButton #Item2Button {
             Anchor: (Width: 150, Height: 150);
-            Text: "Axe";
+            Text: "Item 2";
     }
 }
