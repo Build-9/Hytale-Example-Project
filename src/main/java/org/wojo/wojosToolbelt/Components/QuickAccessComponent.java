@@ -27,19 +27,21 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
     // - First design will use Item ID so multiple of the same item will return first instance.
     // - TODO: Use actual UUID for items added so player can select specific item in inventory 
-    private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS];
+    private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS]; // Array of item UUIDs where array position correlates to UI button that pulls it to players hotbar
+    private int[] _quick_access_searchable_item_contianers = new int[500]; // Array of inventory types to look for the items that can be swapped into the hotbar.
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids){
+    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids, int[] searchable_contianers){
         this._quick_access_item_tier = item_tier;
         this._quick_access_item_type = item_type;
         this._quick_access_max_total_items = max_items;
         this._quick_access_gui_button = gui_button;
         this._quick_access_target_location = target_location;
         this._quick_access_item_uuids = item_uuids.clone();
+        this._quick_access_searchable_item_contianers = searchable_contianers.clone();
     }
 
     public QuickAccessComponent(QuickAccessComponent original){
@@ -49,6 +51,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_gui_button = original._quick_access_gui_button;
         this._quick_access_target_location = original._quick_access_target_location;
         this._quick_access_item_uuids = original._quick_access_item_uuids.clone();
+        this._quick_access_searchable_item_contianers = original._quick_access_searchable_item_contianers.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -79,9 +82,15 @@ public class QuickAccessComponent implements Component<EntityStore> {
             component -> component._quick_access_target_location
         ).add()
         .append(
-            new KeyedCodec<>("quick_access_item_uuids", Codec.STRING_ARRAY),
+            new KeyedCodec<>("QuickAccessItemUuids", Codec.STRING_ARRAY),
             (component, value) -> component._quick_access_item_uuids = value,
             component -> component._quick_access_item_uuids
+        )
+        .add()
+        .append(
+            new KeyedCodec<>("QuickAccessSearchableItemContianers", Codec.INTEGER_ARRAY),
+            (component, value) -> component._quick_access_searchable_item_contianers = value,
+            component -> component._quick_access_searchable_item_contianers
         )
         .add()
         .build();
@@ -96,6 +105,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
         copy._quick_access_gui_button = this._quick_access_gui_button;
         copy._quick_access_target_location = this._quick_access_target_location;
         copy._quick_access_item_uuids = this._quick_access_item_uuids.clone();
+        copy._quick_access_searchable_item_contianers = this._quick_access_searchable_item_contianers.clone();
         return copy;
     }
 
@@ -170,7 +180,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
             this.getSwapTargetLocation()
         );
 
-        debugResult += "- Item Array: "+this._quick_access_item_uuids.toString()+"\n";
+        debugResult += "- Item Array: "+this._quick_access_item_uuids.toString()+"\n - Searchable Inventories: "+this._quick_access_searchable_item_contianers.toString()+"\n";
 
         return debugResult;
     }
