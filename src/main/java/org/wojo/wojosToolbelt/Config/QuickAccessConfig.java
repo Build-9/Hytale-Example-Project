@@ -6,6 +6,7 @@ public class QuickAccessConfig {
     public static final int MAX_QA_ITEMS = 500;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
+    public static final int MAX_SEARCHABLE_CONTAINERS = 50; // Max number of different inventory types on a player that an item search could look for swap item.
     // TODO: Set to -1 to swap to currently equipped location??
     
     // Possible Item Tiers. Mythic is not craftable.
