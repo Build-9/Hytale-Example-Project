@@ -39,15 +39,12 @@ public class ToolSelectionGui extends BasicCustomUIPage {
 
         Ref<EntityStore> ref = playerRef.getReference();
 
-
-
         if(ref != null){
             Store<EntityStore> store = ref.getStore();
-
-            QuickAccessComponent _qa_comp = store.getComponent(ref, QuickAccessComponent.getComponentType());
-
-            // TODO: Build DisplayData from comp
-            //
+            QuickAccessComponent qa_comp = store.getComponent(ref, QuickAccessComponent.getComponentType());
+            if (qa_comp != null){
+                this._num_displayed_items = qa_comp.getMaxTotalItems();
+            }
         }
     }
 
