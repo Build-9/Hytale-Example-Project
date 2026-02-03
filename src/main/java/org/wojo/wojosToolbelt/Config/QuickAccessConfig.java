@@ -49,7 +49,10 @@ public class QuickAccessConfig {
             return UNKNOWN;
         }
     }
-    
+
+    // TODO: Tie this to the QuickAccess Item Type
+    // What inventories can be searched for item to swap into hotbar. (Default only checks player inventory | Hotbar, Backpack & Utility are also possible additional options)
+    static final int SEARCHABLE_CONTAINERS = {Inventory.STORAGE_SECTION_ID};
     
     // Toolbelts can only Items with tool tag
     static final Integer[] TOOLBELT_ARRAY =         {0,3,3,3,3,3,3,3};
