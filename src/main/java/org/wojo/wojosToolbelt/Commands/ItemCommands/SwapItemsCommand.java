@@ -34,11 +34,8 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Trying to swap to item.\n - UUID: "+commandContext.get(this._item_UUID));
 
-        Item item = null;
-        // TODO: get QA component
-        // TODO: get item position from QA Component
-        // TODO: Validate item is at position & Throw warning & Find Item if doesnt exist at position?
-        // TODO: Swap Item Positions
-        // TODO: Update Stored Component with new item data
+        // TODO: Handle optional arg
+        String itemId = commandContext.get(this._item_UUID);
+        FindItemEvent.dispatch(playerRef.getRefrence(), itemId);
     }
 }
