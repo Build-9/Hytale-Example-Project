@@ -28,7 +28,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // - First design will use Item ID so multiple of the same item will return first instance.
     // - TODO: Use actual UUID for items added so player can select specific item in inventory 
     private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS]; // Array of item UUIDs where array position correlates to UI button that pulls it to players hotbar
-    private int[] _quick_access_searchable_item_contianers = new int[500]; // Array of inventory types to look for the items that can be swapped into the hotbar.
+    private int[] _quick_access_searchable_item_contianers = new int[QuickAccessConfig.MAX_SEARCHABLE_CONTAINERS]; // Array of inventory types to look for the items that can be swapped into the hotbar.
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
