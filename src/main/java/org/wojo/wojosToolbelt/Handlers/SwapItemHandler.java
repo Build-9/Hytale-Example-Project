@@ -40,11 +40,11 @@ public class SwapItemHandler implements Consumer<SwapItemEvent> {
         if (qaComp != null && playerComp != null){
             qaComp.getItemInArray(qaComp.getSwapTargetLocation());
 
+            // TODO: Update to verify input types are pointing at correct location
             ItemContainer mainInventory = playerComp.getInventory().getStorage();
             ItemContainer hotbar = playerComp.getInventory().getHotbar();
 
             mainInventory.swapItems(sourcePos, hotbar, destPos, Inventory.DEFAULT_HOTBAR_CAPACITY);
-
         }
     }
 }
