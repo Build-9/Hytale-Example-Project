@@ -14,8 +14,10 @@ import org.wojo.wojosToolbelt.Commands.ComponentCommands.PrintQuickAccessCompone
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.RemoveQuickAccessComponentFromPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
-import org.wojo.wojosToolbelt.Events.SwapWeaponEvent;
-import org.wojo.wojosToolbelt.Handlers.SwapWeaponHandler;
+import org.wojo.wojosToolbelt.Events.AddItemEvent;
+import org.wojo.wojosToolbelt.Events.SwapItemEvent;
+import org.wojo.wojosToolbelt.Handlers.AddItemHandler;
+import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import javax.annotation.Nonnull;
@@ -51,6 +53,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
     private void registerEvents(){
         getEventRegistry().register(SwapItemEvent.class, new SwapItemHandler());
+        getEventRegistry().register(AddItemEvent.class, new AddItemHandler());
     }
     private void registerCommands(){
         this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());

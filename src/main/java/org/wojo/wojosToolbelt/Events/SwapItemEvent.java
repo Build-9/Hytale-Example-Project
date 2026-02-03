@@ -10,16 +10,21 @@ import javax.annotation.Nonnull;
 
 public record SwapItemEvent(
         @Nonnull Ref<EntityStore> playerRef,
-        String oldItemUUID, // Optional arg as item can be found through QAComp as location swapping to. 
-        String newItemUUID
-
+        int sourceInventoryType,
+        short sourceInventoryPosition,
+        int destInventoryType,
+        short destInventoryPosition
 ) implements IEvent<Void> { // No Return
-    public static void dispatch(Ref<EntityStore> playerRef, String oldItemUUID, String> newItemUUID) {
+
+    public static void dispatch(Ref<EntityStore> playerRef,
+                                int sourceInventoryType, short sourceInventoryPosition,
+                                int destInventoryType, short destInventoryPosition) {
+
         IEventDispatcher<SwapItemEvent, SwapItemEvent> dispatcher =
                 HytaleServer.get().getEventBus().dispatchFor(SwapItemEvent.class);
 
         if (dispatcher.hasListener()) {
-            dispatcher.dispatch(new SwapWeaponEvent(playerRef, oldItemUUID, newItemUUID));
+            dispatcher.dispatch(new SwapItemEvent(playerRef, sourceInventoryType, sourceInventoryPosition, destInventoryType,destInventoryPosition));
         }
     }
 }

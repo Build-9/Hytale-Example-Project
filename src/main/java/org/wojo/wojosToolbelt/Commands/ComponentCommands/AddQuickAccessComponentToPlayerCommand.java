@@ -17,6 +17,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.ArrayList;
@@ -37,30 +38,32 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
         commandContext.sendMessage(Message.raw("Adding QuickAccess component to player!"));
 
         QuickAccessComponent qaComp = new QuickAccessComponent();
-        qaComp.setSlingType(QuickAccessComponent.QUICK_ACCESS_ITEM_TYPES[1]);
-        qaComp.setMaxNumTotalSlingItems(500);
+        qaComp.setItemTier(QuickAccessConfig.ITEM_TIER.CRUDE.getId());
+        qaComp.setMaxTotalItems(571);
+        qaComp.setGuiButton(8);
+        qaComp.setSwapTargetLocation(0);
 
-
-        List<ItemStack> validQaToolsAry = new ArrayList<>();
 
         // Get player items
         Player player = store.getComponent(ref, Player.getComponentType());
         Ref<EntityStore> refPlayer = player.getReference();
         Inventory inventory = player.getInventory();
 
-        // Get Container of every player item.
-        //ItemContainer storageContainer = inventory.getStorage();
-        //ItemContainer hotbar = inventory.getStorage();
-        CombinedItemContainer items = inventory.getCombinedEverything();
+
+        CombinedItemContainer items = inventory.getCombinedBackpackStorageHotbar();
 
         ArrayList<String> found_items = new ArrayList<>();
 
         // Add any item id to storage
+        int size = 0;
         items.forEach( (slot, stack ) -> {
-            String id = stack.getItem().getId();
-            AssetExtraInfo.Data itemData = stack.getItem().getData();
+            if (size < QuickAccessConfig.MAX_QA_ITEMS){
+                String id = stack.getItem().getId();
 
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Found item in inventory with\n - ID: "+id+"\n - Data: "+itemData.toString());
+                AssetExtraInfo.Data itemData = stack.getItem().getData();
+
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("Found item in inventory with\n - ID: "+id+"\n - Data: "+itemData.toString());
+            }
         });
 
 

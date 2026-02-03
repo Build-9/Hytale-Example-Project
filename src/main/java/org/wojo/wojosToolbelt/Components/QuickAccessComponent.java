@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.flock.FlockMembershipSystems;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,15 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // --------------------------- Component Data -------------------------------
     private int _quick_access_item_tier = 0;        // Tier of Quick Access Item
     private int _quick_access_item_type = 0;        // Type of Quick Access Item this is.
-    private int _quick_access_max_total_items = 0;           // Max number of total items this QuickAccess Component can store
-    private int _quick_access_item_location = 0;    // Hotbar position that opens gui
-    private int _quick_access_target_location = 0;  // Hotbar position to swap item into
+    private final int _quick_access_config_total_items = QuickAccessConfig.MAX_QA_ITEMS;           // Max number of total items this QuickAccess Component can store
+    private int _quick_access_max_total_items = 0;  // Custom number of items this comp can store. Must be less then config
+    private int _quick_access_gui_button = QuickAccessConfig.MAX_QA_ITEMS;    // Hotbar position that opens gui
+    private int _quick_access_target_location = QuickAccessConfig.HOTBAR_SWAP_LOCATION;  // Hotbar position to swap item into
 
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
     // - First design will use Item ID so multiple of the same item will return first instance.
     // - TODO: Use actual UUID for items added so player can select specific item in inventory 
-    private String[] _item_uuids = new String[20];     // TODO: Get max possible from config
+    private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS];
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
@@ -38,6 +40,15 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_gui_button = gui_button;
         this._quick_access_target_location = target_location;
         this._quick_access_item_uuids = item_uuids.clone();
+    }
+
+    public QuickAccessComponent(QuickAccessComponent original){
+        this._quick_access_item_tier = original._quick_access_item_tier;
+        this._quick_access_item_type = original._quick_access_item_type;
+        this._quick_access_max_total_items = original._quick_access_max_total_items;
+        this._quick_access_gui_button = original._quick_access_gui_button;
+        this._quick_access_target_location = original._quick_access_target_location;
+        this._quick_access_item_uuids = original._quick_access_item_uuids.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -93,7 +104,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public int getItemTier() {
         return this._quick_access_item_tier;
     }
-    public int setItemTier(int tier) {
+    public void setItemTier(int tier) {
         this._quick_access_item_tier = tier;
     }
     
@@ -115,7 +126,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
 
     // --- QAItemComp Gui Button ---
     public int getGuiButton(){
-        return this._quick_access_gui_button
+        return this._quick_access_gui_button;
     }
     public void setGuiButton(int hotbar_button){
         this._quick_access_gui_button = hotbar_button;
@@ -124,7 +135,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // --- QAItemComp TargetLocation ---
     
     public int getSwapTargetLocation(){
-        return this._quick_access_target_location
+        return this._quick_access_target_location;
     }
     public void setSwapTargetLocation(int hotbar_button){
         this._quick_access_target_location = hotbar_button;
@@ -137,6 +148,12 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public void setItemIdArray(String[] item_uuids){
         this._quick_access_item_uuids = item_uuids.clone();
     }
+    public void setItemInArray(String item_uuid, int position){
+        this._quick_access_item_uuids[position] = item_uuid;
+    }
+    public String getItemInArray(int position){
+        return this._quick_access_item_uuids[position];
+    }
 
     // -- Debug Output --
     public String getPrintableString(){
@@ -145,12 +162,13 @@ public class QuickAccessComponent implements Component<EntityStore> {
             "- Quick Access Tier: %d \n" +
             "- Max Num Total Items: %d \n" + 
             "- GUI Button: %d \n"+
-            "- Target Location: %d \n"
+            "- Target Location: %d \n",
             this.getItemType(),
             this.getItemTier(),
             this.getMaxTotalItems(),
             this.getGuiButton(),
-            this.getSwapTargetLocation();
+            this.getSwapTargetLocation()
+        );
 
         debugResult += "- Item Array: "+this._quick_access_item_uuids.toString()+"\n";
 
