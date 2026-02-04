@@ -12,6 +12,18 @@ import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCo
 //                  |       (Commands to pick what tools can be selected)
 //                  |------ToolbeltPlacementGuiCommandCollection
 //
+// WojosQuickAccess                 -wqa
+//      Components                      -c
+//          addItemToPlayer                 -a
+//          removeItemFromPlayer            -r
+//          printComponentData              -p
+//      items - i                       -i
+//          addItemToComponent              -a
+//          removeItemFromComponent         -r
+//          swapItem                        -s
+//      gui - g                         -g
+//          openItemSelection               -o
+//          closeItemSelection              -c
 
 public class WojosToolbeltCommandCollection extends AbstractCommandCollection {
     public WojosToolbeltCommandCollection() {
