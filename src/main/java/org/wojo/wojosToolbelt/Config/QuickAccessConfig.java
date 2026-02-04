@@ -5,9 +5,11 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 public class QuickAccessConfig {
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files. 
-    public static final int MAX_QA_ITEMS = 20;
+    public static final int MAX_QA_ITEMS = 10;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
+
+    // TODO: change item to be its own inventory rather then searching players inventory for item?
     public static final int MAX_SEARCHABLE_CONTAINERS = 50; // Max number of different inventory types on a player that an item search could look for swap item.
     // TODO: Set to -1 to swap to currently equipped location??
     
