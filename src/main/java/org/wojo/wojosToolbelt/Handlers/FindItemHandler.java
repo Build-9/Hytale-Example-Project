@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public class FindItemHandler implements Consumer<FindItemEvent> {
     @Override
     public void accept(FindItemEvent event) {
-        WojosQuickAccessPlugin.LOGGER.atInfo().log(String.format("EVENT: (Find Item Event) - A player is looking for Item: %s"event.itemUUID()));
+        WojosQuickAccessPlugin.LOGGER.atInfo().log(String.format("EVENT: (Find Item Event) - A player is looking for Item: %s",event.itemUUID()));
 
         // TODO: If we have penalties to a weapon swap they would happen here. (Like Take player stamina, Or Animation, or Particles)
 
