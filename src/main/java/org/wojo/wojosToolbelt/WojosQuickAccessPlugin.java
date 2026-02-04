@@ -12,6 +12,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.AddQuickAccessComponentToPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.PrintQuickAccessComponentInfo;
 import org.wojo.wojosToolbelt.Commands.ComponentCommands.RemoveQuickAccessComponentFromPlayerCommand;
+import org.wojo.wojosToolbelt.Commands.ItemCommands.AddItemToComponentCommand;
+import org.wojo.wojosToolbelt.Commands.ItemCommands.SwapItemsCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
