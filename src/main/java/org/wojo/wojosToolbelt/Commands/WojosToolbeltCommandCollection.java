@@ -3,25 +3,22 @@ package org.wojo.wojosToolbelt.Commands;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCollection;
 // WojosQuickAccess                 - wqa
-//      Components                      - comp   (C)
-//          addToPlayer                     - add     (A)         // wqa comp add
-//          removeFromPlayer                - rm      (R)         // wqa comp rm
-//          printComponentData              - print   (P)         // wqa comp print
-//      items                            -item    (I)
-//          addItemToComponent              -add      (A)         // wqa items add 
-//          removeItemFromComponent         -rm       (R)         // wqa items rm
-//          swapItem                        -swap     (S)         // wqa items swap
+//      Components                      - comp    (C)
+//          addToPlayer                     - add     (A)         // wqa comp add      <arg: None>
+//          removeFromPlayer                - rm      (R)         // wqa comp rm       <arg: None>
+//          printComponentData              - print   (P)         // wqa comp print    <arg: None>
+//      items                           - item    (I)
+//          addItemToComponent              -add      (A)         // wqa items add     <arg: uuid, pos(optional)>
+//          removeItemFromComponent         -rm       (R)         // wqa items rm      <arg: pos, uuid(optional)>
+//          swapItem                        -swap     (S)         // wqa items swap    <arg: [uuid(optional), pos(optional)](One Required), targetpos(optional)>
 //      gui                              -guis    (G)
-//          openItemSelectionPage           -ois       (OIS)      // wqa guis ois
-//          closeItemSelectionPage          -cis       (CIS)      // wqa guis cis
-//          openItemPlacementPage           -oip       (OIP)      // wqa guis oip
-//          closeItemPlacementPage          -cip       (CIP)      // wqa guis cip
-//      admin
-//          openSettingsPage                -osp       (OSP)      // wqa admin osp
-//          closeSettingsPage               -csp       (CSP)      // wqa admin csp
-//      user
-//          openHelpPage                    -ohp       (OHP)      // wqa user ohp
-//          closeHelpPage                   -chp       (CHP)      // wqa user chp
+//          itemSelectionPage               -select   (ISE)      // wqa guis select    <arg: (o/c)>
+//          itemStoragePage                 -store    (IST)      // wqa guis store     <arg: (o/c)>
+//          helpPage                        -help      (H)       // wqa guis help      <arg: (o/c)>
+//      admin                            -admin   (A)
+//          settingsPage                    -settings  (S)       // wqa admin settings <arg: (o/c | true/false | 1/0)>
+//      user                             -user    (U)
+//          settingsPage                    -settings  (S)       // wqa user settings  <arg: (o/c)>
 
 public class WojosToolbeltCommandCollection extends AbstractCommandCollection {
     public WojosToolbeltCommandCollection() {
