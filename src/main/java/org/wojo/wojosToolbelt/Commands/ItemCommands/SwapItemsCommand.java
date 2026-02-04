@@ -13,13 +13,14 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Events.FindItemEvent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 // Swap an item with a given UUID to a specific hotbar location
 // WQA_SwapItem <UUID> <hotbar Position> :: swap item in inventory with set UUID into given hotbar position
 public class SwapItemsCommand extends AbstractPlayerCommand {
-    private RequiredArg<String> _item_UUID;
-    private OptionalArg<Integer> _hotbar_position;
+    private final RequiredArg<String> _item_UUID;
+    private final OptionalArg<Integer> _hotbar_position;
   
     // Constructor
     public SwapItemsCommand(){
@@ -32,10 +33,12 @@ public class SwapItemsCommand extends AbstractPlayerCommand {
   
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Trying to swap to item.\n - UUID: "+commandContext.get(this._item_UUID));
+        WojosQuickAccessPlugin.LOGGER.atInfo().log(
+                String.format("Trying to swap to item.\n - UUID: %s\n - Hotbar Position: %d",commandContext.get(this._item_UUID),commandContext.get(_hotbar_position))
+        );
 
         // TODO: Handle optional arg
         String itemId = commandContext.get(this._item_UUID);
-        FindItemEvent.dispatch(playerRef.getRefrence(), itemId);
+        FindItemEvent.dispatch(playerRef.getReference(), itemId);
     }
 }

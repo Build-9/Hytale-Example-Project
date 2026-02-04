@@ -10,8 +10,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-import org.wojo.wojosToolbelt.ui.ToolSelectionGui;
-// import org.wojo.wojosToolbelt.ui.ToolSelectionGui;
+import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
 public class OpenToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
     // Constructor
@@ -27,7 +26,7 @@ public class OpenToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
         commandContext.sendMessage(Message.raw("Opening the Tool Selection GUI"));
 
         Player player = commandContext.senderAs(Player.class);
-        ToolSelectionGui guiPage = new ToolSelectionGui(playerRef);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef);
 
         player.getPageManager().openCustomPage(ref, store, guiPage);
         playerRef.sendMessage(Message.raw("UI Page Shown"));
