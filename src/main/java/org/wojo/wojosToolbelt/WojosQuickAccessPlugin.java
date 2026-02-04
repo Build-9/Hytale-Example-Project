@@ -17,8 +17,10 @@ import org.wojo.wojosToolbelt.Commands.ItemCommands.SwapItemsCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
+import org.wojo.wojosToolbelt.Events.FindItemEvent;
 import org.wojo.wojosToolbelt.Events.SwapItemEvent;
 import org.wojo.wojosToolbelt.Handlers.AddItemHandler;
+import org.wojo.wojosToolbelt.Handlers.FindItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
@@ -56,6 +58,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     private void registerEvents(){
         getEventRegistry().register(SwapItemEvent.class, new SwapItemHandler());
         getEventRegistry().register(AddItemEvent.class, new AddItemHandler());
+        getEventRegistry().register(FindItemEvent.class, new FindItemHandler());
     }
     private void registerCommands(){
         // TODO: Update the command collection to properly hold everything

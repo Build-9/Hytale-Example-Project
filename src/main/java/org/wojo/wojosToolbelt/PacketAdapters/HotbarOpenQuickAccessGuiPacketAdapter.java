@@ -52,7 +52,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             Store<EntityStore> store = entityRef.getStore();
             World world = store.getExternalData().getWorld();
 
-            if ( WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef) == null || WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef) == false){
+            if ( WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef.getReference()) == null || WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef.getReference()) == false){
                 // Try not to spam log
                 if (counter % 10 == 0) {
                     WojosQuickAccessPlugin.LOGGER.atInfo().log("Player Does not have a Quick AccessComponent so letting packets through");

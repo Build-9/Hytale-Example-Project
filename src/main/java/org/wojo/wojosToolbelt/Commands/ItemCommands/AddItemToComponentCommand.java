@@ -12,6 +12,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Events.AddItemEvent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 // Add a UUID to a location in the component array.
@@ -31,12 +33,12 @@ public class AddItemToComponentCommand extends AbstractPlayerCommand {
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Trying to add item to QuickAccessComponent.\n - UUID: "+commandContext.get(this._item_UUID)+"\n - Pos: "+ commandContext.get(this._array_index));
+
         if (commandContext.get(this._array_index) != null){
             commandContext.sendMessage(Message.raw("Invalid Input Args. Must unclude UUID argument"));
             return;
         }
-        // Get Copy of Component
-        // TODO: Add item UUID, to component at desired array position (Position correlates to button thats used to equip item)
-        // TODO: Update QuickAccessComponent on player
+
+        AddItemEvent.dispatch(ref, commandContext.get(this._item_UUID), 0);
     }
 }

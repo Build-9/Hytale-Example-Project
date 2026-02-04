@@ -45,7 +45,6 @@ public class ItemSelectionGui extends BasicCustomUIPage {
             QuickAccessComponent qa_comp = store.getComponent(ref, QuickAccessComponent.getComponentType());
             if (qa_comp != null){
                 this._num_displayed_items = qa_comp.getMaxTotalItems();
-                
             }
         }
     }
@@ -54,10 +53,11 @@ public class ItemSelectionGui extends BasicCustomUIPage {
     public void build(@Nonnull UICommandBuilder uiCommandBuilder) {
         // Path is relative to:
         //      src/main/resources/Common/UI/Custom
+        uiCommandBuilder.append("Pages/ItemSelectionUI.ui");
         if(this._num_displayed_items > QuickAccessConfig.STORAGE_ITEM_GUIS[QuickAccessConfig.STORAGE_ITEM_GUIS.length - 1]){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("WARNING: Trying to display more items then we have a GUI for. Some items won't be selectable");
         }
-        uiCommandBuilder.append("Pages/ItemSelectionUI.ui");
+
         // TODO: Load different displays bassed on number of components?
     }
 

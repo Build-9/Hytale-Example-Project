@@ -28,7 +28,7 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
 
     public AddQuickAccessComponentToPlayerCommand(){
         super("addQAcomp", "Add Quick Access Component to person running command");
-        addAliases("aqa");
+        addAliases("aqc");
     };
 
     // Run the command
@@ -47,32 +47,12 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
         // Get player items
         Player player = store.getComponent(ref, Player.getComponentType());
         Ref<EntityStore> refPlayer = player.getReference();
-        Inventory inventory = player.getInventory();
-
-
-        CombinedItemContainer items = inventory.getCombinedBackpackStorageHotbar();
-
-        ArrayList<String> found_items = new ArrayList<>();
-
-        // Add any item id to storage
-        int size = 0;
-        items.forEach( (slot, stack ) -> {
-            if (size < QuickAccessConfig.MAX_QA_ITEMS){
-                String id = stack.getItem().getId();
-
-                AssetExtraInfo.Data itemData = stack.getItem().getData();
-
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("Found item in inventory with\n - ID: "+id+"\n - Data: "+itemData.toString());
-            }
-        });
-
-
-        // qaComp.addItemToList(found_items);
 
         // TODO: This should prob be in command buffer somehow
         store.addComponent(ref, QuickAccessComponent.getComponentType(), qaComp);
 
         // Verify Hashmap is up to date for all items with a QuickAccessComponent 
         WojosQuickAccessPlugin.hasQuickAccessComponentMap.put(refPlayer, true);
+        commandContext.sendMessage(Message.raw("Added QuickAccess component to player!"));
     }
 }

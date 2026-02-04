@@ -12,6 +12,7 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class QuickAccessComponent implements Component<EntityStore> {
@@ -180,7 +181,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
             this.getSwapTargetLocation()
         );
 
-        debugResult += "- Item Array: "+this._quick_access_item_uuids.toString()+"\n - Searchable Inventories: "+this._quick_access_searchable_item_containers.toString()+"\n";
+        debugResult += "- Item Array: "+ Arrays.toString(this._quick_access_item_uuids)+"\n - Searchable Inventories: "+Arrays.toString(this._quick_access_searchable_item_containers)+"\n";
 
         return debugResult;
     }
