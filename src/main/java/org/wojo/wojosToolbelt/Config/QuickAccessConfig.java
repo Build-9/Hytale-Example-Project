@@ -8,10 +8,13 @@ public class QuickAccessConfig {
     public static final int MAX_QA_ITEMS = 10;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
-
+    
     // TODO: change item to be its own inventory rather then searching players inventory for item?
     public static final int MAX_SEARCHABLE_CONTAINERS = 50; // Max number of different inventory types on a player that an item search could look for swap item.
-    // TODO: Set to -1 to swap to currently equipped location??
+   
+    public static final boolean IS_STORAGE_CONTAINER = false;    // TODO: Items have own storage gui instead of using players inventory
+    public static final boolean IS_SWAP_TO_EQUIPPED = false;     // TODO: Set to -1 to swap to currently equipped location??
+    
     
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
@@ -22,7 +25,8 @@ public class QuickAccessConfig {
         EPIC(4),
         LEGENDARY(5),
         MYTHIC(6),
-        CREATIVE(7);
+        CREATIVE(7),
+        NUM_TIERS(8);
 
         private final int id;
         ITEM_TIER(int id) {this.id = id;}
@@ -43,8 +47,7 @@ public class QuickAccessConfig {
         BANDOLIER(4),
         QUIVER(5),
         CREATIVE(6),
-        TOOLBELT_PREMADE(7),
-        WEAPONSLING_PREMADE;
+        NUM_TYPES(7);
 
         private final int id;
         ITEM_TYPE(int id) {this.id = id;}
@@ -72,13 +75,6 @@ public class QuickAccessConfig {
     
     // Toolbelts can only Items with tool tag
     public static final Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
-    // Premade toolbelt possible items (6 Options)
-    public static final String[] TOOLBELT_PREMADE_AXE_OPTIONS = {"Weapon_Axe_Crude","Weapon_Axe_Common"};
-    public static final String[] TOOLBELT_PREMADE_PICKAXE_OPTIONS = {"Weapon_Pickaxe_Crude","Weapon_Pickaxe_Common"};
-    public static final String[] TOOLBELT_PREMADE_SHOVEL_OPTIONS = {};
-    public static final String[] TOOLBELT_PREMADE_HAMMER_OPTIONS = {};
-    public static final String[] TOOLBELT_PREMADE_HOE_OPTIONS = {};
-    public static final String[] TOOLBELT_PREMADE_LIGHTING_OPTIONS = {};
 
     // Builders pouch can hold any building block
     public static final Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
@@ -98,4 +94,35 @@ public class QuickAccessConfig {
     // TODO: Add map to allow server owners to whitelist or blacklist specific Item ID's as specific types. 
     //    This allows an easy way to add modded items to an item type and or allow specific items to be used in multiple quick access items. 
     // ITEM_ACCESS_MAP<String, boolean[ITEM_TYPE.length()]> = new ConcurrentHashMap(String, new Array());
+
+    // Get the number of different items the QuickAccess Item can swap between
+    public static int getItemCount(ITEM_TYPE type, ITEM_TIER tier){
+        // validatate type and tier
+        if (tier.getId() >= ITEM_TIER.NUM_TIERS.getId() || tier.getId() < 0 ||
+           type.getId() > ITEM_TYPE.NUM_TYPES.getId() || type.getId() < 0 ){
+            return 0;
+        }
+        
+        Integer[] itemTypeArray = getItemArray(type);
+        return itemTypeArray[tier.getId()];
+    }
+
+    public static Integer[] getItemArray(ITEM_TYPE type){
+        switch(type){
+            case TOOLBELT:
+                return this.TOOLBELT_ARRAY;
+            case BUILDERS_POUCH:
+                return this.BUILDERS_POUCH_ARRAY;
+            case WEAPON_SLING:
+                return this.WEAPON_SLING_ARRAY;
+            case BANDOLIER:
+                return this.BANDOLIER_ARRAY;
+            case QUIVER:
+                this.QUIVER_ARRAY;
+            case CREATIVE:
+                return this.CREATIVE_ARRAY;
+            default:
+                return new Integer[ITEM_TYPE.NUM_TIERS].fill(0);
+        }
+    }
 }
