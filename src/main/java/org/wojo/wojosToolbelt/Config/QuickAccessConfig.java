@@ -42,7 +42,9 @@ public class QuickAccessConfig {
         WEAPON_SLING(3),
         BANDOLIER(4),
         QUIVER(5),
-        CREATIVE(6);
+        CREATIVE(6),
+        TOOLBELT_PREMADE(7),
+        WEAPONSLING_PREMADE;
 
         private final int id;
         ITEM_TYPE(int id) {this.id = id;}
@@ -70,6 +72,13 @@ public class QuickAccessConfig {
     
     // Toolbelts can only Items with tool tag
     public static final Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
+    // Premade toolbelt possible items (6 Options)
+    public static final String[] TOOLBELT_PREMADE_AXE_OPTIONS = {"Weapon_Axe_Crude","Weapon_Axe_Common"};
+    public static final String[] TOOLBELT_PREMADE_PICKAXE_OPTIONS = {"Weapon_Pickaxe_Crude","Weapon_Pickaxe_Common"};
+    public static final String[] TOOLBELT_PREMADE_SHOVEL_OPTIONS = {};
+    public static final String[] TOOLBELT_PREMADE_HAMMER_OPTIONS = {};
+    public static final String[] TOOLBELT_PREMADE_HOE_OPTIONS = {};
+    public static final String[] TOOLBELT_PREMADE_LIGHTING_OPTIONS = {};
 
     // Builders pouch can hold any building block
     public static final Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
