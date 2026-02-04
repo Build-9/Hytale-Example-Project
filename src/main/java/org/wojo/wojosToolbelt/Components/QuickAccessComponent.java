@@ -22,7 +22,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     private int _quick_access_item_type = 0;        // Type of Quick Access Item this is.
     private final int _quick_access_config_total_items = QuickAccessConfig.MAX_QA_ITEMS;           // Max number of total items this QuickAccess Component can store
     private int _quick_access_max_total_items = 0;  // Custom number of items this comp can store. Must be less then config
-    private int _quick_access_gui_button = QuickAccessConfig.MAX_QA_ITEMS;    // Hotbar position that opens gui
+    private int _quick_access_gui_button = QuickAccessConfig.HOTBAR_GUI_BUTTON;    // Hotbar position that opens gui
     private int _quick_access_target_location = QuickAccessConfig.HOTBAR_SWAP_LOCATION;  // Hotbar position to swap item into
 
     // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
