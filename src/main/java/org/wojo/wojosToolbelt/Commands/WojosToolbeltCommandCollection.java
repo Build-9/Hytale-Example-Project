@@ -3,11 +3,11 @@ package org.wojo.wojosToolbelt.Commands;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCollection;
 // WojosQuickAccess                 - wqa
-//      components                      - comp  (C)
+//      component                       - comp  (C)
 //          addToPlayer                     - add      (A)         // wqa comp add      <arg: None>
 //          removeFromPlayer                - rm       (R)         // wqa comp rm       <arg: None>
 //          printComponentData              - print    (P)         // wqa comp print    <arg: None>
-//      items                           - item  (I)
+//      item                            - item  (I)
 //          addItemToComponent              - add      (A)         // wqa items add     <arg: uuid, pos(optional)>
 //          removeItemFromComponent         - rm       (R)         // wqa items rm      <arg: pos, uuid(optional)>
 //          swapItem                        - swap     (S)         // wqa items swap    <arg: [uuid(optional), pos(optional)](One Required), targetpos(optional)>
