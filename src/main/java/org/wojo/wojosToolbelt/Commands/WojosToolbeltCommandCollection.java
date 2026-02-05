@@ -26,5 +26,7 @@ public class WojosToolbeltCommandCollection extends AbstractCommandCollection {
     public WojosToolbeltCommandCollection() {
         super("WojosToolbelt","All commands associated with Wojo's Toolbelt");
         this.addSubCommand(new ToolbeltSelectionGuiCommandCollection());
+
+        addAliases("wqa","wojoqa", "WojoQa", "WOJOqa");
     }
 }
