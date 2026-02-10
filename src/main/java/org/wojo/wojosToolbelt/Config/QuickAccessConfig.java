@@ -19,8 +19,8 @@ public class QuickAccessConfig {
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
         UNKNOWN(0),
-        CRUDE(1),
-        COMMON(2),
+        COMMON(1),
+        UNCOMMON(2),
         RARE(3),
         EPIC(4),
         LEGENDARY(5),
@@ -46,8 +46,9 @@ public class QuickAccessConfig {
         WEAPON_SLING(3),
         BANDOLIER(4),
         QUIVER(5),
-        CREATIVE(6),
-        NUM_TYPES(7);
+        CUSTOM(6),
+        CREATIVE(7),
+        NUM_TYPES(8);
 
         private final int id;
         ITEM_TYPE(int id) {this.id = id;}
