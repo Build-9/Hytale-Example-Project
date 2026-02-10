@@ -1,9 +1,9 @@
 # Wojo's Quick Access Items
-Adds a few new items that players can use to remove specific tools from the hotbar and place them in their own inventory for quick access.
+Adds a few new items that players can use to remove specific tools from the hotbar and place them in their own inventory while using a radial menu to access them.
 
 ## Design.
 #### Description
-**Wojo's Quick Access Items** is a mod that adds a new subset of items that are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
+***Wojo's Quick Access Items*** is a mod that adds a new subset of items that are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
 One the item is placed in that location pressing the corresponding hotbar key will open a GUI to a radial wheel allowing the player to more easily swap between specific items
 instead of needing to open the full inventory. This allows the decluttering of the player inventory. 
 
