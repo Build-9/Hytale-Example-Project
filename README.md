@@ -1,92 +1,73 @@
-# Wojo's Toolbelts and Quck Access Slings
-Adds a few new items that, when used, allows the player to use 2 hotbar slots to swap between different weapons/items on the same hotbar location.
-By default the QuickAccessItem needs to be placed in hotbar slot 9 to work. Pressing 9 will then open a GUI to select a different item.
-The GUI will have a settings pannel to allow the user to change what Item is in each slot. 
+# Wojo's Quick Access Items
+Adds a few new items that players can use to remove specific tools from the hotbar and place them in their own inventory for quick access.
 
 ## Design.
-#### Quick Access Items
-- Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
-- Builders Pouch: Quick access radial that only holds blocks & hammer
-- Sling (Weapon Sling): Quick access radial that only hold weapons
-- Bandolier: Quick access radial that only holds Consumables (Potions, Food, Bombs etc)
-- Quiver: Quick access radial that only holds arrows
-- Custom: Quick access radial that only holds specified items
-- Creative: Quick access radial that can hold anything
+#### Description
+**Wojo's Quick Access Items** is a mod that adds a new subset of items that are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
+One the item is placed in that location pressing the corresponding hotbar key will open a GUI to a radial wheel allowing the player to more easily swap between specific items
+instead of needing to open the full inventory. This allows the decluttering of the player inventory. 
+
+#### Quick Access Item Types
+- [ ] Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
+- [ ] Builders Pouch: Quick access radial that only holds blocks & hammer
+- [ ] Sling (Weapon Sling): Quick access radial that only hold weapons
+- [ ] Bandolier: Quick access radial that only holds Consumables (Potions, Food, Bombs etc)
+- [ ] Quiver: Quick access radial that only holds arrows
+- [ ] Custom: Quick access radial that only holds specified items
+- [ ] Creative: Quick access radial that can hold anything
 
 #### Quick Access Item Tiers
-- Crude: 2 slots
-- Common: 4 slots
-- Rare: 6 slots 
-- Epic: 8 slots
-- Legendary: 10 slots
-- Mythic: 12 slots
+- [ ] Common: 2 slots
+- [ ] Uncommon: 4 slots
+- [ ] Rare: 6 slots 
+- [ ] Epic: 8 slots
+- [ ] Legendary: 10 slots
+- [ ] Mythic: 12 slots
+- [ ] Creative: 20 slots??
 
 #### GUI
-- Main Page: Quick Access Wheel showing different selectable items stored in inventory
-- Settings Page: Player setting page to set the following
-    - 
+- [ ] Quick Access Page: Quick access wheel showing different selectable items stored in inventory
+- [ ] Quick Access Inventory: Inventory UI to allow the player to place items where desired
+- [ ] Player Settings Page: Player setting page to set the following
+    - [ ] What hotbar slot the Quick-Access-Item needs to be placed in to have GUI work
+    - [ ] Should the swap be into the active hotbar vs predefined hotbar location?
+    - [ ] What Hotbar slot the selected item will be swapped into
+- [ ] Admin Settings Page (Command Only): 
+    - [ ] Whitelist & Blacklist items to specific item type & tier bassed on item id's
+    - [ ] Change crafting recipe's for each item type & tier
+    - [ ] Interactions to modify Custom item to be whats needed
+    - [ ] Customize slots available per item type & tier
+    - [ ] Customize swap item cost *(Stamina-costs/stamina-regen-delay/animation-time/movement-penalty/health-cost)*
+- [ ] Guide Page: Display a guide for the different aspects of the mod & commands
 
-- When picking up the toolbelt/sling it will automatically get placed into hotbar slot 9 & have tooltip.
-- The player will be forced to have another item selected if 9 was initially selected.
-- Item can be moved from hotbar slot 9 to stop interaction and added back to bring back interaction.
-- When item placed in hotbar slot 9, Add items Component to player. When removed, remove Component from player.
-- Pressing 9 will instead bring a popup for the user to change out whats in hotbar slot 1 with the selected item.
-
-## New Items
-- Crude Toolbelt
-    - Holds max of 2 tools from inventory for quick access. (Update crude to be 3 after testing)
-
-### TODO: (In no particular order)
-- [ ] Allow player to choose what items go where.
-- [ ] Tiered Slings & Toolbelts  
-    - Builders Toolbelt (Blocks)
-    - Weapon Slings (1 Handed, 2 Handed, Ranged, Magic)
-    - Consumables Sling (Food or Weapons)
-    - Possible Quick Access Items (Unofficial)
-        - Crude Toolbelt (2 Tools)
-        - Creative Toolbelt (10 Tools)
-        - Crude Sling (2 Weapons)
-        - Creative Sling (10 Weapons)
-        - Builders Toolbelt (10 Blocks)
-        - Consumables Sling (10 Consumables)
-- [ ] Config 
-    -  max & mins of item types,
-    -  Multiple Items at once
-    -  Default Hotbar slot selection to pick where items are placed
-    -  Allow movement of QuickAccess item in the hotbar to change what button activates the GUI.
-    -  Blacklist or whitelist items that can be added to the QuickAccess
-- [ ] Handle Consumables
-- [ ] Handle all items (Allow player to pick items that sling can hold and)
-- [ ] Configurable Sling/Toolbelt (Allow server owners to make a custom item)
-- [ ] Guis to
-    - View Info about mod
-    - Changing location of items in toolbelt
-    - Change Hotbar location for toolbelt
-    - Change Quickaccess GUI Styles
-- [ ] Add visible Item to player model when equiped
-- [ ] Animations to add/remove items from sling
-- [ ] Add possible cost to swap items
-    - Stamina Cost
-    - Stamina Recharge Delay
-    - Swap delay length (Animation)
-    - Health Cost
-    - Speed Reduction
+#### Other
+- [ ] Have only 1 item equipable at a time.
 
 ## Code Design Overview
-- Components
-    - QuickAccessComponent: Component that holds all the info needed. Can be tied to a player, item, or block
 - Commands
-    - ComponentCommands: Commands to all & remove Components to player
-    - GUICommands: Commands to open and close GUI's
-- Systems
-    - QuickAccessSystem: Handles Adding, Removing, and getting items from the Component whenever its updated.
-- PacketAdapters
-    - HotbarHandleOpenGui: Check users hotbar interaction. If they press 9 and have QuickAccessItem open the GUI
+    - Varous commands that are used for debugging, configuration, or help
+- Components
+    - The QuickAccessComponent is the main data class that the whole mod is built off of
+- Config
+    - All pre defined values that are either statically set or modifyable by admins & users 
 - Events
-    - InventoryChangeEvent: When QuickAccessItem is placed in hotbar slot 9, add QuickAcessComponent to the player.
-- GUI:
-    - SwapItemGUI: GUI used to swap out tool/item
+    - Main way to trigger an effect through a player interaction. 
+- Handlers
+    - Logic for handling the triggered events
+- Packet Adapters
+    - Logic to convert player hotbar interaction to a UI button
+- Systems
+    - Any Component systems to verify the user is valid
+- UI
+    - All ui objects that a player could iteract with and view
 
+## Progress
+- Commands
+    - [ ] Add & remove QuickAccess component from player
+    - [ ] Add inventory item in specific location on QuickAccess item (Use Item Id)
+    - [ ] Add inventory item in specific location on QuickAccess item (Use Item Inventory & Position)
+    - [ ] Remove item from QuickAccess inventory & drop item
+    - [ ] Remove item from QuickAccess inventory & place in player inventory
 
 ### Special Thanks
 - Thanks to Hytalemodding.dev website for some great info on how to set most of this up. [Modding Documentation Website](https://hytalemodding.dev/en)
