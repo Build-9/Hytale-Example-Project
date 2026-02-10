@@ -3,7 +3,29 @@ Adds a few new items that, when used, allows the player to use 2 hotbar slots to
 By default the QuickAccessItem needs to be placed in hotbar slot 9 to work. Pressing 9 will then open a GUI to select a different item.
 The GUI will have a settings pannel to allow the user to change what Item is in each slot. 
 
-## Design. 
+## Design.
+#### Quick Access Items
+- Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
+- Builders Pouch: Quick access radial that only holds blocks & hammer
+- Sling (Weapon Sling): Quick access radial that only hold weapons
+- Bandolier: Quick access radial that only holds Consumables (Potions, Food, Bombs etc)
+- Quiver: Quick access radial that only holds arrows
+- Custom: Quick access radial that only holds specified items
+- Creative: Quick access radial that can hold anything
+
+#### Quick Access Item Tiers
+- Crude: 2 slots
+- Common: 4 slots
+- Rare: 6 slots 
+- Epic: 8 slots
+- Legendary: 10 slots
+- Mythic: 12 slots
+
+#### GUI
+- Main Page: Quick Access Wheel showing different selectable items stored in inventory
+- Settings Page: Player setting page to set the following
+    - 
+
 - When picking up the toolbelt/sling it will automatically get placed into hotbar slot 9 & have tooltip.
 - The player will be forced to have another item selected if 9 was initially selected.
 - Item can be moved from hotbar slot 9 to stop interaction and added back to bring back interaction.
