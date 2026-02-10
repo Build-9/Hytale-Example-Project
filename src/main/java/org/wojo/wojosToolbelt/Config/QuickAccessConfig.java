@@ -3,6 +3,8 @@ package org.wojo.wojosToolbelt.Config;
 import com.hypixel.hytale.server.core.inventory.Inventory;
 
 public class QuickAccessConfig {
+    public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID"
+    
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files. 
     public static final int MAX_QA_ITEMS = 10;
