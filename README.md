@@ -62,12 +62,17 @@ instead of needing to open the full inventory. This allows the decluttering of t
     - All ui objects that a player could iteract with and view
 
 ## Progress
-- Commands
-    - [ ] Add & remove QuickAccess component from player
-    - [ ] Add inventory item in specific location on QuickAccess item (Use Item Id)
-    - [ ] Add inventory item in specific location on QuickAccess item (Use Item Inventory & Position)
-    - [ ] Remove item from QuickAccess inventory & drop item
-    - [ ] Remove item from QuickAccess inventory & place in player inventory
+- [X] Add & remove QuickAccess component from player
+- [ ] Add inventory item in specific location on QuickAccess item (Use Item Id)
+- [ ] Add inventory item in specific location on QuickAccess item (Use Item Inventory & Position)
+- [ ] Remove item from QuickAccess inventory & drop item
+- [ ] Remove item from QuickAccess inventory & place in player inventory
+- [ ] Swap item from QuickAccess inventory to hotbar
+- [ ] QuickAccess GUI
+- [ ] Invenotry GUI
+- [ ] Guide GUI
+- [ ] Player Settings GUI
+- [ ] Admin Settings GUI
 
 ### Special Thanks
 - Thanks to Hytalemodding.dev website for some great info on how to set most of this up. [Modding Documentation Website](https://hytalemodding.dev/en)
