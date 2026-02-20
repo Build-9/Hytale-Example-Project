@@ -16,6 +16,7 @@ import org.wojo.wojosToolbelt.Commands.ItemCommands.AddItemToComponentCommand;
 import org.wojo.wojosToolbelt.Commands.ItemCommands.SwapItemsCommand;
 import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
 import org.wojo.wojosToolbelt.Events.FindItemEvent;
 import org.wojo.wojosToolbelt.Events.SwapItemEvent;

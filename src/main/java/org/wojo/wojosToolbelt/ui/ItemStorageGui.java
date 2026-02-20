@@ -53,9 +53,9 @@ public class ItemStorageGui extends BasicCustomUIPage {
         // Path is relative to:
         //      src/main/resources/Common/UI/Custom
         uiCommandBuilder.append("Pages/ItemSelectionUI.ui");
-        if(this._num_displayed_items > QuickAccessConfig.STORAGE_ITEM_GUIS[QuickAccessConfig.STORAGE_ITEM_GUIS.length - 1]){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("WARNING: Trying to display more items then we have a GUI for. Some items won't be selectable");
-        }
+//        if(this._num_displayed_items > QuickAccessConfig.STORAGE_ITEM_GUIS[QuickAccessConfig.STORAGE_ITEM_GUIS.length - 1]){
+//            WojosQuickAccessPlugin.LOGGER.atInfo().log("WARNING: Trying to display more items then we have a GUI for. Some items won't be selectable");
+//        }
         // TODO: Load different displays bassed on ComponentType and Tier
     }
 

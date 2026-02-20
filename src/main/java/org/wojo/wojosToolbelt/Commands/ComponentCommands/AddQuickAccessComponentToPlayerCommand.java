@@ -38,7 +38,7 @@ public class AddQuickAccessComponentToPlayerCommand extends AbstractPlayerComman
         commandContext.sendMessage(Message.raw("Adding QuickAccess component to player!"));
 
         QuickAccessComponent qaComp = new QuickAccessComponent();
-        qaComp.setItemTier(QuickAccessConfig.ITEM_TIER.CRUDE.getId());
+        qaComp.setItemTier(QuickAccessConfig.ITEM_TIER.COMMON.getId());
         qaComp.setMaxTotalItems(571);
         qaComp.setGuiButton(8);
         qaComp.setSwapTargetLocation(0);

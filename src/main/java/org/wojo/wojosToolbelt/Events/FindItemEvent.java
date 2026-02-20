@@ -11,7 +11,6 @@ import javax.annotation.Nonnull;
 public record FindItemEvent(
         @Nonnull Ref<EntityStore> playerRef,
         String itemUUID
-
 ) implements IEvent<Void> { // No Return
 
     public static void dispatch(Ref<EntityStore> playerRef, String itemUUID) {

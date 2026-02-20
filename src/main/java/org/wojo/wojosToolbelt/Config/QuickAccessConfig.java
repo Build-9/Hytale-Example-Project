@@ -3,7 +3,7 @@ package org.wojo.wojosToolbelt.Config;
 import com.hypixel.hytale.server.core.inventory.Inventory;
 
 public class QuickAccessConfig {
-    public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID"
+    public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files. 
@@ -111,21 +111,14 @@ public class QuickAccessConfig {
     }
 
     public static Integer[] getItemArray(ITEM_TYPE type){
-        switch(type){
-            case TOOLBELT:
-                return this.TOOLBELT_ARRAY;
-            case BUILDERS_POUCH:
-                return this.BUILDERS_POUCH_ARRAY;
-            case WEAPON_SLING:
-                return this.WEAPON_SLING_ARRAY;
-            case BANDOLIER:
-                return this.BANDOLIER_ARRAY;
-            case QUIVER:
-                this.QUIVER_ARRAY;
-            case CREATIVE:
-                return this.CREATIVE_ARRAY;
-            default:
-                return new Integer[ITEM_TYPE.NUM_TIERS].fill(0);
-        }
+        return switch (type) {
+            case TOOLBELT -> QuickAccessConfig.TOOLBELT_ARRAY;
+            case BUILDERS_POUCH -> QuickAccessConfig.BUILDERS_POUCH_ARRAY;
+            case WEAPON_SLING -> QuickAccessConfig.WEAPON_SLING_ARRAY;
+            case BANDOLIER -> QuickAccessConfig.BANDOLIER_ARRAY;
+            case QUIVER -> QuickAccessConfig.QUIVER_ARRAY;
+            case CREATIVE -> QuickAccessConfig.CREATIVE_ARRAY;
+            default -> new Integer[ITEM_TIER.NUM_TIERS.getId()];
+        };
     }
 }
