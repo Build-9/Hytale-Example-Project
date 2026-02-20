@@ -67,5 +67,15 @@
   "ItemLevel": 100,
   "Utility": {
     "Usable": true
+  },
+  "Components": {
+    "WojosToolbelt:WojosQuickAccess_Component_ID": {
+      "QuickAccessItemTier": 7,
+      "QuickAccessItemType": 7,
+      "QuickAccessMaxTotalItems": 9,
+      "QuickAccessGuiButton": 8,
+      "QuickAccessTargetLocation": 0,
+      "QuickAccessItemUuids": []
+    }
   }
 }
