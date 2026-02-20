@@ -39,6 +39,13 @@
         }
       ]
     },
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "OpenQuickAccessComponentUI"
+        }
+      ]
+    },
     "Secondary": {
       "Interactions": [
         {
