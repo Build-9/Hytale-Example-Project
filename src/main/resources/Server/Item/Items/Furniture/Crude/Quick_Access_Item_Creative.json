@@ -1,0 +1,75 @@
+{
+  "PlayerAnimationsId": "Item",
+  "Categories": [
+    "Items.Tools",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Utility_Leather_Quiver.png",
+  "Model": "Items/Back/Quiver.blockymodel",
+  "Texture": "Items/Back/Quiver_Texture.png",
+  "Quality": "Common",
+  "MaxStack": 1,
+  "IconProperties": {
+    "Scale": 1.0,
+    "Rotation": [
+      335.0,
+      128.0,
+      30.0
+    ],
+    "Translation": [
+      1.0,
+      -8.0
+    ]
+  },
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Utility",
+      "WojoQuickAccessItem"
+    ]
+  },
+  "Container": {
+    "Capacity": 9
+  },
+  "Interactions": {
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "OpenItemStackContainer"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenItemStackContainer"
+        }
+      ]
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Fabric_Scrap_Linen",
+        "Quantity": 10
+      },
+      {
+        "ItemId": "Ingredient_Hide_Medium",
+        "Quantity": 4
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Workbench",
+        "Type": "Crafting",
+        "Categories": [
+          "Workbench_Survival"
+        ]
+      }
+    ]
+  },
+  "ItemLevel": 1,
+  "Utility": {
+    "Usable": true
+  }
+}
