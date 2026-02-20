@@ -50,9 +50,15 @@ by opening a radial menu with fewer items instead of needing to open the full in
 - Components
     - The QuickAccessComponent is the main data class that the whole mod is built off of
 - Config
-    - All pre defined values that are either statically set or modifyable by admins & users 
+    - All defined values that are either statically set or modifyable by admins & users
 - Events
-    - Main way to trigger an effect through a player interaction. 
+    - The mod heavily relies on player interaction so most if not all the funtionality will be bassed off events rather then systems
+        - Add Item To QuickAccessInventory Event (Player Added Item from their inventory to QAInventory)
+        - Remove Item From QuickAccessInventory Event (Player Removed Item from their QAInventory)
+        - Equip QuickAccess Item Event (QAItem Added to specific hotbar location)
+        - Remove QuickAccess Item Event (QAItem Removed from specific hotbar location)
+        - Change Local QuickAccessItemSettings (Player Updated Item Settings)
+        - Change Global QuickAccessItemSettings (Admin Updated Global Settings)
 - Handlers
     - Logic for handling the triggered events
 - Packet Adapters
