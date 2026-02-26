@@ -1,7 +1,7 @@
 package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
-import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCollection;
+
 // WojosQuickAccess                 - wqa
 //      component                       - comp  (C)
 //          addToPlayer                     - add      (A)         // wqa comp add      <arg: None>
@@ -21,12 +21,16 @@ import org.wojo.wojosToolbelt.Commands.Collections.ToolbeltSelectionGuiCommandCo
 //          settingsPage                    - settings (S)         // wqa user settings  <arg: (o/c)>
 //      help                             -help  (H)
 //          guide                           - guide    (G)         // wqa help guide <arg: none> (calls `wqa guis help o` to open help gui)
+public class WojosQuickAccessCommandCollection extends AbstractCommandCollection {
+    public WojosQuickAccessCommandCollection() {
+        super("WojosQuickAccess","All commands associated with Wojo's Toolbelt");
+//        this.addSubCommand(new ComponentCollection());
+//        this.addSubCommand(new ItemCollections());
+//        this.addSubCommand(new GuiCollection());
+//        this.addSubCommand(new AdminCollection());
+//        this.addSubCommand(new UserCollection());
+//        this.addSubCommand(new HelpCollection());
 
-public class WojosToolbeltCommandCollection extends AbstractCommandCollection {
-    public WojosToolbeltCommandCollection() {
-        super("WojosToolbelt","All commands associated with Wojo's Toolbelt");
-        this.addSubCommand(new ToolbeltSelectionGuiCommandCollection());
-
-        addAliases("wqa","wojoqa", "WojoQa", "WOJOqa");
+        addAliases("wqa","WQA","wojoqa", "WojoQa", "WOJOqa", "WOJOQA");
     }
 }

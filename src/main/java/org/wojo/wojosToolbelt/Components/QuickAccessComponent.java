@@ -169,9 +169,10 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // -- Debug Output --
     public String getPrintableString(){
         String debugResult = String.format(
+            "\n"+
             "Quick Access Item Type: %d \n"+
             "- Quick Access Tier: %d \n" +
-            "- Max Num Total Items: %d \n" + 
+            "- Max Num Total Items: %d \n" +
             "- GUI Button: %d \n"+
             "- Target Location: %d \n",
             this.getItemType(),

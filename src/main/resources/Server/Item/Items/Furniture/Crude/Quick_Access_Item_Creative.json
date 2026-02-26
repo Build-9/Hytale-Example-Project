@@ -42,7 +42,7 @@
     "Primary": {
       "Interactions": [
         {
-          "Type": "OpenQuickAccessComponentUI"
+          "Type": "WojoQuickAccessOpenSelectionGuiInteraction_ID"
         }
       ]
     },

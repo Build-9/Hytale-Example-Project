@@ -1,8 +1,11 @@
 package org.wojo.wojosToolbelt.Handlers;
 
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.inventory.transaction.Transaction;
+import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
+import java.awt.*;
 import java.util.function.Consumer;
 
 /**
@@ -18,6 +21,10 @@ import java.util.function.Consumer;
 public class QuickAccessItemEquippedHandler implements Consumer<ItemContainer.ItemContainerChangeEvent> {
     @Override
     public void accept(ItemContainer.ItemContainerChangeEvent itemContainerChangeEvent) {
+        ItemContainer container = itemContainerChangeEvent.container();
+        Transaction transaction = itemContainerChangeEvent.transaction();
+
+        container.getClass();
         WojosQuickAccessPlugin.LOGGER.atInfo().log(itemContainerChangeEvent.toString());
         
     }

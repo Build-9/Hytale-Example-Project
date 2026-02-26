@@ -5,24 +5,29 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import org.wojo.wojosToolbelt.Commands.ComponentCommands.AddQuickAccessComponentToPlayerCommand;
-import org.wojo.wojosToolbelt.Commands.ComponentCommands.PrintQuickAccessComponentInfo;
-import org.wojo.wojosToolbelt.Commands.ComponentCommands.RemoveQuickAccessComponentFromPlayerCommand;
+import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
+import org.wojo.wojosToolbelt.Commands.component.AddQuickAccessComponentToPlayerCommand;
+import org.wojo.wojosToolbelt.Commands.component.PrintQuickAccessComponentInfo;
+import org.wojo.wojosToolbelt.Commands.component.RemoveQuickAccessComponentFromPlayerCommand;
 import org.wojo.wojosToolbelt.Commands.ItemCommands.AddItemToComponentCommand;
 import org.wojo.wojosToolbelt.Commands.ItemCommands.SwapItemsCommand;
-import org.wojo.wojosToolbelt.Commands.WojosToolbeltCommandCollection;
+import org.wojo.wojosToolbelt.Commands.gui.OpenQuickAccessSelectionGuiCommand;
+import org.wojo.wojosToolbelt.Commands.item.SwapItem;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
 import org.wojo.wojosToolbelt.Events.FindItemEvent;
 import org.wojo.wojosToolbelt.Events.SwapItemEvent;
+import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.Handlers.AddItemHandler;
 import org.wojo.wojosToolbelt.Handlers.FindItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
+import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
+import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import javax.annotation.Nonnull;
@@ -60,19 +65,19 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         getEventRegistry().register(SwapItemEvent.class, new SwapItemHandler());
         getEventRegistry().register(AddItemEvent.class, new AddItemHandler());
         getEventRegistry().register(FindItemEvent.class, new FindItemHandler());
+        getEventRegistry().register(SwapQuickAccessItemEvent.class, new SwapQuickAccessItemEventHandler());
+    }
+
+    private void registerInteractions(){
+        this.getCodecRegistry(Interaction.CODEC).register(OpenQuickAccessSelectionGuiInteraction.OpenQuickAccessSelectionGuiInteractionID, OpenQuickAccessSelectionGuiInteraction.class, OpenQuickAccessSelectionGuiInteraction.CODEC);
     }
     private void registerCommands(){
         // TODO: Update the command collection to properly hold everything
-        
         // Component Commands
-        this.getCommandRegistry().registerCommand(new WojosToolbeltCommandCollection());
-        this.getCommandRegistry().registerCommand(new AddQuickAccessComponentToPlayerCommand());
-        this.getCommandRegistry().registerCommand(new RemoveQuickAccessComponentFromPlayerCommand());
-        this.getCommandRegistry().registerCommand(new PrintQuickAccessComponentInfo());
+        this.getCommandRegistry().registerCommand(new WojosQuickAccessCommandCollection());
 
-        // Item Commands
-        this.getCommandRegistry().registerCommand(new AddItemToComponentCommand());
-        this.getCommandRegistry().registerCommand(new SwapItemsCommand());
+        this.getCommandRegistry().registerCommand(new OpenQuickAccessSelectionGuiCommand());
+        this.getCommandRegistry().registerCommand(new SwapItem());
     }
     private void registerPacketAdapters(){
         this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
@@ -84,6 +89,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.registerComponents();
         this.registerSystems();
         this.registerEvents();
+        this.registerInteractions();
         this.registerCommands();
         this.registerPacketAdapters();
     }

@@ -4,14 +4,14 @@ Group {
     Background: #2a2a2a;
     Anchor: (Width: 800, Height: 500);
 
-    $C.@TextButton #Item1Button {
+    $C.@TextButton #QuickSwap0 {
         Anchor: (Width: 150, Height: 150);
         Text: "Item 1";
     }
     Group {
         Anchor: (Width: 100, Height: 100);
     }
-    $C.@TextButton #Item2Button {
+    $C.@TextButton #QuickSwap2 {
             Anchor: (Width: 150, Height: 150);
             Text: "Item 2";
     }

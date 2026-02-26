@@ -1,7 +1,8 @@
-package org.wojo.wojosToolbelt.Commands.GuiCommands;
+package org.wojo.wojosToolbelt.Commands.gui;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.packets.interface_.Page;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -10,26 +11,24 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
-public class OpenToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
+public class CloseToolbeltSelectionGuiCommand extends AbstractPlayerCommand {
     // Constructor
-    public OpenToolbeltSelectionGuiCommand(){
-        super("Open", "Opening the tool selection GUI");
-        addAliases("o");
+    public CloseToolbeltSelectionGuiCommand(){
+        super("Close", "Close the toolbelt Selection Gui");
+
+        addAliases("c");
     };
 
     // Run the command
-    // conetext - info about who ran the command. Server console?, Some player?
+    // commandContext - info about who ran the command. Server console?, Some player?
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
-        commandContext.sendMessage(Message.raw("Opening the Tool Selection GUI"));
+        commandContext.sendMessage(Message.raw("Closing the Toolbelt Selection GUI"));
 
         Player player = commandContext.senderAs(Player.class);
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef);
-
-        player.getPageManager().openCustomPage(ref, store, guiPage);
-        playerRef.sendMessage(Message.raw("UI Page Shown"));
+        playerRef.sendMessage(Message.raw("UI Page Closed"));
+        player.getPageManager().setPage(ref, store, Page.None);
 
 //        CompletableFuture.runAsync(() -> {
 //        }, world);
