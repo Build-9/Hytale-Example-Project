@@ -6,13 +6,13 @@ Group {
 
     $C.@TextButton #QuickSwap0 {
         Anchor: (Width: 150, Height: 150);
-        Text: "Item 1";
+        Text: "Quick Swap 0";
     }
     Group {
         Anchor: (Width: 100, Height: 100);
     }
-    $C.@TextButton #QuickSwap2 {
-            Anchor: (Width: 150, Height: 150);
-            Text: "Item 2";
+    $C.@TextButton #QuickSwap1 {
+        Anchor: (Width: 150, Height: 150);
+        Text: "Quick Swap 1";
     }
 }

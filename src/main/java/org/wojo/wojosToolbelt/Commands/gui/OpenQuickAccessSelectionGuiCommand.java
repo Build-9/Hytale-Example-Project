@@ -50,10 +50,7 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
 
         // Open GUI
         ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, ref, updatedQaComp, store);
-
         player.getPageManager().openCustomPage(ref, store, guiPage);
-        playerRef.sendMessage(Message.raw("UI Page Shown"));
-
     }
 
     private ItemStack[] getItemsInQuickAccessContainer(ItemStack quickAccessItemStack) {

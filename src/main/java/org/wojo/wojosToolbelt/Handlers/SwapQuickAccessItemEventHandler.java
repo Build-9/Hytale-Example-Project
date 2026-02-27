@@ -34,28 +34,27 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
         ItemStack itemStoredInQaComp = containerItems[sourceInventoryPosition];
 
-        if (itemStoredInQaComp != null){
-            // ------ Set Container Items ------
-            // Set Quick Access item to hotbar item
-            player.getInventory().getHotbar().removeItemStackFromSlot(targetHotbarPostion);
+        // ------ Set Container Items ------
+        // Set Quick Access item to hotbar item
+        player.getInventory().getHotbar().removeItemStackFromSlot(targetHotbarPostion);
+        if (itemStoredInQaComp != null) {
             player.getInventory().getHotbar().setItemStackForSlot(targetHotbarPostion, itemStoredInQaComp);
+        }
 
-            // Set Hotbar Item to quickaccess Item
-            // NOTE: QuickAccessComponent updates when the UI is opened. No need to update it here we only need to update the container
-            if (equippedItem != null){
-                containerItems[sourceInventoryPosition] = equippedItem;
-                ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
-                ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-                player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-                player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
-            }else{
-
-                containerItems[sourceInventoryPosition] = null;
-                ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
-                ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-                player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-                player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
-            }
+        // Set Hotbar Item to quickaccess Item
+        // NOTE: QuickAccessComponent updates when the UI is opened. No need to update it here we only need to update the container
+        if (equippedItem != null){
+            containerItems[sourceInventoryPosition] = equippedItem;
+            ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
+            ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
+            player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
+            player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
+        }else{
+            containerItems[sourceInventoryPosition] = null;
+            ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
+            ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
+            player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
+            player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
         }
     }
 }

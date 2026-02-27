@@ -10,11 +10,6 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
-import org.wojo.wojosToolbelt.Commands.component.AddQuickAccessComponentToPlayerCommand;
-import org.wojo.wojosToolbelt.Commands.component.PrintQuickAccessComponentInfo;
-import org.wojo.wojosToolbelt.Commands.component.RemoveQuickAccessComponentFromPlayerCommand;
-import org.wojo.wojosToolbelt.Commands.ItemCommands.AddItemToComponentCommand;
-import org.wojo.wojosToolbelt.Commands.ItemCommands.SwapItemsCommand;
 import org.wojo.wojosToolbelt.Commands.gui.OpenQuickAccessSelectionGuiCommand;
 import org.wojo.wojosToolbelt.Commands.item.SwapItem;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
@@ -29,7 +24,6 @@ import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
-import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -80,7 +74,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new SwapItem());
     }
     private void registerPacketAdapters(){
-        this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
+        //this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
     }
     
     @Override

@@ -9,6 +9,7 @@ import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -18,6 +19,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
 import com.hypixel.hytale.server.core.inventory.Inventory;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.concurrent.CompletableFuture;
@@ -48,21 +50,17 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef != null && entityRef.isValid()) {
 
-            // TODO: Add check if player has QuickAccessComponent
             Store<EntityStore> store = entityRef.getStore();
             World world = store.getExternalData().getWorld();
 
-            if ( WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef.getReference()) == null || WojosQuickAccessPlugin.hasQuickAccessComponentMap.get(playerRef.getReference()) == false){
-                // Try not to spam log
-                if (counter % 10 == 0) {
-                    WojosQuickAccessPlugin.LOGGER.atInfo().log("Player Does not have a Quick AccessComponent so letting packets through");
-                }
-                counter++;
+            // Check if player has a quick access component eqiupped
+            // TODO: Cant pull data from component store due to thread safty
+            Player player = store.getComponent(entityRef, Player.getComponentType());
+            ItemStack quickAccessItemSlot = player.getInventory().getHotbar().getItemStack((short)8);
+            if (quickAccessItemSlot == null){return false;}
+            QuickAccessComponent quickAccessComponent = quickAccessItemSlot.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID,QuickAccessComponent.CODEC);
+            if(quickAccessComponent == null){return false;}
 
-                return false;
-            }
-
-            playerRef.sendMessage(Message.raw("Good Packet! : " + syncPacket.getId() + " | " + syncPacket.getClass().getName()));
 
             // Check is user is trying to swap to item 9
             for (SyncInteractionChain chain : syncPacket.updates) {
@@ -126,6 +124,6 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     private void openQuickAccessUI(PlayerRef playerRef){
         playerRef.sendMessage(Message.raw("Showing UI Page"));
         // Open QuickAccess UI by using a command
-        CommandManager.get().handleCommand(playerRef, "WojosToolbelt tsg o");
+        CommandManager.get().handleCommand(playerRef, "open");
     }
 }
