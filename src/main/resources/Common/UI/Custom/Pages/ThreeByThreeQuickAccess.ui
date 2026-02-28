@@ -3,14 +3,15 @@ Group {
   LayoutMode: Top;
   Background: (Color: #414141);
   Anchor: (Width: 600, Height: 600);
+  Padding: (Full: 2);
   Group #R0 {
     LayoutMode: Right;
     Background: (Color: #333333);
     Anchor: (Height: 60);
     Padding: (Full: 0);
     $C.@TextButton #QuickAccessButtonSettings {
-      Anchor: (Width: 120, Height: 60);
-      Padding: (Full: 0);
+      Anchor: (Width: 120, Height: 55);
+      Padding: (Full: 5);
       Text: "Settings";
     }
   }
