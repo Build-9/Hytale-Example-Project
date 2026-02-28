@@ -14,7 +14,7 @@ by opening a radial menu with fewer items instead of needing to open the full in
 - [ ] Bandolier: Quick access radial that only holds Consumables (Potions, Food, Bombs etc)
 - [ ] Quiver: Quick access radial that only holds arrows
 - [ ] Custom: Quick access radial that only holds specified items
-- [ ] Creative: Quick access radial that can hold anything
+- [ ] Unrestricted: Quick access radial that can hold anything
 
 #### Quick Access Item Tiers
 - [ ] Common: 2 slots

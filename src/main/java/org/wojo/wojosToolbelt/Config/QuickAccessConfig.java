@@ -6,17 +6,10 @@ public class QuickAccessConfig {
     public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
-    // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files. 
-    public static final int MAX_QA_ITEMS = 10;
+    // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
+    public static final int MAX_QA_ITEMS = 20;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
-    
-    // TODO: change item to be its own inventory rather then searching players inventory for item?
-    public static final int MAX_SEARCHABLE_CONTAINERS = 50; // Max number of different inventory types on a player that an item search could look for swap item.
-   
-    public static final boolean IS_STORAGE_CONTAINER = false;    // TODO: Items have own storage gui instead of using players inventory
-    public static final boolean IS_SWAP_TO_EQUIPPED = false;     // TODO: Set to -1 to swap to currently equipped location??
-    
     
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
@@ -49,7 +42,7 @@ public class QuickAccessConfig {
         BANDOLIER(4),
         QUIVER(5),
         CUSTOM(6),
-        CREATIVE(7),
+        UNRESTRICTED(7),
         NUM_TYPES(8);
 
         private final int id;
@@ -63,12 +56,6 @@ public class QuickAccessConfig {
         }
     }
 
-    // What inventories can be searched for item to swap into hotbar. (Default only checks player inventory | Hotbar, Backpack & Utility are also possible additional options)
-    public static final Integer[] SEARCHABLE_CONTAINERS = {Inventory.STORAGE_SECTION_ID};
-
-    // GUI's are premade instead of dynamic. The currently defined GUI's are as follows. 
-    public static final Integer[] STORAGE_ITEM_GUIS =      {2};
-
     // ============= Quick Access Item Type Arrays =============
     // The following are configs that correspond to the number of items the QA storage can hold bassed on the item tier
     // EX: {0,1,3,10,15,16,17,20} -> Unknown(0), Crude(1), Common(3), Rare(10), Epic(15), Legendary(16), Mythic(17), Creative(20)
@@ -77,26 +64,25 @@ public class QuickAccessConfig {
     //    - can see and interact with. 
     
     // Toolbelts can only Items with tool tag
-    public static final Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
+    public static Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
 
     // Builders pouch can hold any building block
-    public static final Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
+    public static Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
 
     // Slings can only hold weapons
-    public static final Integer[] WEAPON_SLING_ARRAY =     {2,2,2,2,2,2,2,2};
+    public static Integer[] WEAPON_SLING_ARRAY =     {2,2,2,2,2,2,2,2};
 
     // Bandoleers can only hold consumables (Food, Bombs, Potions, but cant hold arrows)
-    public static final Integer[] BANDOLIER_ARRAY =        {2,2,2,2,2,2,2,2};
+    public static Integer[] BANDOLIER_ARRAY =        {2,2,2,2,2,2,2,2};
     
     // Quivers can only hold arrows
-    public static final Integer[] QUIVER_ARRAY =           {2,2,2,2,2,2,2,2};
+    public static Integer[] QUIVER_ARRAY =           {2,2,2,2,2,2,2,2};
 
-    // Creative can hold anything
-    public static final Integer[] CREATIVE_ARRAY =         {2,2,2,2,2,2,2,2};
+    // Custom array can be edited to hold a set amount
+    public static Integer[] CUSTOM_ARRAY =           {2,2,2,2,2,2,2,2};
 
-    // TODO: Add map to allow server owners to whitelist or blacklist specific Item ID's as specific types. 
-    //    This allows an easy way to add modded items to an item type and or allow specific items to be used in multiple quick access items. 
-    // ITEM_ACCESS_MAP<String, boolean[ITEM_TYPE.length()]> = new ConcurrentHashMap(String, new Array());
+    // Unrestricted array can hold anything
+    public static Integer[] UNRESTRICTED_ARRAY =         {2,2,2,2,2,2,2,2};
 
     // Get the number of different items the QuickAccess Item can swap between
     public static int getItemCount(ITEM_TYPE type, ITEM_TIER tier){
@@ -117,7 +103,8 @@ public class QuickAccessConfig {
             case WEAPON_SLING -> QuickAccessConfig.WEAPON_SLING_ARRAY;
             case BANDOLIER -> QuickAccessConfig.BANDOLIER_ARRAY;
             case QUIVER -> QuickAccessConfig.QUIVER_ARRAY;
-            case CREATIVE -> QuickAccessConfig.CREATIVE_ARRAY;
+            case CUSTOM -> QuickAccessConfig.CUSTOM_ARRAY;
+            case UNRESTRICTED -> QuickAccessConfig.UNRESTRICTED_ARRAY;
             default -> new Integer[ITEM_TIER.NUM_TIERS.getId()];
         };
     }

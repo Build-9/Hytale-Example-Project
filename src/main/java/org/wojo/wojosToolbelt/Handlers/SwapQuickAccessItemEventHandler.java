@@ -46,15 +46,17 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         if (equippedItem != null){
             containerItems[sourceInventoryPosition] = equippedItem;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
-            ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
+            ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
             player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-            player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
+            player.getInventory().getHotbar().setItemStackForSlot((short)8, updatedQuickAccessItem);
         }else{
             containerItems[sourceInventoryPosition] = null;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
-            ItemStack UpdatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
+            ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
             player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-            player.getInventory().getHotbar().setItemStackForSlot((short)8, UpdatedQuickAccessItem);
+            player.getInventory().getHotbar().setItemStackForSlot((short)8, updatedQuickAccessItem);
+
         }
     }
+    final short activeSlot = 0;
 }

@@ -23,6 +23,8 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import javax.annotation.Nonnull;
+import java.beans.Visibility;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -32,15 +34,17 @@ import java.util.List;
 // You may edit this class as necessary, or copy parts only.
 //
 public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.UiData> {
+    String[] buttonsName = new String[2];
+    Boolean[] isButtonsEnabled = new Boolean[2];
 
     public static class UiData {
-        public String button1String = "Button1";
+        public String buttonSelected = "N/A";
 
         public static final BuilderCodec<UiData> CODEC = BuilderCodec.builder(UiData.class, UiData::new)
             .append(
                 new KeyedCodec<>("ButtonSelected", Codec.STRING),
-                (obj, val) -> obj.button1String = val,
-                obj -> obj.button1String
+                (obj, val) -> obj.buttonSelected = val,
+                obj -> obj.buttonSelected
             )
             .add()
             .build();
@@ -52,23 +56,39 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
 
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickSwap0", new EventData().append("ButtonSelected", "0"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickSwap1", new EventData().append("ButtonSelected", "1"), true);
-        uiCommandBuilder.append("Pages/ItemSelectionUI.ui");
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton1", new EventData().append("ButtonSelected", "0"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton2", new EventData().append("ButtonSelected", "1"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton3", new EventData().append("ButtonSelected", "2"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton4", new EventData().append("ButtonSelected", "3"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton5", new EventData().append("ButtonSelected", "4"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "5"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "6"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton8", new EventData().append("ButtonSelected", "7"), true);
+
+        uiCommandBuilder.append("Pages/ThreeByThreeQuickAccess.ui");
+        uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", "Some Item!");
+        //uiCommandBuilder.set("#QuickSwap1.Visible", false);
+        // TODO: Set Button bg to item icon?
+
     }
 
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, UiData data) {
         super.handleDataEvent(ref, store, data);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data! "+data.button1String);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data! "+data.buttonSelected);
+        String buttonPressed = data.buttonSelected;
 
-        if (data.button1String.equals("0")){
-            CommandManager.get().handleCommand(playerRef, "swap --src-pos 0");
-        }else{
-            CommandManager.get().handleCommand(playerRef, "swap --src-pos 1");
+        if (buttonPressed.equals("N/A")) {
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
+        } else if (buttonPressed.equals("settings")) {
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Settings Pressed");
+        } else if (buttonPressed.equals("equipped")) {
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Pressed");
+        } else{
+                CommandManager.get().handleCommand(playerRef, "swap --src-pos "+buttonPressed);
         }
-        Player player = store.getComponent(ref, Player.getComponentType());
-
         this.close();
     }
 }

@@ -1,0 +1,152 @@
+$C = "../Common.ui";
+Group {
+  LayoutMode: Top;
+  Background: (Color: #414141);
+  Anchor: (Width: 600, Height: 600);
+  Group #R0 {
+    LayoutMode: Right;
+    Background: (Color: #333333);
+    Anchor: (Height: 60);
+    Padding: (Full: 0);
+    $C.@TextButton #QuickAccessButtonSettings {
+      Anchor: (Width: 120, Height: 60);
+      Padding: (Full: 0);
+      Text: "Settings";
+    }
+  }
+  Group #R1andR2 {
+    LayoutMode: Left;
+    Background: (Color: #333333);
+    Anchor: (Height: 120);
+    Padding: (Full: 0);
+    Group #R1andR2Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton5 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 5";
+    }
+    Group #R1andR2Spacer1 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton3 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 3";
+    }
+    Group #R1andR2Spacer2 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton7 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 7";
+    }
+  }
+  Group #R3 {
+    LayoutMode: Top;
+    Background: (Color: #333333);
+    Anchor: (Height: 60);
+    Padding: (Full: 0);
+  }
+  Group #R4andR5 {
+    LayoutMode: Left;
+    Background: (Color: #333333);
+    Anchor: (Height: 120);
+    Padding: (Full: 0);
+    Group #R4andR5Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton1 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 1";
+    }
+    Group #R4andR5Spacer1 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButtonEquipped {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "Equipped";
+    }
+    Group #R4andR5Spacer2 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton2 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 2";
+    }
+  }
+  Group #R6 {
+    LayoutMode: Top;
+    Background: (Color: #333333);
+    Anchor: (Height: 60);
+    Padding: (Full: 0);
+  }
+  Group #R7andR8 {
+    LayoutMode: Left;
+    Background: (Color: #333333);
+    Anchor: (Height: 120);
+    Padding: (Full: 0);
+    Group #R7andR7Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton8 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 8";
+    }
+    Group #R7andR7Spacer1 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton4 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 4";
+    }
+    Group #R7andR7Spacer2 {
+      LayoutMode: Top;
+      Background: (Color: #333333);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
+    $C.@TextButton #QuickAccessButton6 {
+      Anchor: (Width: 120, Height: 120);
+      Padding: (Full: 0);
+      Text: "BTN 6";
+    }
+  }
+  Group #R9 {
+    LayoutMode: Top;
+    Background: (Color: #333333);
+    Anchor: (Height: 60);
+    Padding: (Full: 0);
+  }
+}

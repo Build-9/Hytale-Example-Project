@@ -21,7 +21,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
     private int _quick_access_item_tier = 0;        // Tier of Quick Access Item
     private int _quick_access_item_type = 0;        // Type of Quick Access Item this is.
     private final int _quick_access_config_total_items = QuickAccessConfig.MAX_QA_ITEMS;           // Max number of total items this QuickAccess Component can store
-    private int _quick_access_max_total_items = 0;  // Custom number of items this comp can store. Must be less then config
+    private int _quick_access_max_total_items = 0;  // Custom number of items this comp can store. Must be less than config
     private int _quick_access_gui_button = QuickAccessConfig.HOTBAR_GUI_BUTTON;    // Hotbar position that opens gui
     private int _quick_access_target_location = QuickAccessConfig.HOTBAR_SWAP_LOCATION;  // Hotbar position to swap item into
 
@@ -29,7 +29,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // - First design will use Item ID so multiple of the same item will return first instance.
     // - TODO: Use actual UUID for items added so player can select specific item in inventory 
     private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS]; // Array of item UUIDs where array position correlates to UI button that pulls it to players hotbar
-    private int[] _quick_access_searchable_item_containers = new int[QuickAccessConfig.MAX_SEARCHABLE_CONTAINERS]; // Array of inventory types to look for the items that can be swapped into the hotbar.
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
@@ -42,7 +41,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_gui_button = gui_button;
         this._quick_access_target_location = target_location;
         this._quick_access_item_uuids = item_uuids.clone();
-        this._quick_access_searchable_item_containers = searchable_contianers.clone();
     }
 
     public QuickAccessComponent(QuickAccessComponent original){
@@ -52,7 +50,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_gui_button = original._quick_access_gui_button;
         this._quick_access_target_location = original._quick_access_target_location;
         this._quick_access_item_uuids = original._quick_access_item_uuids.clone();
-        this._quick_access_searchable_item_containers = original._quick_access_searchable_item_containers.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -88,12 +85,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
             component -> component._quick_access_item_uuids
         )
         .add()
-        .append(
-            new KeyedCodec<>("QuickAccessSearchableItemContainers", Codec.INT_ARRAY),
-            (component, value) -> component._quick_access_searchable_item_containers = value,
-            component -> component._quick_access_searchable_item_containers
-        )
-        .add()
         .build();
 
     @NullableDecl
@@ -106,7 +97,6 @@ public class QuickAccessComponent implements Component<EntityStore> {
         copy._quick_access_gui_button = this._quick_access_gui_button;
         copy._quick_access_target_location = this._quick_access_target_location;
         copy._quick_access_item_uuids = this._quick_access_item_uuids.clone();
-        copy._quick_access_searchable_item_containers = this._quick_access_searchable_item_containers.clone();
         return copy;
     }
 
@@ -182,7 +172,7 @@ public class QuickAccessComponent implements Component<EntityStore> {
             this.getSwapTargetLocation()
         );
 
-        debugResult += "- Item Array: "+ Arrays.toString(this._quick_access_item_uuids)+"\n - Searchable Inventories: "+Arrays.toString(this._quick_access_searchable_item_containers)+"\n";
+        debugResult += "- Item Array: "+ Arrays.toString(this._quick_access_item_uuids)+"\n";
 
         return debugResult;
     }
