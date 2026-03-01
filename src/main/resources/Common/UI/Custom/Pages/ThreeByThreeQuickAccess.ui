@@ -1,28 +1,42 @@
 $C = "../Common.ui";
+
+// Quick Access Basig design is a 10x10 grid:
+// * * * * * * * * * X <- Settings Btn
+// * X X * X X * X X * <\
+// * X X * X X * X X * </ Quick access [5, 3, 7]
+// * * * * * * * * * *
+// * X X * X X * X X * <\
+// * X X * X X * X X * </ Quick Access [1, Equipped, 2]
+// * * * * * * * * * *
+// * X X * X X * X X * <\
+// * X X * X X * X X * </ Quick Access [8, 4, 6]
+// * * * * * * * * * *
+
 Group {
   LayoutMode: Top;
-  Background: (Color: #414141);
+  Background: (Color: #41414133);
   Anchor: (Width: 600, Height: 600);
-  Padding: (Full: 2);
+  Padding: (Top: 2, Left: 2, Right: 5, Bottom: 2);
   Group #R0 {
     LayoutMode: Right;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 60);
     Padding: (Full: 0);
     $C.@TextButton #QuickAccessButtonSettings {
       Anchor: (Width: 120, Height: 55);
       Padding: (Full: 5);
       Text: "Settings";
+      Background: (Color: #04CC00);
     }
   }
   Group #R1andR2 {
     LayoutMode: Left;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 120);
     Padding: (Full: 0);
     Group #R1andR2Spacer0 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -30,10 +44,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 5";
+      Disabled: true;
     }
     Group #R1andR2Spacer1 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -41,10 +56,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 3";
+      Disabled: true;
     }
     Group #R1andR2Spacer2 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -52,22 +68,23 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 7";
+      Disabled: true;
     }
   }
   Group #R3 {
     LayoutMode: Top;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 60);
     Padding: (Full: 0);
   }
   Group #R4andR5 {
     LayoutMode: Left;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 120);
     Padding: (Full: 0);
     Group #R4andR5Spacer0 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -75,10 +92,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 1";
+      Disabled: false;
     }
     Group #R4andR5Spacer1 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -86,10 +104,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "Equipped";
+      Disabled: false;
     }
     Group #R4andR5Spacer2 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -97,22 +116,23 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 2";
+      Disabled: false;
     }
   }
   Group #R6 {
     LayoutMode: Top;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 60);
     Padding: (Full: 0);
   }
   Group #R7andR8 {
     LayoutMode: Left;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 120);
     Padding: (Full: 0);
     Group #R7andR7Spacer0 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -120,10 +140,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 8";
+      Disabled: true;
     }
     Group #R7andR7Spacer1 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -131,10 +152,11 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 4";
+      Disabled: true;
     }
     Group #R7andR7Spacer2 {
       LayoutMode: Top;
-      Background: (Color: #333333);
+      Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
@@ -142,11 +164,12 @@ Group {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 6";
+      Disabled: true;
     }
   }
   Group #R9 {
     LayoutMode: Top;
-    Background: (Color: #333333);
+    Background: (Color: #00000000);
     Anchor: (Height: 60);
     Padding: (Full: 0);
   }

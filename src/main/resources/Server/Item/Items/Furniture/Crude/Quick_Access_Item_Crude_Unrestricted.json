@@ -4,21 +4,21 @@
     "Items.Tools",
     "Items.Armors"
   ],
-  "Icon": "Icons/ItemsGenerated/Utility_Leather_Quiver.png",
+  "Icon": "Icons/ItemsGenerated/Quick_Access_Item_Creative.png",
   "Model": "Items/Back/Quiver.blockymodel",
   "Texture": "Items/Back/Quiver_Texture.png",
   "Quality": "Common",
   "MaxStack": 1,
   "IconProperties": {
-    "Scale": 1.0,
+    "Scale": 0.5,
     "Rotation": [
-      335.0,
-      128.0,
-      30.0
+      360,
+      128,
+      347
     ],
     "Translation": [
-      1.0,
-      1.0
+      1,
+      -27
     ]
   },
   "Scale": 1,

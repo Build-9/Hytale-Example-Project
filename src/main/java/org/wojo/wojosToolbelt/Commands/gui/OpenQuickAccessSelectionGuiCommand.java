@@ -41,12 +41,16 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         // ------ Get Item Info ------
         ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
         ItemStack[] itemsInQuickAccess = getItemsInQuickAccessContainer(heldItemStack);
-        QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Old Component: "+quickAccessComponent.getPrintableString());
+        QuickAccessComponent updatedQaComp = null;
 
-        // ------ Update Component on item with new Component info ------
-        QuickAccessComponent updatedQaComp = this.updateQuickAccessComponent(itemsInQuickAccess,quickAccessComponent);
-        saveUpdatedComponent(updatedQaComp, player);
+        if(itemsInQuickAccess != null) {
+            QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Old Component: " + quickAccessComponent.getPrintableString());
+
+            // ------ Update Component on item with new Component info ------
+            updatedQaComp = this.updateQuickAccessComponent(itemsInQuickAccess, quickAccessComponent);
+            saveUpdatedComponent(updatedQaComp, player);
+        }
 
         // Open GUI
         ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, ref, updatedQaComp, store);
@@ -56,10 +60,16 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
     private ItemStack[] getItemsInQuickAccessContainer(ItemStack quickAccessItemStack) {
         // TODO: Verify its a quick access item
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
+        if (containerBSON == null){return null;}
         WojosQuickAccessPlugin.LOGGER.atInfo().log(containerBSON.toString());
 
         ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log(containerItems.toString());
+        if (containerItems != null) {
+            WojosQuickAccessPlugin.LOGGER.atInfo().log(containerItems.toString());
+        }else{
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("No Items in container!");
+            return null;
+        }
 
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Item ID's in Quick Access Item: ");
         for (ItemStack item : containerItems){

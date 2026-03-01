@@ -1,0 +1,4 @@
+items.Quick_Access_Item_Crude_Unrestricted.name=Quick Access Toolbelt
+items.Quick_Access_Item_Crude_Unrestricted.description=(Crude-Unrestricted Quick-Access Toolbelt) An item used to quickswap tools in the players hotbar. (By default the item needs to be in slot 9 to be equipped and it swaps items into slot 1)
+items.Quick_Access_Item_Crude_Unrestricted.tooltip= Crude-Unrestricted Quick-Access Toolbelt. Place in Hotbar Slot 9 to work!
+general.qualities.common=Crude
