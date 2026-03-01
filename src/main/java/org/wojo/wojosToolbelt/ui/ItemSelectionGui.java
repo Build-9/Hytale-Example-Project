@@ -34,8 +34,9 @@ import java.util.List;
 // You may edit this class as necessary, or copy parts only.
 //
 public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.UiData> {
-    String[] buttonsName = new String[2];
-    Boolean[] isButtonsEnabled = new Boolean[2];
+    String[] buttonNames = new String[10];
+    Boolean[] isButtonDisabled = new Boolean[10];
+    String equippedItem = "Empty";
 
     public static class UiData {
         public String buttonSelected = "N/A";
@@ -50,8 +51,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             .build();
     }
     
-    public ItemSelectionGui(@Nonnull PlayerRef playerRef, Ref<EntityStore> ref, QuickAccessComponent playersQuickAccessComponent, Store<EntityStore> store) {
+    public ItemSelectionGui(@Nonnull PlayerRef playerRef, String equippedItem, String[] storedItems, Boolean[] disabledButtons) {
         super(playerRef, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
+        this.equippedItem = equippedItem;
+        this.buttonNames = storedItems.clone();
+        this.isButtonDisabled = disabledButtons.clone();
     }
 
     @Override
@@ -68,7 +72,27 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton8", new EventData().append("ButtonSelected", "7"), true);
 
         uiCommandBuilder.append("Pages/ThreeByThreeQuickAccess.ui");
-        uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", "Some Item!");
+        uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", equippedItem);
+        uiCommandBuilder.set("#QuickAccessButton1.Text", buttonNames[0]);
+        uiCommandBuilder.set("#QuickAccessButton2.Text", buttonNames[1]);
+        uiCommandBuilder.set("#QuickAccessButton3.Text", buttonNames[2]);
+        uiCommandBuilder.set("#QuickAccessButton4.Text", buttonNames[3]);
+        uiCommandBuilder.set("#QuickAccessButton5.Text", buttonNames[4]);
+        uiCommandBuilder.set("#QuickAccessButton6.Text", buttonNames[5]);
+        uiCommandBuilder.set("#QuickAccessButton7.Text", buttonNames[6]);
+        uiCommandBuilder.set("#QuickAccessButton8.Text", buttonNames[7]);
+
+        uiCommandBuilder.set("#QuickAccessButton1.Disabled", isButtonDisabled[0].toString());
+        uiCommandBuilder.set("#QuickAccessButton2.Disabled", isButtonDisabled[1].toString());
+        uiCommandBuilder.set("#QuickAccessButton3.Disabled", isButtonDisabled[2].toString());
+        uiCommandBuilder.set("#QuickAccessButton4.Disabled", isButtonDisabled[3].toString());
+        uiCommandBuilder.set("#QuickAccessButton5.Disabled", isButtonDisabled[4].toString());
+        uiCommandBuilder.set("#QuickAccessButton6.Disabled", isButtonDisabled[5].toString());
+        uiCommandBuilder.set("#QuickAccessButton7.Disabled", isButtonDisabled[6].toString());
+        uiCommandBuilder.set("#QuickAccessButton8.Disabled", isButtonDisabled[7].toString());
+
+
+
         //uiCommandBuilder.set("#QuickSwap1.Visible", false);
         // TODO: Set Button bg to item icon?
 

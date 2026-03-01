@@ -5,15 +5,11 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.server.flock.FlockMembershipSystems;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class QuickAccessComponent implements Component<EntityStore> {
     // ==========================================================================
@@ -29,18 +25,22 @@ public class QuickAccessComponent implements Component<EntityStore> {
     // - First design will use Item ID so multiple of the same item will return first instance.
     // - TODO: Use actual UUID for items added so player can select specific item in inventory 
     private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS]; // Array of item UUIDs where array position correlates to UI button that pulls it to players hotbar
+    private String[] _quick_access_item_names = new String[QuickAccessConfig.MAX_QA_ITEMS];
+    private String[] _quick_quick_access_items_disabled = new String[QuickAccessConfig.MAX_QA_ITEMS];
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids, int[] searchable_contianers){
+    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids, String[] item_names, String[] items_disabled){
         this._quick_access_item_tier = item_tier;
         this._quick_access_item_type = item_type;
         this._quick_access_max_total_items = max_items;
         this._quick_access_gui_button = gui_button;
         this._quick_access_target_location = target_location;
         this._quick_access_item_uuids = item_uuids.clone();
+        this._quick_access_item_names = item_names.clone();
+        this._quick_quick_access_items_disabled = items_disabled.clone();
     }
 
     public QuickAccessComponent(QuickAccessComponent original){
@@ -50,6 +50,8 @@ public class QuickAccessComponent implements Component<EntityStore> {
         this._quick_access_gui_button = original._quick_access_gui_button;
         this._quick_access_target_location = original._quick_access_target_location;
         this._quick_access_item_uuids = original._quick_access_item_uuids.clone();
+        this._quick_access_item_names = original._quick_access_item_names.clone();
+        this._quick_quick_access_items_disabled = original._quick_quick_access_items_disabled.clone();
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
@@ -85,6 +87,18 @@ public class QuickAccessComponent implements Component<EntityStore> {
             component -> component._quick_access_item_uuids
         )
         .add()
+        .append(
+                new KeyedCodec<>("QuickAccessItemNames", Codec.STRING_ARRAY),
+                (component, value) -> component._quick_access_item_names = value,
+                component -> component._quick_access_item_names
+        )
+        .add()
+        .append(
+                new KeyedCodec<>("QuickAccessItemsDisabled", Codec.STRING_ARRAY),
+                (component, value) -> component._quick_quick_access_items_disabled = value,
+                component -> component._quick_quick_access_items_disabled
+        )
+        .add()
         .build();
 
     @NullableDecl
@@ -97,6 +111,8 @@ public class QuickAccessComponent implements Component<EntityStore> {
         copy._quick_access_gui_button = this._quick_access_gui_button;
         copy._quick_access_target_location = this._quick_access_target_location;
         copy._quick_access_item_uuids = this._quick_access_item_uuids.clone();
+        copy._quick_access_item_names = this._quick_access_item_names.clone();
+        copy._quick_quick_access_items_disabled = this._quick_quick_access_items_disabled.clone();
         return copy;
     }
 
@@ -149,11 +165,37 @@ public class QuickAccessComponent implements Component<EntityStore> {
     public void setItemIdArray(String[] item_uuids){
         this._quick_access_item_uuids = item_uuids.clone();
     }
-    public void setItemInArray(String item_uuid, int position){
+    public void setItemInIdArray(String item_uuid, int position){
         this._quick_access_item_uuids[position] = item_uuid;
     }
-    public String getItemInArray(int position){
+    public String getItemInIdArray(int position){
         return this._quick_access_item_uuids[position];
+    }
+    //
+    public String[] getItemNameArray(){
+        return this._quick_access_item_names;
+    }
+    public void setItemNameArray(String[] item_names){
+        this._quick_access_item_names = item_names.clone();
+    }
+    public void setItemInNameArray(String item_name, int position){
+        this._quick_access_item_names[position] = item_name;
+    }
+    public String getItemInNameArray(int position){
+        return this._quick_access_item_names[position];
+    }
+    //
+    public String[] getItemsDisabledArray(){
+        return this._quick_quick_access_items_disabled;
+    }
+    public void setItemsDisabledArray(String[] item_bools){
+        this._quick_quick_access_items_disabled = item_bools.clone();
+    }
+    public void setItemInDisabledArray(String item_bools, int position){
+        this._quick_quick_access_items_disabled[position] = item_bools;
+    }
+    public String getItemInDisabledArray(int position){
+        return this._quick_quick_access_items_disabled[position];
     }
 
     // -- Debug Output --

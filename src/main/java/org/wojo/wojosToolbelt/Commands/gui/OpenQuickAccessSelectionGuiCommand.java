@@ -42,6 +42,7 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
         ItemStack[] itemsInQuickAccess = getItemsInQuickAccessContainer(heldItemStack);
         QuickAccessComponent updatedQaComp = null;
+        String[] itemNames = updatedQaComp.getItemIdArray();
 
         if(itemsInQuickAccess != null) {
             QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
@@ -52,8 +53,9 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
             saveUpdatedComponent(updatedQaComp, player);
         }
 
+
         // Open GUI
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, ref, updatedQaComp, store);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, "Empty", itemNames, disabledButtons);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 

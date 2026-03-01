@@ -24,7 +24,7 @@ public class AddItemHandler implements Consumer<AddItemEvent> {
 
         if (qaComp != null && !itemID.isEmpty() && itemPosition >= 0 && itemPosition < QuickAccessConfig.MAX_QA_ITEMS){
             QuickAccessComponent qaCompCpy = new QuickAccessComponent(qaComp);
-            qaCompCpy.setItemInArray(itemID,itemPosition);
+            qaCompCpy.setItemInIdArray(itemID,itemPosition);
 
             // TODO: This needs to be done in correct thread somehow
             store.replaceComponent(player, QuickAccessComponent.getComponentType(), qaCompCpy);
