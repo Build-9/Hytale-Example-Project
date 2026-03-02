@@ -7,7 +7,7 @@ public class QuickAccessConfig {
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
-    public static final int MAX_QA_ITEMS = 20;
+    public static final int MAX_QA_ITEMS = 10;
     public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
     public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
     
@@ -41,8 +41,8 @@ public class QuickAccessConfig {
         WEAPON_SLING(3),
         BANDOLIER(4),
         QUIVER(5),
-        CUSTOM(6),
-        UNRESTRICTED(7),
+        UNRESTRICTED(6),
+        CUSTOM(7),
         NUM_TYPES(8);
 
         private final int id;
@@ -78,11 +78,11 @@ public class QuickAccessConfig {
     // Quivers can only hold arrows
     public static Integer[] QUIVER_ARRAY =           {2,2,2,2,2,2,2,2};
 
-    // Custom array can be edited to hold a set amount
-    public static Integer[] CUSTOM_ARRAY =           {2,2,2,2,2,2,2,2};
-
     // Unrestricted array can hold anything
     public static Integer[] UNRESTRICTED_ARRAY =         {2,2,2,2,2,2,2,2};
+
+    // Custom array can be edited to hold a set amount
+    public static Integer[] CUSTOM_ARRAY =           {2,2,2,2,2,2,2,2};
 
     // Get the number of different items the QuickAccess Item can swap between
     public static int getItemCount(ITEM_TYPE type, ITEM_TIER tier){
@@ -107,5 +107,19 @@ public class QuickAccessConfig {
             case UNRESTRICTED -> QuickAccessConfig.UNRESTRICTED_ARRAY;
             default -> new Integer[ITEM_TIER.NUM_TIERS.getId()];
         };
+    }
+
+    public static String[] getButtonsDisabledArray(ITEM_TYPE type, ITEM_TIER tier) {
+        String [] disabledArray = new String[MAX_QA_ITEMS];
+        int enabledItems = getItemCount(type, tier);
+        int currentItem = 0;
+        for (int i=0; i<MAX_QA_ITEMS; i++){
+            if (currentItem < enabledItems) {
+                disabledArray[i]="false";
+            }else{
+                disabledArray[i]="true";
+            }
+        }
+        return disabledArray;
     }
 }
