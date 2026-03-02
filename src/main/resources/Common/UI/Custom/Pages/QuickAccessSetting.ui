@@ -1,4 +1,47 @@
 $C = "../Common.ui";
 Group {
-
+  Background: (Color: #333333);
+  Anchor: (Width: 600, Height: 450);
+  Padding: (Left: 10, Top: 10);
+  Group #R0 {
+    LayoutMode: Left;
+    Background: (Color: #333333);
+    Anchor: (Height: 50);
+    Padding: (Full: 0);
+    Label #EqippedHotbarSlotLabel {
+      TooltipText: "Hotbar slot ID that Quick Access Item needs to be placed in to open GUI. (Values: 0-8 where 0 hotbar key 1)";
+      Anchor: (Width: 450);
+      Padding: (Full: 0);
+      Text: "Quick Access Equipped Hotbar Position (Default: 9)";
+      Style: (TextColor: #ffffff);
+    }
+    $C.@NumberField #EqippedHotbarSlotInput {
+      Anchor: (Width: 50);
+      Padding: (Full: 0);
+      Value: 0;
+      Min: 0;
+      Max: 8;
+    }
+  }
+  Group #R1 {
+    LayoutMode: Left;
+    Background: (Color: #333333);
+    Anchor: (Height: 50);
+    Padding: (Full: 0);
+    Label #TargetHotbarSlotLabel {
+      LayoutMode: LeftCenterWrap;
+      TooltipText: "Must be different from Equipped Position (Values: 0-8 where 0 hotbar key 1)";
+      Anchor: (Width: 450);
+      Padding: (Full: 0);
+      Text: "Quick Access Target Hotbar Position (Default: 0)";
+      Style: (TextColor: #ffffff);
+    }
+    $C.@NumberField #TargetHotbarSlotInput {
+      Anchor: (Width: 50, Height: 0);
+      Padding: (Full: 0);
+      Value: 0;
+      Min: 0;
+      Max: 8;
+    }
+  }
 }
