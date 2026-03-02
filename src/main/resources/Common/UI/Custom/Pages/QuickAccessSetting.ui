@@ -44,4 +44,16 @@ Group {
       Max: 8;
     }
   }
+  Group #R2 {
+    LayoutMode: Middle;
+    Background: (Color: #333333);
+    Anchor: (Height: 50);
+    Padding: (Full: 0);
+    $C.@TextButton #Save {
+      TooltipText: "Save updated values";
+      Anchor: (Width: 100);
+      Padding: (Full: 0);
+      Text: "Save";
+    }
+  }
 }
