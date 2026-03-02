@@ -82,7 +82,9 @@
       "QuickAccessMaxTotalItems": 9,
       "QuickAccessGuiButton": 8,
       "QuickAccessTargetLocation": 0,
-      "QuickAccessItemUuids": []
+      "QuickAccessItemUuids": [],
+      "QuickAccessItemNames": [],
+      "QuickAccessItemsDisabled": []
     }
   }
 }
