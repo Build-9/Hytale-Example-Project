@@ -64,25 +64,25 @@ public class QuickAccessConfig {
     //    - can see and interact with. 
     
     // Toolbelts can only Items with tool tag
-    public static Integer[] TOOLBELT_ARRAY =         {2,2,2,2,2,2,2,2};
+    public static Integer[] TOOLBELT_ARRAY =         {0,2,3,4,5,6,7,8};
 
     // Builders pouch can hold any building block
-    public static Integer[] BUILDERS_POUCH_ARRAY =   {2,2,2,2,2,2,2,2};
+    public static Integer[] BUILDERS_POUCH_ARRAY =   {0,2,3,4,5,6,7,8};
 
     // Slings can only hold weapons
-    public static Integer[] WEAPON_SLING_ARRAY =     {2,2,2,2,2,2,2,2};
+    public static Integer[] WEAPON_SLING_ARRAY =     {0,2,3,4,5,6,7,8};
 
     // Bandoleers can only hold consumables (Food, Bombs, Potions, but cant hold arrows)
-    public static Integer[] BANDOLIER_ARRAY =        {2,2,2,2,2,2,2,2};
+    public static Integer[] BANDOLIER_ARRAY =        {0,2,3,4,5,6,7,8};
     
     // Quivers can only hold arrows
-    public static Integer[] QUIVER_ARRAY =           {2,2,2,2,2,2,2,2};
+    public static Integer[] QUIVER_ARRAY =           {0,2,3,4,5,6,7,8};
 
     // Unrestricted array can hold anything
-    public static Integer[] UNRESTRICTED_ARRAY =         {2,2,2,2,2,2,2,2};
+    public static Integer[] UNRESTRICTED_ARRAY =     {0,2,3,4,5,6,7,8};
 
     // Custom array can be edited to hold a set amount
-    public static Integer[] CUSTOM_ARRAY =           {2,2,2,2,2,2,2,2};
+    public static Integer[] CUSTOM_ARRAY =           {0,2,3,4,5,6,7,8};
 
     // Get the number of different items the QuickAccess Item can swap between
     public static int getItemCount(ITEM_TYPE type, ITEM_TIER tier){
