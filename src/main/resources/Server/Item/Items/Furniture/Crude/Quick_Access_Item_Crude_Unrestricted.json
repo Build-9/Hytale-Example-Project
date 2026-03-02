@@ -29,7 +29,7 @@
     ]
   },
   "Container": {
-    "Capacity": 9
+    "Capacity": 8
   },
   "Interactions": {
     "Use": {
@@ -79,7 +79,7 @@
     "WojosToolbelt:WojosQuickAccess_Component_ID": {
       "QuickAccessItemTier": 7,
       "QuickAccessItemType": 7,
-      "QuickAccessMaxTotalItems": 9,
+      "QuickAccessMaxTotalItems": 8,
       "QuickAccessGuiButton": 8,
       "QuickAccessTargetLocation": 0,
       "QuickAccessItemUuids": [],
