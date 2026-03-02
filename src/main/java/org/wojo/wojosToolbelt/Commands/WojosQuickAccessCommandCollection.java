@@ -4,26 +4,29 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 
 // WojosQuickAccess                 - wqa
 //      component                       - comp  (C)
-//          addToPlayer                     - add      (A)         // wqa comp add      <arg: None>
-//          removeFromPlayer                - rm       (R)         // wqa comp rm       <arg: None>
-//          printComponentData              - print    (P)         // wqa comp print    <arg: None>
+//          addToItem                       - add      (A)         // wqa comp add      <arg: invId (Default: Hotbar=-1) + invPos (Default: 0)> (Add Quick Access Component to item in inventory)
+//          removeFromItem                  - rm       (R)         // wqa comp rm       <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (Remove Quick Access Component from item in inventory)
+//          printComponentData              - print    (P)         // wqa comp print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (Print Quick Access Component info from item in inventory)
+//          update                          - update   (U)         // wqa comp update   <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (Update QaComp with data from items container)
 //      item                            - item  (I)
-//          addItemToComponent              - add      (A)         // wqa items add     <arg: uuid, pos(optional)>
-//          removeItemFromComponent         - rm       (R)         // wqa items rm      <arg: pos, uuid(optional)>
-//          swapItem                        - swap     (S)         // wqa items swap    <arg: [uuid(optional), pos(optional)](One Required), targetpos(optional)>
+//          moveTo                          - mvto     (T)         // wqa item mvto     <arg: invId, invPos, qaInvId, qaInvPos, qaItemPos> (Move item from an iventory into Quick Access Item) 
+//          moveFrom                        - mvFm     (F)         // wqa item mvfm     <arg: qaInvId, qaInvPos, qaItemPos, invId, invPos> (Move item from Quick Access Item into another invenotry)
+//          remove                          - rm       (R)         // wqa item rm       <arg: qaInvId, qaInvPos, qaItemPos> (Remove an item stack from Quick Access Item) 
+//          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
 //      gui                              -guis  (G)
-//          itemSelectionPage               - select   (ISE)       // wqa guis select    <arg: (o/c)>
-//          itemStoragePage                 - store    (IST)       // wqa guis store     <arg: (o/c)>
-//          helpPage                        - help     (H)         // wqa guis help      <arg: (o/c)>
+//          itemSelectionPage               - select   (ISE)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)
+//          itemStoragePage                 - store    (IST)       // wqa guis store     <arg: qaInvId, qaInvPos, (o/c)> (Open or close item storage page tied to set Quick Access Item)
+//          settingsPage                    - settings (S)         // wqa guis settings  <arg: qaInvId, qaInvPos, (o/c)> (Open or close item settings page tied to quick access item)
+//          helpPage                        - help     (H)         // wqa guis help      <arg: (o/c)>                    (Open or close global help page)
 //      admin                            -admin (A)
-//          settingsPage                    - settings (S)         // wqa admin settings <arg: (o/c | true/false | 1/0)>
+//          settingsPage                    - settings (S)         // wqa admin settings <arg: (o/c | true/false | 1/0)> (Open or close global admin settings page)
 //      user                             -user  (U)
-//          settingsPage                    - settings (S)         // wqa user settings  <arg: (o/c)>
+//          settingsPage                    - settings (S)         // wqa user settings  <arg: qaInvId, qaInvPos, (o/c)> (Open or close user settings page)
 //      help                             -help  (H)
-//          guide                           - guide    (G)         // wqa help guide <arg: none> (calls `wqa guis help o` to open help gui)
+//          guide                           - guide    (G)         // wqa help guide <arg: none> (Calls: wqa guis help)
 public class WojosQuickAccessCommandCollection extends AbstractCommandCollection {
     public WojosQuickAccessCommandCollection() {
-        super("WojosQuickAccess","All commands associated with Wojo's Toolbelt");
+        super("WojosQuickAccess","All commands associated with Wojo's Quick Access Items (Toolbelts, slings, and more)");
 //        this.addSubCommand(new ComponentCollection());
 //        this.addSubCommand(new ItemCollections());
 //        this.addSubCommand(new GuiCollection());
