@@ -4,15 +4,6 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 
 public class QuickAccessConfig {
     public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
-
-    public static final BuilderCodec<MyConfig> CODEC = BuilderCodec.builder(QuickAccessConfig.class, QuickAccessConfig::new)
-            .append(new KeyedCodec<Integer>("HotbarItemEquppedLocation", Codec.INTEGER),
-                    (config, value) -> config.HOTBAR_GUI_BUTTON = value, // Setter
-                    (config) -> config.HOTBAR_GUI_BUTTON).add() // Getter
-            .append(new KeyedCodec<String>("HotbarDestinationLocation", Codec.INTEGER),
-                    (config, value) -> config.HOTBAR_SWAP_LOCATION = value,
-                    (config) -> config.HOTBAR_SWAP_LOCATION).add()
-            .build();
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
