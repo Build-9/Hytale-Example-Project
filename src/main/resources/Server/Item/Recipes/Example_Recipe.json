@@ -6,7 +6,7 @@
     }
   ],
   "PrimaryOutput": {
-    "ItemId": "Soil_Dirt",
+    "ItemId": "Quick_Access_Item_Crude_Unrestricted",
     "Quantity": 1
   },
   "BenchRequirement": [
