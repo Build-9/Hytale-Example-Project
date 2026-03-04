@@ -42,20 +42,21 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
         ItemStack[] itemsInQuickAccess = getItemsInQuickAccessContainer(heldItemStack);
         QuickAccessComponent updatedQaComp = null;
-        String[] itemNames = updatedQaComp.getItemIdArray();
-
-        if(itemsInQuickAccess != null) {
-            QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
+        QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
+        if(itemsInQuickAccess != null && quickAccessComponent != null) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Old Component: " + quickAccessComponent.getPrintableString());
 
             // ------ Update Component on item with new Component info ------
             updatedQaComp = this.updateQuickAccessComponent(itemsInQuickAccess, quickAccessComponent);
             saveUpdatedComponent(updatedQaComp, player);
+        }else{
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Component is Null");
         }
 
-
+        String[] itemNames = {"1","2","3","4","5","6","7","8"};
+        String[] disabledButtons = {"false","false","true","true","true","true","true","true"};
         // Open GUI
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, "Empty", itemNames, disabledButtons);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, heldItemStack);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 
@@ -86,7 +87,11 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
     }
 
     private QuickAccessComponent getItemsQuickAccessComponent (ItemStack quickAccessItemStack) {
-        QuickAccessComponent quickAccessComponent = quickAccessItemStack.getFromMetadataOrDefault(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID,QuickAccessComponent.CODEC);
+        QuickAccessComponent quickAccessComponent = quickAccessItemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
+        if(quickAccessComponent == null){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comp Data failed to parse!");
+            return null;
+        }
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comp Data: \n"+quickAccessComponent.getPrintableString());
         return quickAccessComponent;
     }

@@ -7,10 +7,12 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.BasicCustomUIPage;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
@@ -20,6 +22,7 @@ import com.hypixel.hytale.server.flock.FlockMembershipSystems;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import javax.annotation.Nonnull;
@@ -35,8 +38,10 @@ import java.util.List;
 //
 public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.UiData> {
     String[] buttonNames = new String[10];
-    Boolean[] isButtonDisabled = new Boolean[10];
+    String[] isButtonDisabled = new String[10];
     String equippedItem = "Empty";
+
+    ItemStack heldQuickAccessItem = null;
 
     public static class UiData {
         public String buttonSelected = "N/A";
@@ -51,11 +56,15 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             .build();
     }
     
-    public ItemSelectionGui(@Nonnull PlayerRef playerRef, String equippedItem, String[] storedItems, Boolean[] disabledButtons) {
+    public ItemSelectionGui(@Nonnull PlayerRef playerRef, ItemStack heldItem) {
         super(playerRef, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
-        this.equippedItem = equippedItem;
-        this.buttonNames = storedItems.clone();
-        this.isButtonDisabled = disabledButtons.clone();
+        this.heldQuickAccessItem = heldItem;
+
+        QuickAccessComponent quickAccessComponent = QuickAccessUtils.getItemsQuickAccessComponent(heldItem);
+        ItemStack[] containerItems = QuickAccessUtils.getContainerComponentItems(heldItem);
+        this.buttonNames = QuickAccessUtils.getItemNamesArray(containerItems);
+        this.equippedItem = heldItem.getItemId();
+        this.isButtonDisabled = QuickAccessConfig.getButtonsDisabledArray(quickAccessComponent);
     }
 
     @Override
@@ -82,19 +91,19 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
         uiCommandBuilder.set("#QuickAccessButton7.Text", buttonNames[6]);
         uiCommandBuilder.set("#QuickAccessButton8.Text", buttonNames[7]);
 
-        uiCommandBuilder.set("#QuickAccessButton1.Disabled", isButtonDisabled[0].toString());
-        uiCommandBuilder.set("#QuickAccessButton2.Disabled", isButtonDisabled[1].toString());
-        uiCommandBuilder.set("#QuickAccessButton3.Disabled", isButtonDisabled[2].toString());
-        uiCommandBuilder.set("#QuickAccessButton4.Disabled", isButtonDisabled[3].toString());
-        uiCommandBuilder.set("#QuickAccessButton5.Disabled", isButtonDisabled[4].toString());
-        uiCommandBuilder.set("#QuickAccessButton6.Disabled", isButtonDisabled[5].toString());
-        uiCommandBuilder.set("#QuickAccessButton7.Disabled", isButtonDisabled[6].toString());
-        uiCommandBuilder.set("#QuickAccessButton8.Disabled", isButtonDisabled[7].toString());
-
+//        uiCommandBuilder.set("#QuickAccessButton1.Disabled", isButtonDisabled[0]);
+//        uiCommandBuilder.set("#QuickAccessButton2.Disabled", isButtonDisabled[1]);
+//        uiCommandBuilder.set("#QuickAccessButton3.Disabled", isButtonDisabled[2]);
+//        uiCommandBuilder.set("#QuickAccessButton4.Disabled", isButtonDisabled[3]);
+//        uiCommandBuilder.set("#QuickAccessButton5.Disabled", isButtonDisabled[4]);
+//        uiCommandBuilder.set("#QuickAccessButton6.Disabled", isButtonDisabled[5]);
+//        uiCommandBuilder.set("#QuickAccessButton7.Disabled", isButtonDisabled[6]);
+//        uiCommandBuilder.set("#QuickAccessButton8.Disabled", isButtonDisabled[7]);
 
 
         //uiCommandBuilder.set("#QuickSwap1.Visible", false);
         // TODO: Set Button bg to item icon?
+        uiCommandBuilder.set("#QuickAccessButtonEquipped.Background", equippedItem);
 
     }
 

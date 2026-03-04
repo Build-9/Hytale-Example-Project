@@ -27,7 +27,7 @@ public class FindItemHandler implements Consumer<FindItemEvent> {
         Player playerComp = store.getComponent(player, Player.getComponentType());
 
         if (qaComp != null && playerComp != null){
-            qaComp.getItemInArray(qaComp.getSwapTargetLocation());
+            qaComp.getItemInIdArray(qaComp.getSwapTargetLocation());
 
             int srcInventoryType = Inventory.STORAGE_SECTION_ID;
             ItemContainer mainInventory = playerComp.getInventory().getStorage();

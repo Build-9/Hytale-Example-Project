@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt.Config;
 
 import com.hypixel.hytale.server.core.inventory.Inventory;
+import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 
 public class QuickAccessConfig {
     public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
@@ -85,15 +86,18 @@ public class QuickAccessConfig {
     public static Integer[] CUSTOM_ARRAY =           {0,2,3,4,5,6,7,8};
 
     // Get the number of different items the QuickAccess Item can swap between
-    public static int getItemCount(ITEM_TYPE type, ITEM_TIER tier){
+    public static int getItemCount(QuickAccessComponent item) {
+        int tier = item.getItemTier();
+        int type = item.getItemType();
+
         // validatate type and tier
-        if (tier.getId() >= ITEM_TIER.NUM_TIERS.getId() || tier.getId() < 0 ||
-           type.getId() > ITEM_TYPE.NUM_TYPES.getId() || type.getId() < 0 ){
+        if (tier >= ITEM_TIER.NUM_TIERS.getId() || tier < 0 ||
+           type > ITEM_TYPE.NUM_TYPES.getId() || type < 0 ){
             return 0;
         }
         
-        Integer[] itemTypeArray = getItemArray(type);
-        return itemTypeArray[tier.getId()];
+        Integer[] itemTypeArray = getItemArray(ITEM_TYPE.fromId(type));
+        return itemTypeArray[tier];
     }
 
     public static Integer[] getItemArray(ITEM_TYPE type){
@@ -109,12 +113,11 @@ public class QuickAccessConfig {
         };
     }
 
-    public static String[] getButtonsDisabledArray(ITEM_TYPE type, ITEM_TIER tier) {
+    public static String[] getButtonsDisabledArray(QuickAccessComponent item) {
         String [] disabledArray = new String[MAX_QA_ITEMS];
-        int enabledItems = getItemCount(type, tier);
         int currentItem = 0;
         for (int i=0; i<MAX_QA_ITEMS; i++){
-            if (currentItem < enabledItems) {
+            if ( item != null && currentItem < getItemCount(item)) {
                 disabledArray[i]="false";
             }else{
                 disabledArray[i]="true";

@@ -38,7 +38,7 @@ public class SwapItemHandler implements Consumer<SwapItemEvent> {
         Player playerComp = store.getComponent(player, Player.getComponentType());
 
         if (qaComp != null && playerComp != null){
-            qaComp.getItemInArray(qaComp.getSwapTargetLocation());
+            qaComp.getItemInIdArray(qaComp.getSwapTargetLocation());
 
             // TODO: Update to verify input types are pointing at correct location
             ItemContainer mainInventory = playerComp.getInventory().getStorage();

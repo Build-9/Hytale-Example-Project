@@ -11,6 +11,11 @@ $C = "../Common.ui";
 // * X X * X X * X X * <\
 // * X X * X X * X X * </ Quick Access [8, 4, 6]
 // * * * * * * * * * *
+// @ButtonStyle = ButtonStyle(Default: (Background: (Color: #1e2a38(0.85))),Hovered: (Background: (Color: #2a3a4a(0.95))),Pressed: (Background: (Color: #101820)));
+// @LabelStyle = (Alignment: Center,FontSize: 12,TextColor: #ffffff );
+// Button #EmoteButton {Anchor: (Width: 70, Height: 28);
+// Style: @ButtonStyle;Padding: 4;Label #EmoteLabel {Style: @LabelStyle;}}
+// @DisabledButtonStyle=""
 
 Group {
   LayoutMode: Top;
