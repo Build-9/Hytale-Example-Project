@@ -8,9 +8,9 @@ public class QuickAccessConfig {
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
-    public static final int MAX_QA_ITEMS = 10;
-    public static final int HOTBAR_GUI_BUTTON = 8; // Button 9
-    public static final int HOTBAR_SWAP_LOCATION = 0; // Button 1
+    public static final int MAX_QA_ITEMS = 8; // Should match item_json container field
+    public static int HOTBAR_GUI_BUTTON = 8; // Button 9
+    public static int HOTBAR_SWAP_LOCATION = 0; // Button 1
     
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {

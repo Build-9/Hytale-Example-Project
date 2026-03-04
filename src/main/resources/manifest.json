@@ -17,7 +17,8 @@
         
     },
     "Documents": [
-        "Common/UI/Custom/Pages/ToolSelectionUI.ui"
+        "Common/UI/Custom/Pages/ThreeByThreeQuickAccess.ui",
+        "Common/UI/Custom/Pages/QuickAccessSettings.ui"
     ],
     "DisabledByDefault": false,
     "Main": "org.wojo.wojosToolbelt.WojosQuickAccessPlugin",
