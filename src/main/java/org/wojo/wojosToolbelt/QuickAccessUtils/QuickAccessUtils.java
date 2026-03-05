@@ -18,6 +18,7 @@ public class QuickAccessUtils {
   
   // Get a quickAccessComponent from an item if it exists, else get null
   public static QuickAccessComponent getItemsQuickAccessComponent (ItemStack itemStack) {
+    //TODO: if value doesnt exist, set comp on item
     return itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
   }
 

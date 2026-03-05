@@ -63,7 +63,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
     private List<ButtonData> quickAccessButtons = new ArrayList<>(Collections.nCopies(QUICK_SWAP_BUTTON_IDS.length, new ButtonData()));
     private ButtonData settingsButton = new ButtonData();
     private ButtonData equipedItemButton = new ButtonData();
+
     private ItemStack associatedQuickAccessItem = null;
+    ItemStack[] containerItems = null;
+    QuickAccessComponent quickAccessComponent = null;
+    ItemStack targetItem = null;
 
 
 
@@ -80,14 +84,18 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             .build();
     }
     
-    public ItemSelectionGui(@Nonnull PlayerRef playerRef, ItemStack quickAccessItem) {
-        super(playerRef, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
-        this.associatedQuickAccessItem = quickAccessItem;
+    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Player player, ItemStack quick_access_item) {
+        super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
+
+        this.associatedQuickAccessItem  = quick_access_item;
+        this.containerItems             = QuickAccessUtils.getContainerComponentItems(quick_access_item);
+        this.quickAccessComponent       = QuickAccessUtils.getItemsQuickAccessComponent(quick_access_item);
+        this.targetItem                 = QuickAccessUtils.getTargetItem(player, quickAccessComponent);
 
         // Update Display Data with data from player and players quick access item
-        //this.quickAccessButtons = this.getQuickAccessButtonData(associatedQuickAccessItem);
-        //this.equipedItemButton = this.getEquippedButtonData(player, associatedQuickAccessItem);
-        //this.settingsButton = this.getSettingsButtonData(associatedQuickAccessItem);
+        this.quickAccessButtons     = this.getQuickAccessButtonData();
+        this.equipedItemButton      = this.getEquippedButtonData();
+        this.settingsButton         = this.getSettingsButtonData();
     }
 
     @Override
@@ -147,19 +155,36 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
         }
     }
 
-    private ButtonData getQuickAccessButtonData(ItemStack quick_access_item){
-
+    private ButtonData getQuickAccessButtonData(){
+        for (int i=0; i<quickAccessButtons.length; i++) {
+            if (i < containerItems.length) {
+                this.quickAccessButtons[i].buttonMsg = getTranslatedItemName(containerItems[i]);
+                this.quickAccessButtons[i].buttonText = containerItems[i].getItemId();
+            }else{
+                this.quickAccessButtons.buttonText = String.valueOf(i);
+            }
+        }
     }
 
-    private ButtonData getEquippedButtonData(Player player, ItemStack quick_access_item){
-
-        // msg, text, icon, isDisabled, stlye
-        QuickAccessUtils.;
-        return new ButtonData(null, "", "Icon", "false", "style")
+    private ButtonData getEquippedButtonData(){
+        Message msg = getTranslatedItemName(targetItem);
+        return new ButtonData(msg, "NONE", "Icon", "false", "style")
     }
-
-    private ButtonData getSettingsButtonData(ItemStack quickAccessItem){
+    
+    private ButtonData getSettingsButtonData(){
         // msg, text, icon, isDisabled, stlye
         return new ButtonData(null, "!Settings!", "Icon", "false", "style")
+    }
+
+    private Message getTranslatedItemName(ItemStack item) {
+        Message msg = null;
+
+        String itemId = item.getItem().getId();
+        // TODO: validate asset
+        String translationKey = Item.getAssetMap().getAsset(itemId).getTranslationKey();
+        if (translationKey != null) {
+            msg = Message.translation(translationKey)
+        }
+        return msg;
     }
 }

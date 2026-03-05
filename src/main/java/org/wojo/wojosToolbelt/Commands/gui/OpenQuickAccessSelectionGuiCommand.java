@@ -39,23 +39,9 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         Player player = store.getComponent(ref,Player.getComponentType());
 
         // ------ Get Item Info ------
-        ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
-        ItemStack[] itemsInQuickAccess = getItemsInQuickAccessContainer(heldItemStack);
-        QuickAccessComponent updatedQaComp = null;
-        QuickAccessComponent quickAccessComponent = getItemsQuickAccessComponent(heldItemStack);
-        if(itemsInQuickAccess != null && quickAccessComponent != null) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Old Component: " + quickAccessComponent.getPrintableString());
-
-        }else{
-            // ------ Update Component on item with new Component info ------
-            saveUpdatedComponent(updatedQaComp, player);
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comsponent is Null");
-        }
-
-        String[] itemNames = {"1","2","3","4","5","6","7","8"};
-        String[] disabledButtons = {"false","false","true","true","true","true","true","true"};
-        // Open GUI
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, heldItemStack);
+        ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+        
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, quickAccessItem, containerItems, quickAccessComponent, targetItem);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 
