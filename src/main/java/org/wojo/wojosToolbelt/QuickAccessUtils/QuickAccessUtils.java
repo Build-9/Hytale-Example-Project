@@ -9,7 +9,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 public class QuickAccessUtils {
   public static ItemStack updateQuickAccessComponent(ItemStack quickAccessItemStack) {
-      // Update Quick Access Component Arrays from item Data
+    // Update Quick Access Component Arrays from item Data
     if (quickAccessItemStack == null){
       return null;
     }
@@ -26,13 +26,13 @@ public class QuickAccessUtils {
   
   // Get a quickAccessComponent from an item if it exists, else get null
   public static QuickAccessComponent getItemsQuickAccessComponent (ItemStack itemStack) {
-        return itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
+    return itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
   }
 
   // Get array of items in a container if item has container field, else get null. 
   public static ItemStack[] getContainerComponentItems(ItemStack itemStack) {
-        BsonDocument containerBSON = itemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
-        return ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
+    BsonDocument containerBSON = itemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
+    return ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
   }
 
   // Get array of item names from an array of item stacks
