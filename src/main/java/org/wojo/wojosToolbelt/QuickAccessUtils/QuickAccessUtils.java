@@ -8,14 +8,6 @@ import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 public class QuickAccessUtils {
-  public static ItemStack updateQuickAccessComponent(ItemStack quickAccessItemStack) {
-    // Update Quick Access Component Arrays from item Data
-    if (quickAccessItemStack == null){
-      return null;
-    }
-    return null;
-  }
-
   public static boolean hasQuickAccessComponent(ItemStack itemStack) {
     QuickAccessComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
     if (comp != null) {
@@ -35,29 +27,14 @@ public class QuickAccessUtils {
     return ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
   }
 
-  // Get array of item names from an array of item stacks
-  public static String[] getItemNamesArray(ItemStack[] items){
-    String[] itemNames = new String[QuickAccessConfig.MAX_QA_ITEMS];
-    for (int i = 0; i < QuickAccessConfig.MAX_QA_ITEMS; i++) {
-      if (items!= null && i<items.length && items[i] != null) {
-        itemNames[i] = items[i].getItemId();
-      }else{
-        itemNames[i] = "null";
-      }
-    }
-    return itemNames;
-  }
+  public static ItenStack getTargetItem(Player player, QuickAccessComponent quickAccessComponent){
+    if (player == null || quickAccessComponent == null ) {return null;}
 
-  // Get array of item ID's from an array of item Stacks
-  public static String[] getItemIdArray(ItemStack[] items){
-    String[] itemIds = new String[QuickAccessConfig.MAX_QA_ITEMS];
-    for (int i = 0; i < QuickAccessConfig.MAX_QA_ITEMS; i++) {
-      if (items!= null && i<items.length && items[i] != null) {
-        itemIds[i] = items[i].getItemId();
-      }else{
-        itemIds[i] = "null";
-      }
+    if (quickAccessComponent.getTargetLocation() == -1){
+      // get players active gotbar slot
+      return player.getHotbar().getActiveHotbarItem();
+    } else {
+      return player.getHotbar().getItem(quickAccessComponent.getTargetLocation());
     }
-    return itemIds;
   }
 }
