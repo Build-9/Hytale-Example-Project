@@ -46,11 +46,10 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         if(itemsInQuickAccess != null && quickAccessComponent != null) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Old Component: " + quickAccessComponent.getPrintableString());
 
-            // ------ Update Component on item with new Component info ------
-            updatedQaComp = this.updateQuickAccessComponent(itemsInQuickAccess, quickAccessComponent);
-            saveUpdatedComponent(updatedQaComp, player);
         }else{
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Component is Null");
+            // ------ Update Component on item with new Component info ------
+            saveUpdatedComponent(updatedQaComp, player);
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comsponent is Null");
         }
 
         String[] itemNames = {"1","2","3","4","5","6","7","8"};
@@ -89,26 +88,12 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
     private QuickAccessComponent getItemsQuickAccessComponent (ItemStack quickAccessItemStack) {
         QuickAccessComponent quickAccessComponent = quickAccessItemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
         if(quickAccessComponent == null){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comp Data failed to parse!");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comp Data failed to parse! Creating new Component");
+            quickAccessComponent = new QuickAccessComponentFactory.createQuickAccessComponent(quickAccessItemStack.getItem().getId());
             return null;
         }
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Quick Access Comp Data: \n"+quickAccessComponent.getPrintableString());
         return quickAccessComponent;
-    }
-
-    private QuickAccessComponent updateQuickAccessComponent(ItemStack[] containerItems, QuickAccessComponent component){
-        String [] quickAccessItemArray = new String[containerItems.length];
-        for (int i=0; i<containerItems.length; i++){
-            ItemStack itemStack = containerItems[i];
-            if(itemStack != null){
-                quickAccessItemArray[i] = itemStack.getItemId();
-            }else{
-                quickAccessItemArray[i] = "null";
-            }
-        }
-
-        component.setItemIdArray(quickAccessItemArray);
-        return component;
     }
 
     // Save the updated conponent data back to the players item in their inventory
@@ -117,11 +102,16 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
         ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
 
         // Create new local item with updated info
-        ItemStack newItemStack = heldItemStack.withMetadata(
+        ItemStack newItemStack = heldItemStack.setMetadata(
                 QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID,
                 QuickAccessComponent.CODEC,
                 newComponent
                 );
+        
+        // newItemStack.setMetadata(
+        //     new NamespacedKey("WojosToolbelt", QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID),
+        //     newComponent
+        // );
 
         // Update item in player inventory with new item
         player.getInventory().getHotbar().removeItemStackFromSlot(player.getInventory().getActiveSlot(Inventory.HOTBAR_SECTION_ID));
