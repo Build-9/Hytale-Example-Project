@@ -139,8 +139,6 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Settings Pressed");
         } else if (buttonPressed.equals("equipped")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Pressed");
-        } else if (buttonPressed.equals("toggle")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Toggle Pressed");
         } else{
                 CommandManager.get().handleCommand(playerRef, "swap --src-pos "+buttonPressed);
         }
