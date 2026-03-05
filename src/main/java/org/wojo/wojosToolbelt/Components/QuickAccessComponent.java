@@ -14,207 +14,154 @@ import java.util.Arrays;
 public class QuickAccessComponent implements Component<EntityStore> {
     // ==========================================================================
     // --------------------------- Component Data -------------------------------
-    private int _quick_access_item_tier = 0;        // Tier of Quick Access Item
-    private int _quick_access_item_type = 0;        // Type of Quick Access Item this is.
-    private final int _quick_access_config_total_items = QuickAccessConfig.MAX_QA_ITEMS;           // Max number of total items this QuickAccess Component can store
-    private int _quick_access_max_total_items = 0;  // Custom number of items this comp can store. Must be less than config
-    private int _quick_access_gui_button = QuickAccessConfig.HOTBAR_GUI_BUTTON;    // Hotbar position that opens gui
-    private int _quick_access_target_location = QuickAccessConfig.HOTBAR_SWAP_LOCATION;  // Hotbar position to swap item into
+    private int _item_tier = 0;        // Tier of Quick Access Item (Common, Uncommon, Rare, Epic, etc)
+    private int _item_type = 0;        // Type of Quick Access Item this is. (Quiver, Toolbelt, Unrestricted, etc)
 
-    // Can't get item ref's of items in containers only item id & position. (UUID == ItemId for the time being)
-    // - First design will use Item ID so multiple of the same item will return first instance.
-    // - TODO: Use actual UUID for items added so player can select specific item in inventory 
-    private String[] _quick_access_item_uuids = new String[QuickAccessConfig.MAX_QA_ITEMS]; // Array of item UUIDs where array position correlates to UI button that pulls it to players hotbar
-    private String[] _quick_access_item_names = new String[QuickAccessConfig.MAX_QA_ITEMS];
-    private String[] _quick_quick_access_items_disabled = new String[QuickAccessConfig.MAX_QA_ITEMS];
+    private int _equipped_hotbar_location = 8;      // Hotbar location item needs to be placed in to be 'equipped' (8 == button 9)
+    private int _target_hotbar_location = 0;        // Hotbar location items get swapped into (0==1 and -1 == eqipped hotbar)
+
+    private boolean _is_quick_swap_enabled = false; // Can the user press equpped slot to open GUI (true) or do they need to use item interaction
+    
+    // There are pre defined Quick-Access radial GUI's, make sure using correct gui for comps number of items
+    private String _item_selection_ui = "Pages/ThreeByThreeQuickAccess.ui";   // What UI file to use
+
     // ========================= End Component Data =============================
 
     public QuickAccessComponent(){
     }
 
-    public QuickAccessComponent(int item_tier, int item_type, int max_items, int gui_button, int target_location, String[] item_uuids, String[] item_names, String[] items_disabled){
-        this._quick_access_item_tier = item_tier;
-        this._quick_access_item_type = item_type;
-        this._quick_access_max_total_items = max_items;
-        this._quick_access_gui_button = gui_button;
-        this._quick_access_target_location = target_location;
-        this._quick_access_item_uuids = item_uuids.clone();
-        this._quick_access_item_names = item_names.clone();
-        this._quick_quick_access_items_disabled = items_disabled.clone();
+    public QuickAccessComponent(int item_tier, int item_type, int equipped_location, int target_location, boolean is_swap_enabled, String item_selection_file){
+        this._item_tier = item_tier;
+        this._item_type = item_type;
+        this._equipped_hotbar_location = equipped_location;
+        this._target_hotbar_location = target_location;
+        this._is_quick_swap_enabled = is_swap_enabled;
+        this._item_selection_ui = item_selection_file;
     }
 
     public QuickAccessComponent(QuickAccessComponent original){
-        this._quick_access_item_tier = original._quick_access_item_tier;
-        this._quick_access_item_type = original._quick_access_item_type;
-        this._quick_access_max_total_items = original._quick_access_max_total_items;
-        this._quick_access_gui_button = original._quick_access_gui_button;
-        this._quick_access_target_location = original._quick_access_target_location;
-        this._quick_access_item_uuids = original._quick_access_item_uuids.clone();
-        this._quick_access_item_names = original._quick_access_item_names.clone();
-        this._quick_quick_access_items_disabled = original._quick_quick_access_items_disabled.clone();
+        this._item_tier = original._item_tier;
+        this._item_type = original._item_type;
+        this._equipped_hotbar_location = original._equipped_hotbar_location;
+        this._target_hotbar_location = original._target_hotbar_location;
+        this._is_quick_swap_enabled = original._is_quick_swap_enabled;
+        this._item_selection_ui = original._item_selection_ui;
+    }
+
+    @NullableDecl
+    @Override
+    public Component<EntityStore> clone() {
+        QuickAccessComponent copy = new QuickAccessComponent();
+        copy._item_tier = this._item_tier;
+        copy._item_type = this._item_type;
+        copy._equipped_hotbar_location = this._equipped_hotbar_location;
+        copy._target_hotbar_location = this._target_hotbar_location;
+        copy._is_quick_swap_enabled = this._is_quick_swap_enabled;
+        copy._item_selection_ui = this._item_selection_ui;
+        return copy;
     }
 
     public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
         .builder(QuickAccessComponent.class, QuickAccessComponent::new)
         .append(
             new KeyedCodec<>("QuickAccessItemTier", Codec.INTEGER),
-            (component, value) -> component._quick_access_item_tier = value,
-            component -> component._quick_access_item_tier
+            (component, value) -> component._item_tier = value,
+            component -> component._item_tier
         ).add()
         .append(
             new KeyedCodec<>("QuickAccessItemType", Codec.INTEGER),
-            (component, value) -> component._quick_access_item_type = value,
-            component -> component._quick_access_item_type
+            (component, value) -> component._item_type = value,
+            component -> component._item_type
         ).add()
         .append(
-            new KeyedCodec<>("QuickAccessMaxTotalItems", Codec.INTEGER),
-            (component, value) -> component._quick_access_max_total_items = value,
-            component -> component._quick_access_max_total_items
+            new KeyedCodec<>("QuickAccessEquippedHotbarLocation", Codec.INTEGER),
+            (component, value) -> component._equipped_hotbar_location = value,
+            component -> component._equipped_hotbar_location
         ).add()
         .append(
-            new KeyedCodec<>("QuickAccessGuiButton", Codec.INTEGER),
-            (component, value) -> component._quick_access_gui_button = value,
-            component -> component._quick_access_gui_button
+            new KeyedCodec<>("QuickAccessTargetHotbarLocation", Codec.INTEGER),
+            (component, value) -> component._target_hotbar_location = value,
+            component -> component._target_hotbar_location
         ).add()
         .append(
-            new KeyedCodec<>("QuickAccessTargetLocation", Codec.INTEGER),
-            (component, value) -> component._quick_access_target_location = value,
-            component -> component._quick_access_target_location
+            new KeyedCodec<>("QuickAccessItemIsQuickSwapEnabled", Codec.BOOLEAN),
+            (component, value) -> component._is_quick_swap_enabled = value,
+            component -> component._is_quick_swap_enabled
         ).add()
         .append(
-            new KeyedCodec<>("QuickAccessItemUuids", Codec.STRING_ARRAY),
-            (component, value) -> component._quick_access_item_uuids = value,
-            component -> component._quick_access_item_uuids
-        )
-        .add()
-        .append(
-                new KeyedCodec<>("QuickAccessItemNames", Codec.STRING_ARRAY),
-                (component, value) -> component._quick_access_item_names = value,
-                component -> component._quick_access_item_names
-        )
-        .add()
-        .append(
-                new KeyedCodec<>("QuickAccessItemsDisabled", Codec.STRING_ARRAY),
-                (component, value) -> component._quick_quick_access_items_disabled = value,
-                component -> component._quick_quick_access_items_disabled
-        )
-        .add()
+            new KeyedCodec<>("ItemSelectionUi", Codec.STRING),
+            (component, value) -> component._item_selection_ui = value,
+            component -> component._item_selection_ui
+        ).add()
         .build();
 
-    @NullableDecl
-    @Override
-    public Component<EntityStore> clone() {
-        QuickAccessComponent copy = new QuickAccessComponent();
-        copy._quick_access_item_tier = this._quick_access_item_tier;
-        copy._quick_access_item_type = this._quick_access_item_type;
-        copy._quick_access_max_total_items = this._quick_access_max_total_items;
-        copy._quick_access_gui_button = this._quick_access_gui_button;
-        copy._quick_access_target_location = this._quick_access_target_location;
-        copy._quick_access_item_uuids = this._quick_access_item_uuids.clone();
-        copy._quick_access_item_names = this._quick_access_item_names.clone();
-        copy._quick_quick_access_items_disabled = this._quick_quick_access_items_disabled.clone();
-        return copy;
-    }
 
     // ============ Getters and Setters ============
     // --- QAItemComp Tier ---
     public int getItemTier() {
-        return this._quick_access_item_tier;
+        return this._item_tier;
     }
     public void setItemTier(int tier) {
-        this._quick_access_item_tier = tier;
+        this._item_tier = tier;
     }
     
     // --- QAItemComp Type ---
     public int getItemType() {
-        return this._quick_access_item_type;
+        return this._item_type;
     }
     public void setItemType(int type){
-        this._quick_access_item_type = type;
+        this._item_type = type;
     }
 
-    // --- QAItemComp MaxItems ---
-    public int getMaxTotalItems(){
-        return this._quick_access_max_total_items;
+    // --- Equipped Hotbar Loc ---
+    public int getEquippedLocation(){
+        return this._equipped_hotbar_location;
     }
-    public void setMaxTotalItems(int max){
-        this._quick_access_max_total_items = max;
-    }
-
-    // --- QAItemComp Gui Button ---
-    public int getGuiButton(){
-        return this._quick_access_gui_button;
-    }
-    public void setGuiButton(int hotbar_button){
-        this._quick_access_gui_button = hotbar_button;
+    public void setEquippedLocation(int loc){
+        this._equipped_hotbar_location = loc;
     }
 
-    // --- QAItemComp TargetLocation ---
-    
-    public int getSwapTargetLocation(){
-        return this._quick_access_target_location;
+    // --- Target Hotbar Loc ---
+    public int getTargetLocation(){
+        return this._target_hotbar_location;
     }
-    public void setSwapTargetLocation(int hotbar_button){
-        this._quick_access_target_location = hotbar_button;
+    public void setTargetLocation(int loc){
+        this._target_hotbar_location = loc;
     }
 
-    // -- Array Accessors ---
-    public String[] getItemIdArray(){
-        return this._quick_access_item_uuids;
+    // --- is QuickSwap Enabled ---
+    public boolean getIsQuickSwapEnabled(){
+        return this._is_quick_swap_enabled;
     }
-    public void setItemIdArray(String[] item_uuids){
-        this._quick_access_item_uuids = item_uuids.clone();
+    public void setItQuickSwapEnabled(boolean is_enabled){
+        this._is_quick_swap_enabled = is_enabled;
     }
-    public void setItemInIdArray(String item_uuid, int position){
-        this._quick_access_item_uuids[position] = item_uuid;
+
+    // --- item Selection Ui
+    public String getItemSelectionUi(){
+        return this._item_selection_ui;
     }
-    public String getItemInIdArray(int position){
-        return this._quick_access_item_uuids[position];
-    }
-    //
-    public String[] getItemNameArray(){
-        return this._quick_access_item_names;
-    }
-    public void setItemNameArray(String[] item_names){
-        this._quick_access_item_names = item_names.clone();
-    }
-    public void setItemInNameArray(String item_name, int position){
-        this._quick_access_item_names[position] = item_name;
-    }
-    public String getItemInNameArray(int position){
-        return this._quick_access_item_names[position];
-    }
-    //
-    public String[] getItemsDisabledArray(){
-        return this._quick_quick_access_items_disabled;
-    }
-    public void setItemsDisabledArray(String[] item_bools){
-        this._quick_quick_access_items_disabled = item_bools.clone();
-    }
-    public void setItemInDisabledArray(String item_bools, int position){
-        this._quick_quick_access_items_disabled[position] = item_bools;
-    }
-    public String getItemInDisabledArray(int position){
-        return this._quick_quick_access_items_disabled[position];
+    public void setItemSelectionUi(String ui_path){
+        this._item_selection_ui = ui_path;
     }
 
     // -- Debug Output --
     public String getPrintableString(){
         String debugResult = String.format(
-            "\n"+
-            "Quick Access Item Type: %d \n"+
+            "[DEBUG] Quick Access Component Data:\n"+
+            "- Quick Access Item Type: %d \n"+
             "- Quick Access Tier: %d \n" +
-            "- Max Num Total Items: %d \n" +
-            "- GUI Button: %d \n"+
-            "- Target Location: %d \n",
+            "- Equipped Hotbar Loc: %d \n" +
+            "- Target Hotbar Loc: %d \n"+
+            "- Is Quick Swap Enabled: %d \n",
+            "- Item Selection UI: %s \n"
             this.getItemType(),
             this.getItemTier(),
-            this.getMaxTotalItems(),
-            this.getGuiButton(),
-            this.getSwapTargetLocation()
+            this.getEquippedLocation(),
+            this.getTargetLocation(),
+            this.getIsQuickSwapEnabled(),
+            this.getItemSelectionUi()
         );
-
-        debugResult += "- Item Array: "+ Arrays.toString(this._quick_access_item_uuids)+"\n";
 
         return debugResult;
     }
