@@ -1,0 +1,41 @@
+$C = "../Common.ui";
+Group {
+    ## DESC
+
+    Quick Access Items (Toolbelts and more) is a plugin designed to solve my biggest gripe with block games; the hotbar.
+    The plugin allows the player to not clutter up their hotbar with tools by placing them in their own container and 
+    allowing the user to use a radial menu to quickly swap between items on the menu.
+    
+    ## USEAGE
+        - Holding the item and left-clicking will open the Selection GUI
+        - Holding the item and right-clicking will open the Storage GUI
+        - The player needs to enable quick swap to convert their hotbar slot
+        - Dropping the item and running the equip button
+            will still run the gui logic 1 last time and revert their selected hotbar slot before the player data gets updated
+            (This is a hytale limitation due to multithreading and inablity to use itemDropEvent)
+
+    ## DEFAULTS
+        - Eqipping: The item is required to be placed in hotbar slot 9 to be "Eqipped"
+        - Target: Items from swapping are swapped with hotbar slot 1 when selected
+
+    ## FUTURE PLANS
+        - Implement Different tiers of Items
+            - common, Uncommon, Rare, Epic etc
+
+        - Implement different types of Quick Access Items with different bonus's and limitiations
+            - Bandolier's (Consumables Only)
+            - Toolbelts (Tools Only)
+            - Builders Puch (Blocks only)
+
+        - Add Custom Models & Model Animations
+
+        - Add Item Block Entites to item so they can be placed in the world and used as chests 
+            - Shift click auto equips item?
+
+        - Allow players to set what hotbar slot counts as Equipped
+        - Allow players to set what hotbar slot items get placed into
+        - Allow players to let swap happen to selected hotbar slot vs defined
+
+        - Improve Ui design
+
+}

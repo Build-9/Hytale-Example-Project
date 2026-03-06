@@ -26,6 +26,7 @@ import java.sql.Array;
 
 public class ItemSelectionPageCommand extends AbstractPlayerCommand {
     private final DefaultArg<String> eventArg;
+    private final DefaultArg<String> itemHotbarPosition;
 
     // Constructor
     public ItemSelectionPageCommand(){
@@ -33,6 +34,7 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         addAliases("select", "SEL");
 
         this.eventArg = this.withDefaultArg("event", "Run gui event like open/close/reset", ArgTypes.STRING, "open", "Default is to open the gui");
+        this.itemHotbarPosition = this.withDefaultArg("pos", "Quick Access Item's position in the hotbar", ArgTypes.INTEGER, 8, "Default position is 8 (Button 9)");
     };
 
     // Run the command
@@ -42,12 +44,17 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         // ------ Get Data ------
         Player player = store.getComponent(ref, Player.getComponentType());
         ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+        Integer activeHotbarSlot = commandContext.get(itemHotbarPosition);
         
-        // ------ Verify item has data ------
-        
+        // ------ Verify item is Quick Access Item ------
+        if (!QuickAccessUtils.isQuickAccessItem()){
+            return;
+        }
+        // Verify it has quick access data on the item and add it if not
+        QuickAccessUtils.addQuickAccessComponent(quickAccessItem);
 
         // ------ Run GUI event ------
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, quickAccessItem);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, quickAccessItem, activeHotbarSlot);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 }

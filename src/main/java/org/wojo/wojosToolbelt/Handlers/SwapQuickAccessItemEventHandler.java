@@ -20,10 +20,11 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         Ref<EntityStore> playerRef = swapQuickAccessItemEvent.playerRef();
         Store<EntityStore> store = swapQuickAccessItemEvent.store();
         short sourceInventoryPosition = swapQuickAccessItemEvent.sourceInventoryPosition();
+        short quickAccessItemHotbarPosition = swapQuickAccessItemEvent.hotbarPosition();
         short targetHotbarPostion = 0;
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
-        ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack((short)8);
+        ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(quickAccessItemHotbarPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current hotbar 0 item

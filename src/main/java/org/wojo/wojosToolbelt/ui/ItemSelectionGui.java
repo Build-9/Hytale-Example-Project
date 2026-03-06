@@ -68,6 +68,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
     ItemStack[] containerItems = null;
     QuickAccessComponent quickAccessComponent = null;
     ItemStack targetItem = null;
+    Integer hotbarPosition = 8;
 
 
 
@@ -84,10 +85,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             .build();
     }
     
-    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Player player, ItemStack quick_access_item) {
+    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Player player, Integer quick_access_item_hotbar_pos) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
 
-        this.associatedQuickAccessItem  = quick_access_item;
+        this.hotbarPosition             = quick_access_item_hotbar_pos;
+        this.associatedQuickAccessItem  = player.getHotbar().getItem(quick_access_item_hotbar_pos);
         this.containerItems             = QuickAccessUtils.getContainerComponentItems(quick_access_item);
         this.quickAccessComponent       = QuickAccessUtils.getItemsQuickAccessComponent(quick_access_item);
         this.targetItem                 = QuickAccessUtils.getTargetItem(player, quickAccessComponent);
