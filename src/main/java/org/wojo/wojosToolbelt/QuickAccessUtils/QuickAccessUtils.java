@@ -8,12 +8,38 @@ import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 public class QuickAccessUtils {
-  public static boolean hasQuickAccessComponent(ItemStack itemStack) {
+  public static ItemStack hasQuickAccessComponent(ItemStack itemStack) {
     QuickAccessComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
     if (comp != null) {
       return true;
     }
     return false;
+  }
+
+  public static boolean isQuickAccessItem(ItemStack item_stack) {
+    if (item_stack != null){
+      String itemId = item_stack.getItemId();
+      if (QuickAccessConfig.QUICK_ACCESS_ITEM_IDS.contains(itemId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static ItemStack addQuickAccessComponent(ItemStack item_stack){
+    ItemStack item = item_stack;
+    if (isQuickAccessItem(item)) {
+      QuickAccessComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
+      if (comp == null) {
+        QuickAccessComponent comp = QuickAccessComponentFactory.createQuickAccessComponent(item_stack.getItemId());
+        item.withMetadata(
+          QuickAccessComponent.CODEC,
+          comp
+        )
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Item Info:\n"+item.getData().toString());
+      }
+    }
+    return item;
   }
   
   // Get a quickAccessComponent from an item if it exists, else get null

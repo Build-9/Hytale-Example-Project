@@ -177,11 +177,13 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
     private Message getTranslatedItemName(ItemStack item) {
         Message msg = null;
 
-        String itemId = item.getItem().getId();
-        // TODO: validate asset
-        String translationKey = Item.getAssetMap().getAsset(itemId).getTranslationKey();
-        if (translationKey != null) {
-            msg = Message.translation(translationKey)
+        if (item != null) {
+            String itemId = item.getItem().getId();
+            // TODO: Split line to validate asset
+            String translationKey = Item.getAssetMap().getAsset(itemId).getTranslationKey();
+            if (translationKey != null) {
+                msg = Message.translation(translationKey)
+            }
         }
         return msg;
     }

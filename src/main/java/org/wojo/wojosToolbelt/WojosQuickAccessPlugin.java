@@ -70,7 +70,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         // Component Commands
         this.getCommandRegistry().registerCommand(new WojosQuickAccessCommandCollection());
 
-        this.getCommandRegistry().registerCommand(new OpenQuickAccessSelectionGuiCommand());
+        this.getCommandRegistry().registerCommand(new ItemSelectionPageCommand());
         this.getCommandRegistry().registerCommand(new SwapItem());
     }
     private void registerPacketAdapters(){

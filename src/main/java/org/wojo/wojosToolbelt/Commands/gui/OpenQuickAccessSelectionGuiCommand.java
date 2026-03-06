@@ -40,7 +40,7 @@ public class OpenQuickAccessSelectionGuiCommand extends AbstractPlayerCommand {
 
         // ------ Get Item Info ------
         ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
-        
+
         ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, quickAccessItem, containerItems, quickAccessComponent, targetItem);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
