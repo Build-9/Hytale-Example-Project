@@ -38,4 +38,7 @@ Group {
 
         - Improve Ui design
 
+        - Allow custom keybind to open UI 
+            NOTE: Fully custom keybinds are not yet possible in hytale and require game updates to be implemented
+
 }
