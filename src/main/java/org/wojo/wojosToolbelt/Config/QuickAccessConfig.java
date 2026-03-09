@@ -4,7 +4,8 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 
 public class QuickAccessConfig {
-    public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
+    public static final String QUICK_ACCESS_PLAYER_COMPONENT_ID = "WojosQuickAccess_Player_Component_ID";
+    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
 
     private static final Set<String> QUICK_ACCESS_ITEM_IDS = Set.of(
         "Quick_Access_Item_Crude_Unrestricted",

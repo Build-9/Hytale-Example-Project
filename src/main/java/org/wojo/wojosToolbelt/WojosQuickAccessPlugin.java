@@ -49,9 +49,12 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
-        var compType = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
-        QuickAccessComponent.setComponentType(compType);
+        var itemCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessItemComponent.class, QuickAccessConfig.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
+        var plyrCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessPlayerComponent.class, QuickAccessConfig.QUICK_ACCESS_PLAYER_COMPONENT_ID, QuickAccessPlayerComponent.CODEC);
+        QuickAccessItemComponent.setComponentType(itemCompType);
+        QuickAccessPlayerComponent.setComponentType(plyrCompType);
     }
+    
     private void registerSystems(){
         this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
     }

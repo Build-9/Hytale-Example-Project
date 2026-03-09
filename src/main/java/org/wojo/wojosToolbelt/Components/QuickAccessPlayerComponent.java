@@ -2,7 +2,7 @@ package wojo.wojosToolbelt.Components;
 
 // Quick access settings that are tied to each player
 
-public class QuickAccessPlayerComponent {
+public class QuickAccessPlayerComponent implements Component<EntityStore> {
     boolean _isEnabled = false;  // Allow hotbar button to opens the quickswap UI
     int _equippedPosition = 8;   // Hotbar location that quick access items need to be placed in / Button used to open swap UI
     int _targetPosition = 0;     // Where items get quickswapped into (-1 means to target players active hotbar slot instead)
@@ -76,5 +76,14 @@ public class QuickAccessPlayerComponent {
 
     public void getTargetPosition(int target_position){
         this._targetPosition = target_position;
+    }
+
+    // ================ Component Type info ==================
+    private static ComponentType<EntityStore, QuickAccessPlayerComponent> _quick_access_player_component_type;
+    public static ComponentType<EntityStore, QuickAccessPlayerComponent> getComponentType(){
+        return _quick_access_player_component_type;
+    }
+    public static void setComponentType(ComponentType<EntityStore, QuickAccessPlayerComponent> type){
+        QuickAccessPlayerComponent._quick_access_player_component_type = type;
     }
 }

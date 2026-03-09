@@ -1,11 +1,11 @@
 package org.wojo.wojosToolbelt.Components;
 
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 
-class QuickAccessComponentFactory {
-    public static QuickAccessComponent createQuickAccessComponent(String item_id) {
-        QuickAccessComponent comp = new QuickAccessComponent();
+class QuickAccessItemComponentFactory {
+    public static QuickAccessItemComponent createQuickAccessItemComponent(String item_id) {
+        QuickAccessComponent comp = new QuickAccessItemComponent();
 
         switch (item_id){
             case "Quick_Access_Item_Crude_Unrestricted":
