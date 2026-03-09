@@ -25,10 +25,12 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
         ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(quickAccessItemHotbarPosition);
+        QuickAccessComponent quickAccessComponent = QuickAccessUtils.getItemsQuickAccessComponent(quickAccessItemStack);
+        targetHotbarPostion = quickAccessComponent.getTargetLocation();
 
         // ------ Get Currently Stored Items ------
-        // Get current hotbar 0 item
-        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack((short)0);
+        // Get current target hotbar item
+        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(targetHotbarPostion);
 
         // Get Item in Quick Access Component Storage to swap into hotbar
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
