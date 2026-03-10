@@ -37,7 +37,9 @@ public class ItemSettingsCommand extends AbstractPlayerCommand {
         );
 
         this.gui = this.withDefaultArg(
-            "gui", "Path to UI To use. If player wants to use UI that has"
+            "gui", "Path to UI To use. If player wants to use UI that has",
+            ArgTypes.STRING,
+            "Pages/ThreeByThreeQuickAccess.ui", "Basic UI file with 8 total buttons."
         );
     }
 }
