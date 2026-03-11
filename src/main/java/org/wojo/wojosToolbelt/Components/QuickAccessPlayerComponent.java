@@ -78,6 +78,20 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._targetPosition = target_position;
     }
 
+    // ------------ Debug ------------
+    public String getPrintableString(){
+        String debugResult = String.format(
+            "[DEBUG] Quick-Access Player Component Data:\n"+
+            "- Is Enabled: %d \n"+
+            "- Equipped Pos: %d \n" +
+            "- Target Pos: %d \n"
+            this.getIsEnabled(),
+            this.getEquippedPosition(),
+            this.getTargetPosition()
+        );
+
+        return debugResult;
+    }
     // ================ Component Type info ==================
     private static ComponentType<EntityStore, QuickAccessPlayerComponent> _quick_access_player_component_type;
     public static ComponentType<EntityStore, QuickAccessPlayerComponent> getComponentType(){
