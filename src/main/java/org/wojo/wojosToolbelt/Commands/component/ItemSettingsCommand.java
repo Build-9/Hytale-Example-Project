@@ -2,11 +2,11 @@ package org.wojo.wojosToolbelt.Commands.component;
 
 // wqa comp item     <arg: tier, contSize, type, qaSize, gui> (Update held items quick access settings)
 public class ItemSettingsCommand extends AbstractPlayerCommand {
-    private static final DefaultArg<Integer> _tier;     // Item Tier (Uncommon, Common, Rare, Epic...)
-    private static final DefaultArg<Integer> _contSize; // Container Size (Size of storage for items)
-    private static final DefaultArg<Integer> _type;     // Item Type (Unrestricted, Toolbelt, Sling, ...)
-    private static final DefaultArg<Integer> _qaSize;   // Quick Swap Size (Number of enabled buttons on UI)
-    private static final DefaultArg<String>  _gui;      // GUI String
+    private final DefaultArg<Integer> _tier;     // Item Tier (Uncommon, Common, Rare, Epic...)
+    private final DefaultArg<Integer> _contSize; // Container Size (Size of storage for items)
+    private final DefaultArg<Integer> _type;     // Item Type (Unrestricted, Toolbelt, Sling, ...)
+    private final DefaultArg<Integer> _qaSize;   // Quick Swap Size (Number of enabled buttons on UI)
+    private final DefaultArg<String>  _gui;      // GUI String
 
     PlayerSettingsCommand() {
         super("itemSettings", "Configure the players held Quick-Access-Item");
