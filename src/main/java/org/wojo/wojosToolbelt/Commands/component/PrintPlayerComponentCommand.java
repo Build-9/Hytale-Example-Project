@@ -1,7 +1,7 @@
 public class PrintPlayerComponentCommand extends AbstractPlayerCommand {
     PrintPlayerComponentCommand() {
-        super("print","Print the players Quick-Access component");
-        addAlias("P");
+        super("printp","Print the players Quick-Access component");
+        addAlias("PP","printplayer", "printPlayer");
     }
 
     @Override

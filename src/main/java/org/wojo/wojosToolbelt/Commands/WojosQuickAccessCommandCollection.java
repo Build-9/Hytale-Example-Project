@@ -6,7 +6,8 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 //      component                       - comp  (C)
 //          playerSettings                  - player   (PS)        // wqa comp player   <arg: enable, equipPos, targetPos> (Update player comp with new settings)
 //          itemSettings                    - item     (IS)        // wqa comp item     <arg: tier, contSize, type, size, gui> (Update item QA comp settings)
-//          print                           - print    (P)         // wqa comp print    <arg: invID, invPos> (Print player comp data)
+//          printPlayer                     - printp   (PP)        // wqa comp printp   <arg: None> (Print player comp data)
+//          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
 //      item                            - item  (I)
 //          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
 //          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
@@ -19,7 +20,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 public class WojosQuickAccessCommandCollection extends AbstractCommandCollection {
     public WojosQuickAccessCommandCollection() {
         super("WojosQuickAccess","All commands associated with Wojo's Quick Access Items (Toolbelts, slings, and more)");
-//        this.addSubCommand(new ComponentCollection());
+        this.addSubCommand(new ComponentCommandCollection());
 //        this.addSubCommand(new ItemCollections());
 //        this.addSubCommand(new GuiCollection());
 //        this.addSubCommand(new AdminCollection());
