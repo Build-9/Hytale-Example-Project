@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 //          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
 //      item                            - item  (I)
 //          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
+//          move                            - move     (M)         // wqa item move     <arg: srcInContainer?, srcInvId, srcInvPos, tgtInContainer?, tgtInvId, tgtInvPos, tgtHdl[del,mv,swap]> (Move an item to another location and handle existing item appropriately)
 //          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
 //      gui                              -guis  (G)
 //          itemSelectionPage               - select   (SEL)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)

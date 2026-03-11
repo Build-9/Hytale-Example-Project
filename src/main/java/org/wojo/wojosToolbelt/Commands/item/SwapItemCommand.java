@@ -14,12 +14,12 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 
-public class SwapItem extends AbstractPlayerCommand {
+public class SwapItemCommand extends AbstractPlayerCommand {
     private final DefaultArg<Integer> srcInventoryPostition;
     private final DefaultArg<Integer> quickAccessItemHotbarPosition;
 
-    public SwapItem(){
-        super("swap","Swap Item from QuickAccessItem(stored at hotbar 9) sub container (positon 0) into hotbar slot 0");
+    public SwapItemCommand(){
+        super("swapItem","Swap Item from QuickAccessItem(stored at hotbar 9) sub container (positon 0) into hotbar slot 0");
         this.srcInventoryPostition = this.withDefaultArg("src-pos","Inventory position in QuickAccess Item to pull item from",
                 ArgTypes.INTEGER,
                 0, "Pull from first position in inventory by default");
@@ -27,6 +27,8 @@ public class SwapItem extends AbstractPlayerCommand {
         this.quickAccessItemHotbarPosition = this.withDefaultArg("hotbar-pos","Hotbar position in QuickAccess Item",
                 ArgTypes.INTEGER,
                 8, "Default equipped hotbar position 8 (Key 9)");
+
+        addAliases("swap", "S");
     }
 
     @Override
