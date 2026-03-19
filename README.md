@@ -3,9 +3,8 @@ Adds a few new items that players can use to remove specific tools from the hotb
 
 ## Design.
 #### Description
-***Wojo's Quick Access Item's*** is a mod that adds a new subset of items that are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
-One the item is placed in that location pressing the corresponding hotbar key will open a GUI to a radial wheel allowing the player to more easily swap between specific items
-by opening a radial menu with fewer items instead of needing to open the full inventory. This allows the decluttering of the player inventory. 
+**Wojo's Quick Access Item's** is a mod that adds a new radial menu and storage items to allow a player to quickswap the containers items into the hotbar. The new container items are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
+One the item is placed in that location the user can press the corresponding hotbar key. It will open a GUI to a radial wheel allowing the player to more easily swap between specific items by opening a radial menu with fewer items instead of needing to open the full inventory. This allows the decluttering of the player inventory. 
 
 #### Quick Access Item Types
 - [ ] Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
@@ -25,84 +24,61 @@ by opening a radial menu with fewer items instead of needing to open the full in
 - [ ] Mythic: 12 slots
 - [ ] Creative: 20 slots??
 
-#### GUI
-- [ ] Quick Access Page: Quick access wheel showing different selectable items stored in inventory
-- [ ] Quick Access Inventory: Inventory UI to allow the player to place items where desired
-- [ ] Player Settings Page: Player setting page to set the following
-    - [ ] What hotbar slot the Quick-Access-Item needs to be placed in to have GUI work
-    - [ ] Should the swap be into the active hotbar vs predefined hotbar location?
-    - [ ] What Hotbar slot the selected item will be swapped into
-- [ ] Admin Settings Page (Command Only): 
-    - [ ] Whitelist & Blacklist items to specific item type & tier bassed on item id's
-    - [ ] Change crafting recipe's for each item type & tier
-    - [ ] Interactions to modify Custom item to be whats needed
-    - [ ] Customize slots available per item type & tier
-    - [ ] Customize swap item cost *(Stamina-costs/stamina-regen-delay/animation-time/movement-penalty/health-cost)*
-- [ ] Guide Page: Display a guide for the different aspects of the mod & commands
+## Code Design 
+### Code Description
+The desing layout has 2 data the player and the item. 
+- The PlayerComponent: Houses player settings like
+    - What hotbar slot is the 'equipped' location / what hotbar button pressed to open ui
+    - Is the hotbar button enabled?
+    - Where to swap the items into
+- The ItemComponent: Houses item info
+    - Item type (Unrestricted, Toolbelt, sling, etc)
+    - Item tier (Common, Uncommon, Rare, etc)
+    - Container Size
+    - Quick Access Size
+    - guiPageString
+When a user presses the eqipped hotbar location the code checks to see if the user care's about equipped items. If so, grab the data of the items in the component and open the gui. When the user selects an item on the gui swap that item with whatever is in the defined location.
 
-#### Other
-- [ ] Have only 1 item equipable at a time.
-- [ ] Allow cusom keybind to open menu
-
-## Code Design Overview
+### Code Components
 - Commands
     - Varous commands that are used for debugging, configuration, or help
 - Components
-    - The QuickAccessComponent is the main data class that the whole mod is built off of
+    - The QuickAccessPlayerComponent
+    - The QuickAccessItemComponent
 - Config
     - All defined values that are either statically set or modifyable by admins & users
 - Events
     - The mod heavily relies on player interaction so most if not all the funtionality will be bassed off events rather then systems
-        - Add Item To QuickAccessInventory Event (Player Added Item from their inventory to QAInventory)
-        - Remove Item From QuickAccessInventory Event (Player Removed Item from their QAInventory)
-        - Equip QuickAccess Item Event (QAItem Added to specific hotbar location)
-        - Remove QuickAccess Item Event (QAItem Removed from specific hotbar location)
-        - Change Local QuickAccessItemSettings (Player Updated Item Settings)
-        - Change Global QuickAccessItemSettings (Admin Updated Global Settings)
+        - Swap Item Event
 - Handlers
     - Logic for handling the triggered events
+        - Handle Swap Item Events
 - Packet Adapters
-    - Logic to convert player hotbar interaction to a UI button
+    - Logic to convert player hotbar interaction to a UI button (Ideally this will be changed to better handle player button interactions)
 - Systems
-    - Any Component systems to verify the user is valid
+    - Player Component System adds a component to every player uplon joining the server and watches for changes
 - UI
     - All ui objects that a player could iteract with and view
 
-## Progress
-- [X] Add & remove QuickAccess component from player
-- [ ] Add inventory item in specific location on QuickAccess item (Use Item Id)
-- [ ] Add inventory item in specific location on QuickAccess item (Use Item Inventory & Position)
-- [ ] Remove item from QuickAccess inventory & drop item
-- [ ] Remove item from QuickAccess inventory & place in player inventory
-- [ ] Swap item from QuickAccess inventory to hotbar
-- [ ] QuickAccess GUI
-- [ ] Invenotry GUI
-- [ ] Guide GUI
-- [ ] Player Settings GUI
-- [ ] Admin Settings GUI
 
 ## Commands
 ```java
 // NOTE: All open/close args can be one of the following: [o/c, Open/Close(case Insensitive), 1/0, True/False(case Insensitive)]
 // WojosQuickAccess                 - wqa
 //      component                       - comp  (C)
-//          addToPlayer                     - add      (A)         // wqa comp add      <arg: None>
-//          removeFromPlayer                - rm       (R)         // wqa comp rm       <arg: None>
-//          printComponentData              - print    (P)         // wqa comp print    <arg: None>
+//          playerSettings                  - player   (PS)        // wqa comp player   <arg: enable, equipPos, targetPos> (Update player comp with new settings)
+//          itemSettings                    - item     (IS)        // wqa comp item     <arg: tier, contSize, type, size, gui> (Update item QA comp settings)
+//          printPlayer                     - printp   (PP)        // wqa comp printp   <arg: None> (Print player comp data)
+//          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
 //      item                            - item  (I)
-//          addItemToComponent              - add      (A)         // wqa items add     <arg: (uuid || [invPos && invType]) && quickAccessPos>
-//          removeItemFromComponent         - rm       (R)         // wqa items rm      <arg: quickAccessPos || uuid>
-//          swapItem                        - swap     (S)         // wqa items swap    <arg: [uuid || pos] && targetpos>
+//          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
+//          moveItem                        - move     (M)         // wqa item move     <arg: srcInContainer?, containerId, containerPos, srcInvId, srcInvPos, tgtInContainer?, tgtContainerId, tgtContainerPos, tgtInvId, tgtInvPos, tgtHdl[del,mv,swap]> (Move an item to another location and handle existing item appropriately)
+//          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
 //      gui                              -guis  (G)
-//          itemSelectionPage               - select   (ISE)       // wqa guis select    <arg: (o/c)>
-//          itemStoragePage                 - store    (IST)       // wqa guis store     <arg: (o/c)>
-//          helpPage                        - help     (H)         // wqa guis help      <arg: (o/c)>
-//      admin                            -admin (A)
-//          settingsPage                    - settings (S)         // wqa admin settings <arg: (o/c | true/false | 1/0)>
-//      user                             -user  (U)
-//          settingsPage                    - settings (S)         // wqa user settings  <arg: (o/c)>
-//      help                             -help  (H)
-//          guide                           - guide    (G)         // wqa help guide <arg: none> (calls `wqa guis help o` to open help gui)
+//          itemSelectionPage               - select   (SEL)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)
+//          itemStoragePage                 - store    (STO)       // wqa guis store     <arg: qaInvId, qaInvPos, (o/c)> (Open or close item storage page tied to set Quick Access Item)
+//          settingsPage                    - settings (SET)       // wqa guis settings  <arg: qaInvId, qaInvPos, (o/c)> (Open or close item settings page tied to quick access item)
+//          helpPage                        - help     (HEL)       // wqa guis help      <arg: (o/c)> 
 ```
 
 ### Special Thanks
