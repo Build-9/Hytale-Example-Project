@@ -108,7 +108,7 @@ Group {
     $C.@TextButton #QuickAccessButtonEquipped {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "Equipped";
+      Text: "@EquippedItem";
       Disabled: false;
     }
     Group #R4andR5Spacer2 {

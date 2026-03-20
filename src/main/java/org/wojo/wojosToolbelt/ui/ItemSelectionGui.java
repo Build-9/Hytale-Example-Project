@@ -7,12 +7,14 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.BasicCustomUIPage;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.modules.i18n.generator.TranslationMap;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
@@ -37,9 +39,10 @@ import java.util.List;
 // You may edit this class as necessary, or copy parts only.
 //
 public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.UiData> {
-    String[] buttonNames = new String[10];
+    Message[] buttonNames = new Message[10];
     String[] isButtonDisabled = new String[10];
     String equippedItem = "Empty";
+    String equippedIcon = "";
 
     ItemStack heldQuickAccessItem = null;
 
@@ -62,9 +65,30 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
 
         QuickAccessComponent quickAccessComponent = QuickAccessUtils.getItemsQuickAccessComponent(heldItem);
         ItemStack[] containerItems = QuickAccessUtils.getContainerComponentItems(heldItem);
-        this.buttonNames = QuickAccessUtils.getItemNamesArray(containerItems);
+
+        for(int i=0; i<buttonNames.length; i++){
+            if (containerItems != null){
+                if (i < containerItems.length && containerItems[i] != null){
+                    buttonNames[i] = Message.translation(Item.getAssetMap().getAsset(containerItems[i].getItemId()).getTranslationKey());
+                }else{
+                    buttonNames[i] = null;
+                }
+            }else{
+                buttonNames[i] = null;
+            }
+        }
+
+
+        //this.buttonNames = QuickAccessUtils.getItemNamesArray(containerItems);
+        //this.equippedItem = Item.getAssetMap().getAsset(heldItem.getItemId()).getTranslationKey();
         this.equippedItem = heldItem.getItemId();
+        this.equippedIcon = Item.getAssetMap().getAsset(heldItem.getItemId()).getIcon();
         this.isButtonDisabled = QuickAccessConfig.getButtonsDisabledArray(quickAccessComponent);
+
+        Message msg = Message.raw(equippedItem);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Item translation key: "+equippedItem);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Item msg: "+Message.raw(equippedItem).getRawText());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Item Icon: "+equippedIcon);
     }
 
     @Override
@@ -81,15 +105,59 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton8", new EventData().append("ButtonSelected", "7"), true);
 
         uiCommandBuilder.append("Pages/ThreeByThreeQuickAccess.ui");
-        uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", equippedItem);
-        uiCommandBuilder.set("#QuickAccessButton1.Text", buttonNames[0]);
-        uiCommandBuilder.set("#QuickAccessButton2.Text", buttonNames[1]);
-        uiCommandBuilder.set("#QuickAccessButton3.Text", buttonNames[2]);
-        uiCommandBuilder.set("#QuickAccessButton4.Text", buttonNames[3]);
-        uiCommandBuilder.set("#QuickAccessButton5.Text", buttonNames[4]);
-        uiCommandBuilder.set("#QuickAccessButton6.Text", buttonNames[5]);
-        uiCommandBuilder.set("#QuickAccessButton7.Text", buttonNames[6]);
-        uiCommandBuilder.set("#QuickAccessButton8.Text", buttonNames[7]);
+        //Message msg = Message.raw(Item.getAssetMap().getAsset(equippedItem).getTranslationKey());
+        Message msg = Message.translation(Item.getAssetMap().getAsset(equippedItem).getTranslationKey());
+
+        uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", msg);
+
+        if (buttonNames[0] != null){
+            uiCommandBuilder.set("#QuickAccessButton1.Text", buttonNames[0]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton1.Text", "1");
+        }
+
+        if (buttonNames[1] != null){
+            uiCommandBuilder.set("#QuickAccessButton2.Text", buttonNames[1]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton2.Text", "2");
+        }
+
+        if (buttonNames[2] != null){
+            uiCommandBuilder.set("#QuickAccessButton3.Text", buttonNames[2]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton3.Text", "3");
+        }
+
+        if (buttonNames[3] != null){
+            uiCommandBuilder.set("#QuickAccessButton4.Text", buttonNames[3]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton4.Text", "4");
+        }
+
+        if (buttonNames[4] != null){
+            uiCommandBuilder.set("#QuickAccessButton5.Text", buttonNames[4]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton5.Text", "5");
+        }
+
+        if (buttonNames[5] != null){
+            uiCommandBuilder.set("#QuickAccessButton6.Text", buttonNames[5]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton6.Text", "6");
+        }
+
+        if (buttonNames[6] != null){
+            uiCommandBuilder.set("#QuickAccessButton7.Text", buttonNames[6]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton7.Text", "7");
+        }
+
+        if (buttonNames[7] != null){
+            uiCommandBuilder.set("#QuickAccessButton8.Text", buttonNames[7]);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton8.Text", "8");
+        }
+
 
 //        uiCommandBuilder.set("#QuickAccessButton1.Disabled", isButtonDisabled[0]);
 //        uiCommandBuilder.set("#QuickAccessButton2.Disabled", isButtonDisabled[1]);

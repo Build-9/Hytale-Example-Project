@@ -32,13 +32,6 @@
     "Capacity": 8
   },
   "Interactions": {
-    "Use": {
-      "Interactions": [
-        {
-          "Type": "OpenItemStackContainer"
-        }
-      ]
-    },
     "Primary": {
       "Interactions": [
         {
@@ -46,7 +39,7 @@
         }
       ]
     },
-    "Secondary": {
+    "Use": {
       "Interactions": [
         {
           "Type": "OpenItemStackContainer"
@@ -69,22 +62,30 @@
           "Workbench_Survival"
         ]
       }
-    ]
+    ],
+    "PrimaryOutput": {
+      "ItemId": "Quick_Access_Item_Crude_Unrestricted"
+    }
   },
   "ItemLevel": 100,
   "Utility": {
     "Usable": true
   },
-  "Components": {
-    "WojosToolbelt:WojosQuickAccess_Component_ID": {
-      "QuickAccessItemTier": 7,
-      "QuickAccessItemType": 7,
-      "QuickAccessMaxTotalItems": 8,
-      "QuickAccessGuiButton": 8,
-      "QuickAccessTargetLocation": 0,
-      "QuickAccessItemUuids": [],
-      "QuickAccessItemNames": [],
-      "QuickAccessItemsDisabled": []
+  "BlockType": {
+    "TextureSideMask": "Items/Back/Quiver_Texture.png",
+    "CustomModel": "Items/Back/Quiver.blockymodel",
+    "DrawType": "Model",
+    "Components": {
+      "WojosToolbelt:WojosQuickAccess_Component_ID": {
+        "QuickAccessItemTier": 7,
+        "QuickAccessItemType": 7,
+        "QuickAccessMaxTotalItems": 8,
+        "QuickAccessGuiButton": 8,
+        "QuickAccessTargetLocation": 0,
+        "QuickAccessItemUuids": [],
+        "QuickAccessItemNames": [],
+        "QuickAccessItemsDisabled": []
+      }
     }
   }
 }
