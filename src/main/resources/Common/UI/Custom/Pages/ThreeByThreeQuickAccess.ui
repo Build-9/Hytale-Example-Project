@@ -45,7 +45,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton5 {
+    $C.@TextButton #QuickAccessButton4 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 5";
@@ -57,7 +57,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton3 {
+    $C.@TextButton #QuickAccessButton2 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 3";
@@ -69,7 +69,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton7 {
+    $C.@TextButton #QuickAccessButton6 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 7";
@@ -93,7 +93,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton1 {
+    $C.@TextButton #QuickAccessButton0 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 1";
@@ -117,7 +117,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton2 {
+    $C.@TextButton #QuickAccessButton1 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 2";
@@ -141,7 +141,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton8 {
+    $C.@TextButton #QuickAccessButton7 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 8";
@@ -153,7 +153,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton4 {
+    $C.@TextButton #QuickAccessButton3 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 4";
@@ -165,7 +165,7 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton6 {
+    $C.@TextButton #QuickAccessButton5 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
       Text: "BTN 6";

@@ -4,7 +4,18 @@ import com.hypixel.hytale.server.core.inventory.Inventory;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 
 public class QuickAccessConfig {
-    public static final String QUICK_ACCESS_COMPONENT_ID = "WojosQuickAccess_Component_ID";
+    public static final String QUICK_ACCESS_PLAYER_COMPONENT_ID = "WojosQuickAccess_Player_Component_ID";
+    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
+
+    private static final Set<String> QUICK_ACCESS_ITEM_IDS = Set.of(
+        "Quick_Access_Item_Crude_Unrestricted",
+        "Quick_Access_Item_Uncommon_Unrestricted",
+        "Quick_Access_Item_Rare_Unrestricted",
+        "Quick_Access_Item_Epic_Unrestricted",
+        "Quick_Access_Item_Legendary_Unrestricted",
+        "Quick_Access_Item_Mythic_Unrestricted",
+        "Quick_Access_Item_Creative_Unrestricted"
+    );
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.

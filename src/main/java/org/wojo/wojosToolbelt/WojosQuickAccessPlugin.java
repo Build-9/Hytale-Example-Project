@@ -24,6 +24,7 @@ import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickSwapStatus;
 import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,9 +39,8 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     private PacketFilter _inbound_hotbar_filter;
     private ComponentType<EntityStore, QuickAccessComponent> _quick_access_component;
 
-    // Threadsafe accessor to check if a given player has a QuickAccessComponent.
-    //     Needed by network thread as getting the actual comp requires using the world thread. 
-    public static ConcurrentHashMap<Ref<EntityStore>, Boolean> hasQuickAccessComponentMap = new ConcurrentHashMap<>();
+    // Threadsafe accessor to check if a given player has the GUI tied to the hotbar
+    public static ConcurrentHashMap<String, QuickSwapStatus> quickSwapStatus = new ConcurrentHashMap<>();
 
     public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -49,9 +49,12 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
-        var compType = this.getEntityStoreRegistry().registerComponent(QuickAccessComponent.class, QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
-        QuickAccessComponent.setComponentType(compType);
+        var itemCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessItemComponent.class, QuickAccessConfig.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
+        var plyrCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessPlayerComponent.class, QuickAccessConfig.QUICK_ACCESS_PLAYER_COMPONENT_ID, QuickAccessPlayerComponent.CODEC);
+        QuickAccessItemComponent.setComponentType(itemCompType);
+        QuickAccessPlayerComponent.setComponentType(plyrCompType);
     }
+    
     private void registerSystems(){
         this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
     }
@@ -70,7 +73,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         // Component Commands
         this.getCommandRegistry().registerCommand(new WojosQuickAccessCommandCollection());
 
-        this.getCommandRegistry().registerCommand(new OpenQuickAccessSelectionGuiCommand());
+        this.getCommandRegistry().registerCommand(new ItemSelectionPageCommand());
         this.getCommandRegistry().registerCommand(new SwapItem());
     }
     private void registerPacketAdapters(){

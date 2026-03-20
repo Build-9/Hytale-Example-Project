@@ -56,19 +56,21 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             // Check if player has a quick access component eqiupped
             // TODO: Cant pull data from component store due to thread safty
             Player player = store.getComponent(entityRef, Player.getComponentType());
-            ItemStack quickAccessItemSlot = player.getInventory().getHotbar().getItemStack((short)8);
-            if (quickAccessItemSlot == null){return false;}
-            QuickAccessComponent quickAccessComponent = quickAccessItemSlot.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID,QuickAccessComponent.CODEC);
-            if(quickAccessComponent == null){return false;}
+            UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+            UUID playerUuid = component.getUuid();
 
+            boolean isEnabled = quickAccessBtnEnabledMap.get(playerUuid);
+            int equippedHotbarPos = quickAccessGuiBtnMap.get(playerUuid);
 
-            // Check is user is trying to swap to item 9
+            if (isEnabled == false){return false;}
+
+            // Check is user is trying to swap to equipped position
             for (SyncInteractionChain chain : syncPacket.updates) {
                 WojosQuickAccessPlugin.LOGGER.atInfo().log("Looping Sync interaction chain");
 
                if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
                        && chain.data != null // data exists
-                       && chain.data.targetSlot == ABILITY_SLOT // slot to switch too
+                       && chain.data.targetSlot == equippedHotbarPos // slot to switch too
                        && chain.initial // start of new chain
                    ){
                     WojosQuickAccessPlugin.LOGGER.atInfo().log("In interaction Chain");
@@ -78,7 +80,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                         // Revert Selected Hotbar Item
                         revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
                         // Open UI
-                        openQuickAccessUI(playerRef);
+                        openQuickAccessUI(playerRef, equippedHotbarPos);
                     });
 
                     // Block Packet as we don't want player to actually change to hotbar 9
@@ -121,9 +123,9 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     // Open the Quick Access Gui 
     // Params:
     // - PlayerRef playerRef: Refrence to the player entity. 
-    private void openQuickAccessUI(PlayerRef playerRef){
-        playerRef.sendMessage(Message.raw("Showing UI Page"));
+    private void openQuickAccessUI(PlayerRef playerRef, short hotbar_position){
+        playerRef.sendMessage(Message.raw("Showing UI Page with position "+String.valueOf(hotbar_position)));
         // Open QuickAccess UI by using a command
-        CommandManager.get().handleCommand(playerRef, "open");
+        CommandManager.get().handleCommand(playerRef, "select --event open --pos "+String.valueOf(hotbar_position));
     }
 }

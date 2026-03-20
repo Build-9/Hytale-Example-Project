@@ -40,8 +40,9 @@ public class OpenQuickAccessSelectionGuiInteraction extends SimpleInstantInterac
         Ref<EntityStore> ref = interactionContext.getEntity();
         Player player = commandBuffer.getComponent(ref, Player.getComponentType());
 
+
         if (player != null) {
-            CommandManager.get().handleCommand(player,"Open");
+            CommandManager.get().handleCommand(player,"select");
         }
     }
 }
