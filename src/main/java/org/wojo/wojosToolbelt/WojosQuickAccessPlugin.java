@@ -13,6 +13,8 @@ import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
 import org.wojo.wojosToolbelt.Commands.gui.OpenQuickAccessSelectionGuiCommand;
 import org.wojo.wojosToolbelt.Commands.item.SwapItem;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
 import org.wojo.wojosToolbelt.Events.FindItemEvent;
@@ -49,8 +51,8 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
-        var itemCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessItemComponent.class, QuickAccessConfig.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
-        var plyrCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessPlayerComponent.class, QuickAccessConfig.QUICK_ACCESS_PLAYER_COMPONENT_ID, QuickAccessPlayerComponent.CODEC);
+        var itemCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessItemComponent.class, QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
+        var plyrCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessPlayerComponent.class, QuickAccessPlayerComponent.QUICK_ACCESS_PLAYER_COMPONENT_ID, QuickAccessPlayerComponent.CODEC);
         QuickAccessItemComponent.setComponentType(itemCompType);
         QuickAccessPlayerComponent.setComponentType(plyrCompType);
     }
@@ -69,12 +71,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register(OpenQuickAccessSelectionGuiInteraction.OpenQuickAccessSelectionGuiInteractionID, OpenQuickAccessSelectionGuiInteraction.class, OpenQuickAccessSelectionGuiInteraction.CODEC);
     }
     private void registerCommands(){
-        // TODO: Update the command collection to properly hold everything
-        // Component Commands
         this.getCommandRegistry().registerCommand(new WojosQuickAccessCommandCollection());
-
-        this.getCommandRegistry().registerCommand(new ItemSelectionPageCommand());
-        this.getCommandRegistry().registerCommand(new SwapItem());
     }
     private void registerPacketAdapters(){
         //this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());

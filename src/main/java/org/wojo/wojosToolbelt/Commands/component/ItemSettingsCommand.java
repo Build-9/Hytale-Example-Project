@@ -1,5 +1,22 @@
 package org.wojo.wojosToolbelt.Commands.component;
 
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
+import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
+import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
+
 // wqa comp item     <arg: tier, contSize, type, qaSize, gui> (Update held items quick access settings)
 public class ItemSettingsCommand extends AbstractPlayerCommand {
     private final DefaultArg<Integer> _tier;     // Item Tier (Uncommon, Common, Rare, Epic...)
@@ -8,7 +25,7 @@ public class ItemSettingsCommand extends AbstractPlayerCommand {
     private final DefaultArg<Integer> _qaSize;   // Quick Swap Size (Number of enabled buttons on UI)
     private final DefaultArg<String>  _gui;      // GUI String
 
-    PlayerSettingsCommand() {
+    ItemSettingsCommand() {
         super("itemSettings", "Configure the players held Quick-Access-Item");
         addAliases("item","IS");
 
@@ -45,33 +62,32 @@ public class ItemSettingsCommand extends AbstractPlayerCommand {
 
     @Override
     protected void execute(
-        @NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, 
-        @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, 
-        @NonNullDecl World world) 
+            @NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store,
+            @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef,
+            @NonNullDecl World world)
     {
         Integer tier = commandContext.get(this._tier);
         Integer type = commandContext.get(this._type);
-
         Integer contSize = commandContext.get(this._contSize);
         Integer qaSize = commandContext.get(this._qaSize);
-
         String guiPath = commandContext.get(this._gui);
         
         Player player = store.getComponent(ref, Player.getComponentType());
         ItemStack heldItem = player.getInventory().getActiveHotbarItem();
         
         if (QuickAccessUtils.isQuickAccessItem(heldItem)){
-            QuickAccessItemComponent newComponent = new quickAccessItemComponent(tier, contSize, type, qaSize, gui);
+            QuickAccessItemComponent newComponent = new QuickAccessItemComponent(tier, contSize, type, qaSize, guiPath);
             heldItem.withMetadata(
-                QuickAccessComponent.CODEC,
+                QuickAccessItemComponent.KEY,
+                QuickAccessItemComponent.CODEC,
                 newComponent
             );
 
-            short itemSlot = player.getActiveHotbarSlot();
+            short itemSlot = player.getInventory().getActiveHotbarSlot();
             player.getInventory().getHotbar().removeItemStackFromSlot(itemSlot);
             player.getInventory().getHotbar().setItemStackForSlot(itemSlot, heldItem);
 
-            WojosQuickAccessPlugin.LOGGER.atInfo.log("Updated held ItemStack with the following info:\n"+heldItem.getData().toString());
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Updated held ItemStack with the following info:\n"+heldItem.getItem().getData().toString());
 
         }else{
             commandContext.sendMessage(Message.raw("Not holding a quick access item"));

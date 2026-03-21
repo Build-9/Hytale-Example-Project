@@ -24,6 +24,7 @@ import com.hypixel.hytale.server.flock.FlockMembershipSystems;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -31,10 +32,7 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import javax.annotation.Nonnull;
 import java.beans.Visibility;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class ButtonData {
     public Message buttonMsg = null;
@@ -57,7 +55,7 @@ public class ButtonData {
 // You may edit this class as necessary, or copy parts only.
 //
 public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.UiData> {
-    private static final GUI_FILE = "Pages/ThreeByThreeQuickAccess.ui";
+    private static final String GUI_FILE = "Pages/ThreeByThreeQuickAccess.ui";
     private static final String[] QUICK_SWAP_BUTTON_IDS = {
         '#QuickAccessButton1', '#QuickAccessButton2', '#QuickAccessButton3', '#QuickAccessButton4',
         '#QuickAccessButton5','#QuickAccessButton6','#QuickAccessButton7','#QuickAccessButton8'
@@ -69,7 +67,8 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
 
     private ItemStack associatedQuickAccessItem = null;
     ItemStack[] containerItems = null;
-    QuickAccessComponent quickAccessComponent = null;
+    QuickAccessItemComponent itemComponent = null;
+    QuickAccessPlayerComponent playerComponent = null;
     ItemStack targetItem = null;
     Integer hotbarPosition = 8;
 
@@ -86,7 +85,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
             .build();
     }
     
-    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Player player, Integer quick_access_item_hotbar_pos) {
+    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Player player, short quick_access_item_hotbar_pos) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, UiData.CODEC);
 
         QuickAccessItemComponent quickAccessComponent = QuickAccessUtils.getItemsQuickAccessComponent(heldItem);

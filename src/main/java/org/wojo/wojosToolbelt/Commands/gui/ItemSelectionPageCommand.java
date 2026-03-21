@@ -6,6 +6,8 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
+import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.Inventory;
@@ -19,6 +21,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
@@ -26,7 +29,7 @@ import java.sql.Array;
 
 public class ItemSelectionPageCommand extends AbstractPlayerCommand {
     private final DefaultArg<String> eventArg;
-    private final DefaultArg<String> itemHotbarPosition;
+    private final DefaultArg<Integer> itemHotbarPosition;
 
     // Constructor
     public ItemSelectionPageCommand(){
@@ -44,10 +47,11 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         // ------ Get Data ------
         Player player = store.getComponent(ref, Player.getComponentType());
         ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
-        Integer activeHotbarSlot = commandContext.get(itemHotbarPosition);
+        Integer hotbarPos = commandContext.get(itemHotbarPosition);
+        short itemHotbarPosition = hotbarPos.shortValue();
         
         // ------ Verify item is Quick Access Item ------
-        if (!QuickAccessUtils.isQuickAccessItem()){
+        if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
             return;
         }
 
@@ -61,7 +65,7 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         }
 
         // ------ Run GUI event ------
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, quickAccessItem, activeHotbarSlot);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, player, itemHotbarPosition);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 }

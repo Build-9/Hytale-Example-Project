@@ -4,12 +4,15 @@ import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
 import org.bson.BsonDocument;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 public class QuickAccessUtils {
   public static ItemStack hasQuickAccessComponent(ItemStack itemStack) {
-    QuickAccessComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
+    QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
     if (comp != null) {
       return true;
     }
@@ -27,19 +30,20 @@ public class QuickAccessUtils {
   }
 
   public static ItemStack addQuickAccessComponent(ItemStack item_stack){
-    ItemStack item = item_stack;
-    if (isQuickAccessItem(item)) {
-      QuickAccessComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessComponent.CODEC);
+    ItemStack itemStack = item_stack;
+    if (isQuickAccessItem(itemStack)) {
+      QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessItemComponent.CODEC);
       if (comp == null) {
-        QuickAccessComponent comp = QuickAccessComponentFactory.createQuickAccessComponent(item_stack.getItemId());
-        item.withMetadata(
-          QuickAccessComponent.CODEC,
+        comp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(item_stack.getItemId());
+        item_stack.withMetadata(
+          QuickAccessItemComponent.KEY,
+          QuickAccessItemComponent.CODEC,
           comp
-        )
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Item Info:\n"+item.getData().toString());
+        );
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Item Info:\n"+itemStack.getItem().getData().toString());
       }
     }
-    return item;
+    return itemStack;
   }
   
   // Get a quickAccessComponent from an item if it exists, else get null

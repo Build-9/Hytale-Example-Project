@@ -1,12 +1,25 @@
+package org.wojo.wojosToolbelt.Systems;
+
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.system.RefChangeSystem;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
+
+import javax.annotation.Nonnull;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, QuickAccessPlayerComponent> {
 
-    public static ConcurrentHashMap<UUID, boolean> quickAccessBtnEnabledMap = new ConcurrentHashMap<>();
-    public static ConcurrentHashMap<UUID, int> quickAccessGuiBtnMap = new ConcurrentHashMap<>();
+
 
     @Override
-    public void onComponentAdded(@Nonnull Ref<EntityStore> ref, 
-        @Nonnull QuickAccessPlayerComponent component, 
-        @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) 
+    public void onComponentAdded(@Nonnull Ref<EntityStore> ref,
+                                 @Nonnull QuickAccessPlayerComponent component,
+                                 @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
         
         // Quick Access component was added to a new entity
@@ -19,9 +32,9 @@ public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, QuickA
     }
 
     @Override
-    public void onComponentRemoved(@Nonnull Ref<EntityStore> ref, 
+    public void onComponentRemoved(@Nonnull Ref<EntityStore> ref,
         @Nonnull QuickAccessPlayerComponent component, 
-        @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) 
+        @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
         
         // Quick Access Component was removed from entity

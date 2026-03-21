@@ -1,8 +1,22 @@
-package wojo.wojosToolbelt.Components;
+package org.wojo.wojosToolbelt.Components;
 
 // Quick access settings that are tied to each player
 
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.component.Component;
+import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class QuickAccessPlayerComponent implements Component<EntityStore> {
+    public static ConcurrentHashMap<UUID, Boolean> quickAccessBtnEnabledMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<UUID, Integer> quickAccessGuiBtnMap = new ConcurrentHashMap<>();
+
     boolean _isEnabled = false;  // Allow hotbar button to opens the quickswap UI
     int _equippedPosition = 8;   // Hotbar location that quick access items need to be placed in / Button used to open swap UI
     int _targetPosition = 0;     // Where items get quickswapped into (-1 means to target players active hotbar slot instead)
@@ -16,13 +30,12 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._targetPosition = component._targetPosition;
     }
 
-    public QuickAccessComponent(boolean is_enabled, int equipped_position, int target_position) {
+    public QuickAccessPlayerComponent(boolean is_enabled, int equipped_position, int target_position) {
         this._isEnabled = is_enabled;
         this._equippedPosition = equipped_position;
         this._targetPosition = target_position;
     }
 
-    public 
     @NullableDecl
     @Override
     public Component<EntityStore> clone() {
@@ -33,8 +46,8 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         return copy;
     }
 
-    public static final BuilderCodec<QuickAccessComponent> CODEC = BuilderCodec
-        .builder(QuickAccessComponent.class, QuickAccessComponent::new)
+    public static final BuilderCodec<QuickAccessPlayerComponent> CODEC = BuilderCodec
+        .builder(QuickAccessPlayerComponent.class, QuickAccessPlayerComponent::new)
         .append(
             new KeyedCodec<>("QuickAccessIsEnabled", Codec.BOOLEAN),
             (component, value) -> component._isEnabled = value,
@@ -58,7 +71,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
     }
 
     public int getEquippedPosition() {
-        return this._equippedPosition
+        return this._equippedPosition;
     }
 
     public int getTargetPosition() {
@@ -70,7 +83,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._isEnabled = is_enabled;
     }
 
-    public void setEquippedPosition(int equipped_location){
+    public void setEquippedPosition(int equipped_position){
         this._equippedPosition = equipped_position;
     }
 
@@ -82,9 +95,9 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
     public String getPrintableString(){
         String debugResult = String.format(
             "[DEBUG] Quick-Access Player Component Data:\n"+
-            "- Is Enabled: %d \n"+
+            "- Is Enabled: %b \n"+
             "- Equipped Pos: %d \n" +
-            "- Target Pos: %d \n"
+            "- Target Pos: %d \n",
             this.getIsEnabled(),
             this.getEquippedPosition(),
             this.getTargetPosition()
@@ -93,6 +106,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         return debugResult;
     }
     // ================ Component Type info ==================
+    public static final String QUICK_ACCESS_PLAYER_COMPONENT_ID = "WojosQuickAccess_Player_Component_ID";
     private static ComponentType<EntityStore, QuickAccessPlayerComponent> _quick_access_player_component_type;
     public static ComponentType<EntityStore, QuickAccessPlayerComponent> getComponentType(){
         return _quick_access_player_component_type;

@@ -1,13 +1,12 @@
 package org.wojo.wojosToolbelt.Config;
 
 import com.hypixel.hytale.server.core.inventory.Inventory;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+
+import java.util.Set;
 
 public class QuickAccessConfig {
-    public static final String QUICK_ACCESS_PLAYER_COMPONENT_ID = "WojosQuickAccess_Player_Component_ID";
-    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
-
-    private static final Set<String> QUICK_ACCESS_ITEM_IDS = Set.of(
+    public static final Set<String> QUICK_ACCESS_ITEM_IDS = Set.of(
         "Quick_Access_Item_Crude_Unrestricted",
         "Quick_Access_Item_Uncommon_Unrestricted",
         "Quick_Access_Item_Rare_Unrestricted",
@@ -97,7 +96,7 @@ public class QuickAccessConfig {
     public static Integer[] CUSTOM_ARRAY =           {0,2,3,4,5,6,7,8};
 
     // Get the number of different items the QuickAccess Item can swap between
-    public static int getItemCount(QuickAccessComponent item) {
+    public static int getItemCount(QuickAccessItemComponent item) {
         int tier = item.getItemTier();
         int type = item.getItemType();
 
@@ -124,7 +123,7 @@ public class QuickAccessConfig {
         };
     }
 
-    public static String[] getButtonsDisabledArray(QuickAccessComponent item) {
+    public static String[] getButtonsDisabledArray(QuickAccessItemComponent item) {
         String [] disabledArray = new String[MAX_QA_ITEMS];
         int currentItem = 0;
         for (int i=0; i<MAX_QA_ITEMS; i++){

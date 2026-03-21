@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 public class QuickAccessItemComponent implements Component<EntityStore> {
     // ============================= json data =============================
+    public static String KEY = "QaItemComp";
     // (data stored in items json)
     private int _itemTier = 0;        // Tier of Quick Access Item (Common, Uncommon, Rare, Epic, etc)
     private int _containerSize = 10;  // Size of the container field in the item
@@ -22,20 +23,20 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
     private int _itemType = 0;          // Type of Quick Access Item this is. (Quiver, Toolbelt, Unrestricted, etc)
     private int _quickAccessSize = 2;   // Current number of enabled buttons the item has
 
-    private String _selectionGui = "Pages/ThreeByThreeQuickAccess.ui"
+    private String _selectionGui = "Pages/ThreeByThreeQuickAccess.ui";
 
     public QuickAccessItemComponent(){
     }
 
     public QuickAccessItemComponent(int item_tier, int container_size, int item_type, int quick_access_size, String selection_gui){
-        this._itemTier;
-        this._containerSize;
-        this._itemType;
-        this._quickAccessSize;
-        this._selectionGui;
+        this._itemTier = item_tier;
+        this._containerSize = container_size;
+        this._itemType = item_type;
+        this._quickAccessSize = quick_access_size;
+        this._selectionGui = selection_gui;
     }
 
-    public QuickAccessItemComponent(QuickAccessComponent original){
+    public QuickAccessItemComponent(QuickAccessItemComponent original){
         this._itemTier = original._itemTier;
         this._containerSize = original._containerSize;
         this._itemType = original._itemType;
@@ -134,7 +135,7 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
             "- Quick Access Tier: %d \n" +
             "- Container Size: %d \n" +
             "- Quick Access Size: %d \n"+
-            "- Item Selection UI: %s \n"
+            "- Item Selection UI: %s \n",
             this.getItemType(),
             this.getItemTier(),
             this.getContainerSize(),
@@ -146,6 +147,7 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
     }
 
     // ================ Component Type info ==================
+    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
     private static ComponentType<EntityStore, QuickAccessItemComponent> _quick_access_item_component_type;
     public static ComponentType<EntityStore, QuickAccessItemComponent> getComponentType(){
         return _quick_access_item_component_type;

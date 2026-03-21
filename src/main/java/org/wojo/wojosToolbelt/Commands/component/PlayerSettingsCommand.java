@@ -1,8 +1,21 @@
 package org.wojo.wojosToolbelt.Commands.component;
 
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
+import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
+import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
+
 // wqa comp player   <arg: enable, equipPos, targetPos> (Update players quick access comp with new settings)
 public class PlayerSettingsCommand extends AbstractPlayerCommand {
-    private final DefaultArg<boolean> _enable;
+    private final DefaultArg<Boolean> _enable;
     private final DefaultArg<Integer> _equipPos;
     private final DefaultArg<Integer> _targetPos;
 
@@ -32,16 +45,16 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
 
     @Override
     protected void execute(
-        @NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, 
-        @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, 
-        @NonNullDecl World world) 
+            @NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store,
+            @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef,
+            @NonNullDecl World world)
     {
-        boolean enabled = commandContext.get(PlayerSettingsCommand._enable);
-        Integer equipped = commandContext.get(PlayerSettingsCommand._equipPos);
-        Integer target = commandContext.get(PlayerSettingsCommand._targetPos);
+        boolean enabled = commandContext.get(this._enable);
+        Integer equipped = commandContext.get(this._equipPos);
+        Integer target = commandContext.get(this._targetPos);
 
         QuickAccessPlayerComponent newQuickAccessPlayerComponent = new QuickAccessPlayerComponent(enabled, equipped, target);
 
-        store.setComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
+        store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
     }
 }
