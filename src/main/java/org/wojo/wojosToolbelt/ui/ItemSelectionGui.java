@@ -10,7 +10,6 @@ import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -19,7 +18,6 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.QuickAccessUtils.*;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
@@ -159,7 +157,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.U
         uiCommandBuilder.append("Pages/ThreeByThreeQuickAccess.ui");
 
         uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonMsg);
-        uiCommandBuilder.set("#QuickAccessSettingsButton.Text", _settingsButton.buttonMsg);
+        uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonMsg);
 
         uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.getFirst().buttonMsg);
         uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonMsg);
