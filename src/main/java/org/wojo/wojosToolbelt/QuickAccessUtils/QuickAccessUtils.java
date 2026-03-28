@@ -18,18 +18,11 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import javax.annotation.Nonnull;
 
 public class QuickAccessUtils {
-  public static ItemStack hasQuickAccessComponent(ItemStack itemStack) {
-    QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
-    if (comp != null) {
-      return true;
-    }
-    return false;
-  }
 
   public static ItemStack addQuickAccessComponent(ItemStack item_stack) {
     ItemStack itemStack = item_stack;
     if (isQuickAccessItem(itemStack)) {
-      QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessConfig.QUICK_ACCESS_COMPONENT_ID, QuickAccessItemComponent.CODEC);
+      QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
       if (comp == null) {
         comp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(item_stack.getItemId());
         item_stack.withMetadata(
@@ -41,6 +34,13 @@ public class QuickAccessUtils {
       }
     }
     return itemStack;
+  }
+
+  public static QuickAccessItemComponent getQuickAccessItemComponentOrNull(ItemStack item){
+    if (!isQuickAccessItem(item)){
+      return null;}
+
+    return item.getFromMetadataOrNull(QuickAccessItemComponent.KEY, QuickAccessItemComponent.CODEC);
   }
 
   public static ItemStack getEquippedQaItemOrNull(PlayerRef player_ref, Store<EntityStore> store) {
@@ -63,19 +63,6 @@ public class QuickAccessUtils {
     return quickAccessItem;
   }
 
-
-  public static Boolean isQuickAccessItem(String item_id) {
-    return QuickAccessConfig.QUICK_ACCESS_ITEM_IDS.contains(item_id);
-  }
-
-  public static boolean isQuickAccessItem(ItemStack item_stack) {
-    if (item_stack != null) {
-      String itemId = item_stack.getItemId();
-      return QuickAccessConfig.QUICK_ACCESS_ITEM_IDS.contains(itemId);
-    }
-    return false;
-  }
-
   public static ItemStack getEquippedTargetItemOrNull(PlayerRef player_ref, Store<EntityStore> store) {
     if (player_ref == null || player_ref.getReference() == null || !player_ref.isValid()) {
       return null;
@@ -96,6 +83,18 @@ public class QuickAccessUtils {
     }
 
     return targetItem;
+  }
+
+  public static Boolean isQuickAccessItem(String item_id) {
+    return QuickAccessConfig.QUICK_ACCESS_ITEM_IDS.contains(item_id);
+  }
+
+  public static boolean isQuickAccessItem(ItemStack item_stack) {
+    if (item_stack != null) {
+      String itemId = item_stack.getItemId();
+      return QuickAccessConfig.QUICK_ACCESS_ITEM_IDS.contains(itemId);
+    }
+    return false;
   }
 
   // Get array of items in a container if item has container field, else get null.

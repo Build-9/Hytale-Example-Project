@@ -1,21 +1,17 @@
 package org.wojo.wojosToolbelt;
 
-import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
 import org.wojo.wojosToolbelt.Commands.gui.OpenQuickAccessSelectionGuiCommand;
 import org.wojo.wojosToolbelt.Commands.item.SwapItem;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
-import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.Events.AddItemEvent;
 import org.wojo.wojosToolbelt.Events.FindItemEvent;
 import org.wojo.wojosToolbelt.Events.SwapItemEvent;
@@ -25,10 +21,11 @@ import org.wojo.wojosToolbelt.Handlers.FindItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
+import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
-import org.wojo.wojosToolbelt.QuickAccessUtils.QuickSwapStatus;
+import org.wojo.wojosToolbelt.Systems.QuickAccessPlayerComponentSystem;
+
 import javax.annotation.Nonnull;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class serves as the entrypoint for your plugin. Use the setup method to register into game registries or add
@@ -39,10 +36,6 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     
     private PacketFilter _inbound_hotbar_filter;
-    private ComponentType<EntityStore, QuickAccessComponent> _quick_access_component;
-
-    // Threadsafe accessor to check if a given player has the GUI tied to the hotbar
-    public static ConcurrentHashMap<String, QuickSwapStatus> quickSwapStatus = new ConcurrentHashMap<>();
 
     public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -58,12 +51,10 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
     
     private void registerSystems(){
-        this.getEntityStoreRegistry().registerSystem(new QuickAccessEntityTickingSystem(this._quick_access_component));
+        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerComponentSystem());
     }
+
     private void registerEvents(){
-        getEventRegistry().register(SwapItemEvent.class, new SwapItemHandler());
-        getEventRegistry().register(AddItemEvent.class, new AddItemHandler());
-        getEventRegistry().register(FindItemEvent.class, new FindItemHandler());
         getEventRegistry().register(SwapQuickAccessItemEvent.class, new SwapQuickAccessItemEventHandler());
     }
 
@@ -74,7 +65,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new WojosQuickAccessCommandCollection());
     }
     private void registerPacketAdapters(){
-        //this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
+        this._inbound_hotbar_filter = PacketAdapters.registerInbound(new HotbarOpenQuickAccessGuiPacketAdapter());
     }
     
     @Override

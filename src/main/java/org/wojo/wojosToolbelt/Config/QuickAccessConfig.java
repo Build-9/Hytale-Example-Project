@@ -1,7 +1,9 @@
 package org.wojo.wojosToolbelt.Config;
 
 import com.hypixel.hytale.server.core.inventory.Inventory;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 
 import java.util.Set;
 
@@ -134,5 +136,50 @@ public class QuickAccessConfig {
             }
         }
         return disabledArray;
+    }
+
+    public static String getIsButtonDisabled(ItemStack quick_access_item, Integer button_id) {
+        QuickAccessItemComponent qaItemComp = QuickAccessUtils.getQuickAccessItemComponentOrNull(quick_access_item);
+        if (qaItemComp == null){
+            return "true";}
+
+        ITEM_TYPE type = ITEM_TYPE.fromId(qaItemComp.getItemType());
+        Integer tier = qaItemComp.getItemTier();
+        // Invalid inputs check so disable button
+        if (type.getId() > ITEM_TYPE.NUM_TYPES.getId() || tier > ITEM_TIER.NUM_TIERS.getId()){
+            return "true";}
+
+        Integer numEnabledButtons = 0;
+        switch (type){
+            case ITEM_TYPE.TOOLBELT:
+                numEnabledButtons = TOOLBELT_ARRAY[tier];
+                break;
+            case ITEM_TYPE.BUILDERS_POUCH:
+                numEnabledButtons = BUILDERS_POUCH_ARRAY[tier];
+                break;
+            case ITEM_TYPE.WEAPON_SLING:
+                numEnabledButtons = WEAPON_SLING_ARRAY[tier];
+                break;
+            case ITEM_TYPE.BANDOLIER:
+                numEnabledButtons = BANDOLIER_ARRAY[tier];
+                break;
+            case ITEM_TYPE.QUIVER:
+                numEnabledButtons = QUIVER_ARRAY[tier];
+                break;
+            case ITEM_TYPE.UNRESTRICTED:
+                numEnabledButtons = UNRESTRICTED_ARRAY[tier];
+                break;
+            case ITEM_TYPE.CUSTOM:
+                numEnabledButtons = CUSTOM_ARRAY[tier];
+                break;
+            default:
+                return "true";
+        }
+
+        // Button is enabled: IsButtonDisabled = false
+        if (button_id < numEnabledButtons){
+            return "false";
+        }
+        return "true";
     }
 }
