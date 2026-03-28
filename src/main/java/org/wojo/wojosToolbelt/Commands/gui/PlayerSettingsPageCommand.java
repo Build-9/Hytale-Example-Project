@@ -6,6 +6,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.Inventory;
@@ -19,6 +20,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
@@ -28,7 +30,7 @@ public class PlayerSettingsPageCommand extends AbstractPlayerCommand {
     private final DefaultArg<String> eventArg;
 
     // Constructor
-    public ItemSelectionPageCommand(){
+    public PlayerSettingsPageCommand(){
         super("playerSettingsPage", "Do something with the tool selection GUI");
         addAliases("settings", "SET");
 
@@ -45,7 +47,7 @@ public class PlayerSettingsPageCommand extends AbstractPlayerCommand {
         Integer activeHotbarSlot = commandContext.get(itemHotbarPosition);
         
         // ------ Verify item is Quick Access Item ------
-        if (!QuickAccessUtils.isQuickAccessItem()){
+        if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
             return;
         }
 

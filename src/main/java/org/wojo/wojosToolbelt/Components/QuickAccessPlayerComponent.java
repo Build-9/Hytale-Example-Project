@@ -14,12 +14,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class QuickAccessPlayerComponent implements Component<EntityStore> {
+    // Hashmaps used by packet adapter to know to block packet or not
     public static ConcurrentHashMap<UUID, Boolean> quickAccessBtnEnabledMap = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<UUID, Integer> quickAccessGuiBtnMap = new ConcurrentHashMap<>();
 
-    boolean _isEnabled = false;  // Allow hotbar button to opens the quickswap UI
-    int _equippedPosition = 8;   // Hotbar location that quick access items need to be placed in / Button used to open swap UI
-    int _targetPosition = 0;     // Where items get quickswapped into (-1 means to target players active hotbar slot instead)
+    Boolean _isEnabled = false;  // Allow hotbar button to opens the quickswap UI
+    Integer _equippedPosition = 8;   // Hotbar location that quick access items need to be placed in / Button used to open swap UI
+    Integer _targetPosition = 0;     // Where items get quickswapped into (-1 means to target players active hotbar slot instead)
 
     public QuickAccessPlayerComponent() {
     }
@@ -30,7 +31,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._targetPosition = component._targetPosition;
     }
 
-    public QuickAccessPlayerComponent(boolean is_enabled, int equipped_position, int target_position) {
+    public QuickAccessPlayerComponent(Boolean is_enabled, Integer equipped_position, Integer target_position) {
         this._isEnabled = is_enabled;
         this._equippedPosition = equipped_position;
         this._targetPosition = target_position;
@@ -87,7 +88,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._equippedPosition = equipped_position;
     }
 
-    public void getTargetPosition(int target_position){
+    public void setTargetPosition(int target_position){
         this._targetPosition = target_position;
     }
 
