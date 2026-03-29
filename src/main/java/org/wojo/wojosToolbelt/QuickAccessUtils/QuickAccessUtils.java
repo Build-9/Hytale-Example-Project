@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt.QuickAccessUtils;
 
 import com.hypixel.hytale.codec.ExtraInfo;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -20,9 +21,8 @@ import javax.annotation.Nonnull;
 public class QuickAccessUtils {
 
   public static ItemStack addQuickAccessComponent(ItemStack item_stack) {
-    ItemStack itemStack = item_stack;
-    if (isQuickAccessItem(itemStack)) {
-      QuickAccessItemComponent comp = itemStack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
+    if (isQuickAccessItem(item_stack)) {
+      QuickAccessItemComponent comp = item_stack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
       if (comp == null) {
         comp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(item_stack.getItemId());
         item_stack.withMetadata(
@@ -30,10 +30,19 @@ public class QuickAccessUtils {
                 QuickAccessItemComponent.CODEC,
                 comp
         );
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Item Info:\n" + itemStack.getItem().getData().toString());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Item Info:\n" + item_stack.getItem().getData().toString());
       }
     }
-    return itemStack;
+    return item_stack;
+  }
+
+  public static short getQuickAccessItemEquippedLocationOrDefault(Ref<EntityStore> playerRef, Store<EntityStore> store) {
+    QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(playerRef, QuickAccessPlayerComponent.getComponentType());
+    if (quickAccessPlayerComponent != null){
+      int intPos = quickAccessPlayerComponent.getEquippedPosition();
+      return (short) intPos;
+    }
+    return 8; // Return default of 8
   }
 
   public static QuickAccessItemComponent getQuickAccessItemComponentOrNull(ItemStack item){
@@ -54,8 +63,8 @@ public class QuickAccessUtils {
       return null;
     }
 
-    Integer equippedPosition = playerComponent.getEquippedPosition();
-    ItemStack quickAccessItem = player.getInventory().getHotbar().getItemStack(equippedPosition.shortValue());
+    int equippedPosition = playerComponent.getEquippedPosition();
+    ItemStack quickAccessItem = player.getInventory().getHotbar().getItemStack((short) equippedPosition);
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
       return null;
@@ -74,12 +83,12 @@ public class QuickAccessUtils {
       return null;
     }
 
-    Integer targetPosition = playerComponent.getTargetPosition();
+    int targetPosition = playerComponent.getTargetPosition();
     ItemStack targetItem;
     if (targetPosition == -1) {
       targetItem = player.getInventory().getActiveHotbarItem();
     } else {
-      targetItem = player.getInventory().getHotbar().getItemStack(targetPosition.shortValue());
+      targetItem = player.getInventory().getHotbar().getItemStack((short) targetPosition);
     }
 
     return targetItem;

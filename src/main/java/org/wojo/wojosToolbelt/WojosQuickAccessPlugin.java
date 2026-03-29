@@ -7,22 +7,12 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Int
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
-import org.wojo.wojosToolbelt.Commands.gui.OpenQuickAccessSelectionGuiCommand;
-import org.wojo.wojosToolbelt.Commands.item.SwapItem;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
-import org.wojo.wojosToolbelt.Events.AddItemEvent;
-import org.wojo.wojosToolbelt.Events.FindItemEvent;
-import org.wojo.wojosToolbelt.Events.SwapItemEvent;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
-import org.wojo.wojosToolbelt.Handlers.AddItemHandler;
-import org.wojo.wojosToolbelt.Handlers.FindItemHandler;
-import org.wojo.wojosToolbelt.Handlers.SwapItemHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
-import org.wojo.wojosToolbelt.Systems.QuickAccessEntityTickingSystem;
 import org.wojo.wojosToolbelt.Systems.QuickAccessPlayerComponentSystem;
 
 import javax.annotation.Nonnull;

@@ -12,8 +12,7 @@ import javax.annotation.Nonnull;
 public record SwapQuickAccessItemEvent (
         @Nonnull Ref<EntityStore> playerRef,
         Store<EntityStore> store,
-        short sourceInventoryPosition,
-        short hotbarPosition
+        short sourceInventoryPosition
 ) implements IEvent<Void> { // No Return
 
     public static void dispatch(Ref<EntityStore> playerRef,
@@ -24,7 +23,7 @@ public record SwapQuickAccessItemEvent (
                 HytaleServer.get().getEventBus().dispatchFor(SwapQuickAccessItemEvent.class);
 
         if (dispatcher.hasListener()) {
-            dispatcher.dispatch(new SwapQuickAccessItemEvent(playerRef, store, sourceInventoryPosition, hotbarPosition));
+            dispatcher.dispatch(new SwapQuickAccessItemEvent(playerRef, store, sourceInventoryPosition));
         }
     }
 }

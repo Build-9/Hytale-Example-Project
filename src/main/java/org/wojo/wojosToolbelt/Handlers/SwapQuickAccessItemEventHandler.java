@@ -6,12 +6,13 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.bson.BsonDocument;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
-import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
+
 import java.util.function.Consumer;
 
 public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccessItemEvent> {
@@ -20,13 +21,15 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         Ref<EntityStore> playerRef = swapQuickAccessItemEvent.playerRef();
         Store<EntityStore> store = swapQuickAccessItemEvent.store();
         short sourceInventoryPosition = swapQuickAccessItemEvent.sourceInventoryPosition();
-        short quickAccessItemHotbarPosition = swapQuickAccessItemEvent.hotbarPosition();
+        short quickAccessItemHotbarPosition = QuickAccessUtils.getQuickAccessItemEquippedLocationOrDefault(playerRef, store);
         short targetHotbarPostion = 0;
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
         ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(quickAccessItemHotbarPosition);
-        QuickAccessComponent quickAccessComponent = QuickAccessUtils.getItemsQuickAccessComponent(quickAccessItemStack);
-        targetHotbarPostion = quickAccessComponent.getTargetLocation();
+        QuickAccessItemComponent quickAccessItemComponent = QuickAccessUtils.getQuickAccessItemComponentOrNull(quickAccessItemStack);
+        QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(playerRef, QuickAccessPlayerComponent.getComponentType());
+        Integer intPos = quickAccessPlayerComponent.getTargetPosition();
+        targetHotbarPostion = intPos.shortValue();
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item

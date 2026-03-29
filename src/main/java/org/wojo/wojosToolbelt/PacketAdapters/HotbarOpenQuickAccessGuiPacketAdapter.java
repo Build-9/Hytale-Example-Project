@@ -98,7 +98,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     // Params:
     // - originalHotbarSlot: Hotbar slot the player was swapping from when pressing (open Gui button)
     // - playerRef: Reference to the player entity that hit the open GUI button.
-    private void revertSelectedHotbarItem(int originalHotbarSlot, PlayerRef playerRef) {
+    private void revertSelectedHotbarItem(Integer originalHotbarSlot, PlayerRef playerRef) {
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef == null || !entityRef.isValid()){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad entity ref when reverting sleected hotbar item.");
@@ -111,7 +111,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad player when getting component");
             return;
         }
-        player.getInventory().setActiveHotbarSlot((byte) originalHotbarSlot);
+        player.getInventory().setActiveHotbarSlot(originalHotbarSlot.byteValue());
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
