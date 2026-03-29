@@ -1,6 +1,9 @@
 package org.wojo.wojosToolbelt.Commands;
 
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
+import org.wojo.wojosToolbelt.Commands.component.ComponentCommandCollection;
+import org.wojo.wojosToolbelt.Commands.gui.GuiCommandCollection;
+import org.wojo.wojosToolbelt.Commands.item.ItemCommandCollection;
 
 // WojosQuickAccess                 - wqa
 //      component                       - comp  (C)
@@ -10,7 +13,6 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
 //          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
 //      item                            - item  (I)
 //          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
-//          moveItem                        - move     (M)         // wqa item move     <arg: srcInContainer?, containerId, containerPos, srcInvId, srcInvPos, tgtInContainer?, tgtContainerId, tgtContainerPos, tgtInvId, tgtInvPos, tgtHdl[del,mv,swap]> (Move an item to another location and handle existing item appropriately)
 //          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
 //      gui                              -guis  (G)
 //          itemSelectionPage               - select   (SEL)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)
@@ -22,8 +24,8 @@ public class WojosQuickAccessCommandCollection extends AbstractCommandCollection
     public WojosQuickAccessCommandCollection() {
         super("WojosQuickAccess","All commands associated with Wojo's Quick Access Items (Toolbelts, slings, and more)");
         this.addSubCommand(new ComponentCommandCollection());
-//        this.addSubCommand(new ItemCollections());
-//        this.addSubCommand(new GuiCollection());
+        this.addSubCommand(new ItemCommandCollection());
+        this.addSubCommand(new GuiCommandCollection());
 //        this.addSubCommand(new AdminCollection());
 //        this.addSubCommand(new UserCollection());
 //        this.addSubCommand(new HelpCollection());

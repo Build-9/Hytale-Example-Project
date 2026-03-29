@@ -8,7 +8,7 @@ import org.wojo.wojosToolbelt.Commands.component.PrintPlayerComponentCommand;
 
 public class ComponentCommandCollection extends AbstractCommandCollection {
     public ComponentCommandCollection(){
-        super("component","All Component Specific comamnds");
+        super("component","All Component Specific commands");
 
         this.addSubCommand(new PlayerSettingsCommand());
         this.addSubCommand(new ItemSettingsCommand());

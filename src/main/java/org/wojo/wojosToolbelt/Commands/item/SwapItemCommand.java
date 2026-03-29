@@ -27,7 +27,6 @@ public class SwapItemCommand extends AbstractPlayerCommand {
         this._quickAccessItemHotbarPosition = this.withDefaultArg("hotbar-pos","Hotbar position in QuickAccess Item",
                 ArgTypes.INTEGER,
                 8, "Default equipped hotbar position 8 (Key 9)");
-
         addAliases("swap", "S");
     }
 
