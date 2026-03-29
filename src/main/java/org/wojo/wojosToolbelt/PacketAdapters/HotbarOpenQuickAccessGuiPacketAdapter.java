@@ -111,7 +111,10 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad player when getting component");
             return;
         }
-        player.getInventory().setActiveHotbarSlot(originalHotbarSlot.byteValue());
+
+        //Intentory playerInventory = store.getComponent(entityRef, Inventory.getComponentType());
+        byte hotbarPos = originalHotbarSlot.byteValue();
+        player.getInventory().setActiveHotbarSlot(entityRef, hotbarPos, store);
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(

@@ -22,6 +22,11 @@ import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quick
 
 public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStore, QuickAccessPlayerComponent> {
 
+    private final ComponentType<EntityStore, QuickAccessPlayerComponent> playerComponentComponentType;
+    public QuickAccessPlayerComponentSystem(ComponentType<EntityStore, QuickAccessPlayerComponent> quick_access_player_component_type){
+        this.playerComponentComponentType = quick_access_player_component_type;
+    }
+
     @NonNullDecl
     @Override
     public ComponentType<EntityStore, QuickAccessPlayerComponent> componentType() {
@@ -84,7 +89,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(Player.getComponentType());
+        return Query.and(playerComponentComponentType);
     }
 
     @Override

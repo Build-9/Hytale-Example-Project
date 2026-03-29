@@ -41,7 +41,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
     
     private void registerSystems(){
-        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerComponentSystem());
+        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerComponentSystem(QuickAccessPlayerComponent.getComponentType()));
     }
 
     private void registerEvents(){
