@@ -8,8 +8,8 @@ import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChain;
 import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -18,12 +18,12 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 // Send Packet to player to tell them they are actually holding the original slected item not hotbar 9
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
 import com.hypixel.hytale.server.core.inventory.Inventory;
-import org.wojo.wojosToolbelt.Components.QuickAccessComponent;
-import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
+
+import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessBtnEnabledMap;
+import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessGuiBtnMap;
 
 // Update the hotbar interaction to check if the player it swaping to the same item tey have equipped.
 // If they are then open UI.
@@ -49,38 +49,39 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef != null && entityRef.isValid()) {
-
             Store<EntityStore> store = entityRef.getStore();
             World world = store.getExternalData().getWorld();
 
-            // Check if player has a quick access component eqiupped
-            // TODO: Cant pull data from component store due to thread safty
-            Player player = store.getComponent(entityRef, Player.getComponentType());
-            UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
-            UUID playerUuid = component.getUuid();
+            // Check if player has quick swap enabled
+            final UUIDComponent component = store.getComponent(entityRef, UUIDComponent.getComponentType());
+            final UUID playerUuid = component.getUuid();
 
-            boolean isEnabled = quickAccessBtnEnabledMap.get(playerUuid);
-            int equippedHotbarPos = quickAccessGuiBtnMap.get(playerUuid);
+            // If player doesnt exist in hash map, add them then dont block packet
+            if (!quickAccessBtnEnabledMap.containsKey(playerUuid) || !quickAccessGuiBtnMap.containsKey(playerUuid)){
+                quickAccessBtnEnabledMap.put(playerUuid, false);
+                quickAccessGuiBtnMap.put(playerUuid, 8);
+                return false;
 
-            if (isEnabled == false){return false;}
+            // Player exists but button disabled so don't block packed
+            } else if (!quickAccessBtnEnabledMap.get(playerUuid)) {
+                return false;
+            }
 
-            // Check is user is trying to swap to equipped position
+            Integer equippedHotbarPos = quickAccessGuiBtnMap.get(playerUuid);
+            // Check is user is trying to swap to quick access equipped position
             for (SyncInteractionChain chain : syncPacket.updates) {
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("Looping Sync interaction chain");
-
                if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)
                        && chain.data != null // data exists
                        && chain.data.targetSlot == equippedHotbarPos // slot to switch too
                        && chain.initial // start of new chain
                    ){
-                    WojosQuickAccessPlugin.LOGGER.atInfo().log("In interaction Chain");
-
                     // Interacting with following comps required us to be threadsafe so update on world thread not network thread.
                     world.execute(() -> {
                         // Revert Selected Hotbar Item
                         revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
+
                         // Open UI
-                        openQuickAccessUI(playerRef, equippedHotbarPos);
+                        openQuickAccessUI(playerRef, equippedHotbarPos.shortValue());
                     });
 
                     // Block Packet as we don't want player to actually change to hotbar 9
