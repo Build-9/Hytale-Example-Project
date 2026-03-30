@@ -11,42 +11,36 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Set;
-import java.util.UUID;
+public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStore, Player> {
 
-import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.*;
-
-public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStore, QuickAccessPlayerComponent> {
-
-    private final ComponentType<EntityStore, QuickAccessPlayerComponent> playerComponentComponentType;
-    public QuickAccessPlayerComponentSystem(ComponentType<EntityStore, QuickAccessPlayerComponent> quick_access_player_component_type){
-        this.playerComponentComponentType = quick_access_player_component_type;
+    private final ComponentType<EntityStore, Player> playerComponentType;
+    public QuickAccessPlayerComponentSystem(ComponentType<EntityStore, Player> player_component_type){
+        this.playerComponentType = player_component_type;
     }
 
     @NonNullDecl
     @Override
     public ComponentType<EntityStore, QuickAccessPlayerComponent> componentType() {
-        return QuickAccessPlayerComponent.getComponentType();
+        return playerComponentType.getComponentType();
     }
 
     @Override
     public void onComponentAdded(@Nonnull Ref<EntityStore> ref,
                                  @Nonnull QuickAccessPlayerComponent component,
                                  @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
-        {
-        
-        // Quick Access component was added to a new entity
+    {
+        super.onComponentAdded(ref, component, store, commandBuffer);
 
-        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
-        UUID playerUuid = uuidComponent.getUuid();
+        // A player was added to the game, Add QuickAccessPlayerComponent to them if needed
 
-        quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
-        quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
-        quickAccessPlayerUuidMap.putIfAbsent(ref,playerUuid);
+        QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponentType(ref, QuickAccessPlayerComponent.getComponentType());
+        if (quickAccessPlayerComponent == null) {
+            quickAccessPlayerComponent = new QuickAccessPlayerComponent();
+            store.componentAdd(ref, QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded - We added a comp to a player!");
+        }
 
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentAdded");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded - Player allready had a QuickAccessPlayerComponent!");
     }
 
     @Override
@@ -54,16 +48,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         @Nonnull QuickAccessPlayerComponent component, 
         @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
-        
-        // Quick Access Component was removed from entity
-
-        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
-        UUID playerUuid = uuidComponent.getUuid();
-
-        quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
-        quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
-
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentRemoved");
+        super.onComponentRemoved(ref, component, commandBuffer);
     }
 
     @Override
@@ -71,14 +56,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
                                @Nullable QuickAccessPlayerComponent old_component, @Nonnull QuickAccessPlayerComponent new_component,
                                @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
-
-        // Quick Access Component replaced on a player that already has it
-        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
-        UUID playerUuid = uuidComponent.getUuid();
-        
-        quickAccessBtnEnabledMap.put(playerUuid, new_component.getIsEnabled());
-        quickAccessHotbarLocationEquipMap.put(playerUuid, new_component.getEquippedPosition());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentSet");
+            super.onComponentSet(ref, old_component, new_component, store, commandBuffer);
     }
 
     @Override
@@ -113,4 +91,5 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     public Set<Dependency<EntityStore>> getDependencies() {
         return super.getDependencies();
     }
+
 }

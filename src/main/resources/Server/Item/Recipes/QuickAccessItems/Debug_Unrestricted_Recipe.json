@@ -6,7 +6,7 @@
     }
   ],
   "PrimaryOutput": {
-    "ItemId": "Quick_Access_Item_Crude_Unrestricted",
+    "ItemId": "Quick_Access_Item_Debug_Unrestricted",
     "Quantity": 1
   },
   "BenchRequirement": [

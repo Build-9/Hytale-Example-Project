@@ -8,21 +8,22 @@ import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import java.util.Set;
 
 public class QuickAccessConfig {
+    // Default Hytale Qualities:
+    // - [Common, Uncommon, Rare, Epic, Legendary, Debug]
     public static final Set<String> QUICK_ACCESS_ITEM_IDS = Set.of(
-        "Quick_Access_Item_Crude_Unrestricted",
+        "Quick_Access_Item_Common_Unrestricted",
         "Quick_Access_Item_Uncommon_Unrestricted",
         "Quick_Access_Item_Rare_Unrestricted",
         "Quick_Access_Item_Epic_Unrestricted",
         "Quick_Access_Item_Legendary_Unrestricted",
-        "Quick_Access_Item_Mythic_Unrestricted",
-        "Quick_Access_Item_Creative_Unrestricted"
+        "Quick_Access_Item_Debug_Unrestricted",
     );
     
     // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
     // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
-    public static final int MAX_QA_ITEMS = 8; // Should match item_json container field
-    public static int HOTBAR_GUI_BUTTON = 8; // Button 9
-    public static int HOTBAR_SWAP_LOCATION = 0; // Button 1
+    // TODO: These can be changed so set names to 'DEFAULT'
+    public static int HOTBAR_GUI_BUTTON = 8;            // Button 9
+    public static int HOTBAR_SWAP_LOCATION = 0;         // Button 1
     
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
@@ -32,8 +33,7 @@ public class QuickAccessConfig {
         RARE(3),
         EPIC(4),
         LEGENDARY(5),
-        MYTHIC(6),
-        CREATIVE(7),
+        DEBUG(6),
         NUM_TIERS(8);
 
         private final int id;
@@ -98,10 +98,20 @@ public class QuickAccessConfig {
     public static Integer[] CUSTOM_ARRAY =           {0,2,3,4,5,6,7,8};
 
     // Get the number of different items the QuickAccess Item can swap between
-    public static int getItemCount(QuickAccessItemComponent item) {
-        int tier = item.getItemTier();
-        int type = item.getItemType();
+    public static Integer getItemCount(QuickAccessItemComponent item) {
+        Integer tier = item.getItemTier();
+        Integer type = item.getItemType();
 
+        // validatate type and tier
+        if (tier >= ITEM_TIER.NUM_TIERS.getId() || tier < 0 ||
+           type > ITEM_TYPE.NUM_TYPES.getId() || type < 0 ){
+            return 0;
+        }
+        
+        Integer[] itemTypeArray = getItemArray(ITEM_TYPE.fromId(type));
+        return itemTypeArray[tier];
+    }
+    public static int getItemCount(int tier, int type) {
         // validatate type and tier
         if (tier >= ITEM_TIER.NUM_TIERS.getId() || tier < 0 ||
            type > ITEM_TYPE.NUM_TYPES.getId() || type < 0 ){
@@ -123,63 +133,5 @@ public class QuickAccessConfig {
             case UNRESTRICTED -> QuickAccessConfig.UNRESTRICTED_ARRAY;
             default -> new Integer[ITEM_TIER.NUM_TIERS.getId()];
         };
-    }
-
-    public static String[] getButtonsDisabledArray(QuickAccessItemComponent item) {
-        String [] disabledArray = new String[MAX_QA_ITEMS];
-        int currentItem = 0;
-        for (int i=0; i<MAX_QA_ITEMS; i++){
-            if ( item != null && currentItem < getItemCount(item)) {
-                disabledArray[i]="false";
-            }else{
-                disabledArray[i]="true";
-            }
-        }
-        return disabledArray;
-    }
-
-    public static String getIsButtonDisabled(ItemStack quick_access_item, Integer button_id) {
-        QuickAccessItemComponent qaItemComp = QuickAccessUtils.getQuickAccessItemComponentOrNull(quick_access_item);
-        if (qaItemComp == null){
-            return "true";}
-
-        ITEM_TYPE type = ITEM_TYPE.fromId(qaItemComp.getItemType());
-        Integer tier = qaItemComp.getItemTier();
-        // Invalid inputs check so disable button
-        if (type.getId() > ITEM_TYPE.NUM_TYPES.getId() || tier > ITEM_TIER.NUM_TIERS.getId()){
-            return "true";}
-
-        Integer numEnabledButtons = 0;
-        switch (type){
-            case ITEM_TYPE.TOOLBELT:
-                numEnabledButtons = TOOLBELT_ARRAY[tier];
-                break;
-            case ITEM_TYPE.BUILDERS_POUCH:
-                numEnabledButtons = BUILDERS_POUCH_ARRAY[tier];
-                break;
-            case ITEM_TYPE.WEAPON_SLING:
-                numEnabledButtons = WEAPON_SLING_ARRAY[tier];
-                break;
-            case ITEM_TYPE.BANDOLIER:
-                numEnabledButtons = BANDOLIER_ARRAY[tier];
-                break;
-            case ITEM_TYPE.QUIVER:
-                numEnabledButtons = QUIVER_ARRAY[tier];
-                break;
-            case ITEM_TYPE.UNRESTRICTED:
-                numEnabledButtons = UNRESTRICTED_ARRAY[tier];
-                break;
-            case ITEM_TYPE.CUSTOM:
-                numEnabledButtons = CUSTOM_ARRAY[tier];
-                break;
-            default:
-                return "true";
-        }
-
-        // Button is enabled: IsButtonDisabled = false
-        if (button_id < numEnabledButtons){
-            return "false";
-        }
-        return "true";
     }
 }
