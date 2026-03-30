@@ -5,7 +5,6 @@ import com.hypixel.hytale.component.dependency.Dependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
@@ -17,8 +16,7 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessBtnEnabledMap;
-import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessGuiBtnMap;
+import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.*;
 
 public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStore, QuickAccessPlayerComponent> {
 
@@ -45,7 +43,8 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         UUID playerUuid = uuidComponent.getUuid();
 
         quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
-        quickAccessGuiBtnMap.put(playerUuid, component.getEquippedPosition());
+        quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
+        quickAccessPlayerUuidMap.putIfAbsent(ref,playerUuid);
 
         WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded");
     }
@@ -62,9 +61,9 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         UUID playerUuid = uuidComponent.getUuid();
 
         quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
-        quickAccessGuiBtnMap.put(playerUuid, component.getEquippedPosition());
+        quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
 
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentRemoved");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentRemoved");
     }
 
     @Override
@@ -78,7 +77,8 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         UUID playerUuid = uuidComponent.getUuid();
         
         quickAccessBtnEnabledMap.put(playerUuid, new_component.getIsEnabled());
-        quickAccessGuiBtnMap.put(playerUuid, new_component.getEquippedPosition());
+        quickAccessHotbarLocationEquipMap.put(playerUuid, new_component.getEquippedPosition());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentSet");
     }
 
     @Override

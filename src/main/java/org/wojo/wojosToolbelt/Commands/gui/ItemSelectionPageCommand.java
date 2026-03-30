@@ -48,7 +48,7 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         }
 
         // Verify it has quick access data on the item and add it if not
-        quickAccessItem = QuickAccessUtils.addQuickAccessComponent(quickAccessItem);
+        quickAccessItem = QuickAccessUtils.addQuickAccessItemComponent(quickAccessItem);
 
         // Replace players item on if it was updated
         if (quickAccessItem != null){

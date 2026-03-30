@@ -11,9 +11,8 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 import java.util.Arrays;
 
-public class QuickAccessItemComponent implements Component<EntityStore> {
+public class QuickAccessItemComponent {
     // ============================= json data =============================
-    public static String KEY = "QaItemComp";
     // (data stored in items json)
     private int _itemTier = 0;        // Tier of Quick Access Item (Common, Uncommon, Rare, Epic, etc)
     private int _containerSize = 10;  // Size of the container field in the item
@@ -23,17 +22,14 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
     private int _itemType = 0;          // Type of Quick Access Item this is. (Quiver, Toolbelt, Unrestricted, etc)
     private int _quickAccessSize = 2;   // Current number of enabled buttons the item has
 
-    private String _selectionGui = "Pages/ThreeByThreeQuickAccess.ui";
-
     public QuickAccessItemComponent(){
     }
 
-    public QuickAccessItemComponent(int item_tier, int container_size, int item_type, int quick_access_size, String selection_gui){
+    public QuickAccessItemComponent(int item_tier, int container_size, int item_type, int quick_access_size){
         this._itemTier = item_tier;
         this._containerSize = container_size;
         this._itemType = item_type;
         this._quickAccessSize = quick_access_size;
-        this._selectionGui = selection_gui;
     }
 
     public QuickAccessItemComponent(QuickAccessItemComponent original){
@@ -41,7 +37,6 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
         this._containerSize = original._containerSize;
         this._itemType = original._itemType;
         this._quickAccessSize = original._quickAccessSize;
-        this._selectionGui = original._selectionGui;
     }
 
     @NullableDecl
@@ -52,7 +47,6 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
         copy._containerSize = this._containerSize;
         copy._itemType = this._itemType;
         copy._quickAccessSize = this._quickAccessSize;
-        copy._selectionGui = this._selectionGui;
         return copy;
     }
 
@@ -77,11 +71,6 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
             new KeyedCodec<>("QuickAccessSize", Codec.INTEGER),
             (component, value) -> component._quickAccessSize = value,
             component -> component._quickAccessSize
-        ).add()
-        .append(
-            new KeyedCodec<>("QuickAccessSelectionUi", Codec.STRING),
-            (component, value) -> component._selectionGui = value,
-            component -> component._selectionGui
         ).add()
         .build();
 
@@ -119,14 +108,6 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
         this._quickAccessSize = size;
     }
 
-    // --- item Selection Ui
-    public String getItemSelectionUi(){
-        return this._selectionGui;
-    }
-    public void setItemSelectionUi(String ui_path){
-        this._selectionGui = ui_path;
-    }
-
     // -- Debug Output --
     public String getPrintableString(){
         String debugResult = String.format(
@@ -134,25 +115,23 @@ public class QuickAccessItemComponent implements Component<EntityStore> {
             "- Quick Access Item Type: %d \n"+
             "- Quick Access Tier: %d \n" +
             "- Container Size: %d \n" +
-            "- Quick Access Size: %d \n"+
-            "- Item Selection UI: %s \n",
+            "- Quick Access Size: %d \n",
             this.getItemType(),
             this.getItemTier(),
             this.getContainerSize(),
-            this.getQuickAccessSize(),
-            this.getItemSelectionUi()
+            this.getQuickAccessSize()
         );
 
         return debugResult;
     }
 
     // ================ Component Type info ==================
-    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
-    private static ComponentType<EntityStore, QuickAccessItemComponent> _quick_access_item_component_type;
-    public static ComponentType<EntityStore, QuickAccessItemComponent> getComponentType(){
-        return _quick_access_item_component_type;
-    }
-    public static void setComponentType(ComponentType<EntityStore, QuickAccessItemComponent> type){
-        QuickAccessItemComponent._quick_access_item_component_type = type;
-    }
+//    public static final String QUICK_ACCESS_ITEM_COMPONENT_ID = "WojosQuickAccess_Item_Component_ID";
+//    private static ComponentType<EntityStore, QuickAccessItemComponent> _quick_access_item_component_type;
+//    public static ComponentType<EntityStore, QuickAccessItemComponent> getComponentType(){
+//        return _quick_access_item_component_type;
+//    }
+//    public static void setComponentType(ComponentType<EntityStore, QuickAccessItemComponent> type){
+//        QuickAccessItemComponent._quick_access_item_component_type = type;
+//    }
 }

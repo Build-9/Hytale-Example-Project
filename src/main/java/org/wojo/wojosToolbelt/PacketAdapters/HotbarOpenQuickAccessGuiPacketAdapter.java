@@ -22,8 +22,7 @@ import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.UUID;
 
-import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessBtnEnabledMap;
-import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.quickAccessGuiBtnMap;
+import static org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent.*;
 
 // Update the hotbar interaction to check if the player it swaping to the same item tey have equipped.
 // If they are then open UI.
@@ -52,14 +51,22 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             Store<EntityStore> store = entityRef.getStore();
             World world = store.getExternalData().getWorld();
 
-            // Check if player has quick swap enabled
-            final UUIDComponent component = store.getComponent(entityRef, UUIDComponent.getComponentType());
-            final UUID playerUuid = component.getUuid();
+            if (!quickAccessPlayerUuidMap.containsKey(entityRef)){
+                world.execute(() -> {
+                    final UUIDComponent component = store.getComponent(entityRef, UUIDComponent.getComponentType());
+                    final UUID playerUuid = component.getUuid();
+                    quickAccessPlayerUuidMap.put(entityRef, playerUuid);
+                });
+                return false;
+            }
 
-            // If player doesnt exist in hash map, add them then dont block packet
-            if (!quickAccessBtnEnabledMap.containsKey(playerUuid) || !quickAccessGuiBtnMap.containsKey(playerUuid)){
+            // Check if player has quick swap enabled
+            final UUID playerUuid = quickAccessPlayerUuidMap.get(entityRef);
+
+            // If player doesnt exist in hash map, add them then don't block packet
+            if (!quickAccessBtnEnabledMap.containsKey(playerUuid) || !quickAccessHotbarLocationEquipMap.containsKey(playerUuid)){
                 quickAccessBtnEnabledMap.put(playerUuid, false);
-                quickAccessGuiBtnMap.put(playerUuid, 8);
+                quickAccessHotbarLocationEquipMap.put(playerUuid, 8);
                 return false;
 
             // Player exists but button disabled so don't block packed
@@ -67,7 +74,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                 return false;
             }
 
-            Integer equippedHotbarPos = quickAccessGuiBtnMap.get(playerUuid);
+            Integer equippedHotbarPos = quickAccessHotbarLocationEquipMap.get(playerUuid);
             // Check is user is trying to swap to quick access equipped position
             for (SyncInteractionChain chain : syncPacket.updates) {
                if ( (chain.interactionType == InteractionType.SwapFrom || chain.interactionType == InteractionType.SwapTo)

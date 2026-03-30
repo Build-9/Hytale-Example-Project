@@ -42,7 +42,7 @@ public class OpenQuickAccessSelectionGuiInteraction extends SimpleInstantInterac
 
 
         if (player != null) {
-            CommandManager.get().handleCommand(player,"select");
+            CommandManager.get().handleCommand(player,"wqa gui select --event open");
         }
     }
 }

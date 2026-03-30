@@ -39,6 +39,13 @@
         }
       ]
     },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenItemStackContainer"
+        }
+      ]
+    },
     "Use": {
       "Interactions": [
         {

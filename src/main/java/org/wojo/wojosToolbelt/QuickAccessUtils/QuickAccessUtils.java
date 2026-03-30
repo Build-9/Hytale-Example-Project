@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 public class QuickAccessUtils {
 
-  public static ItemStack addQuickAccessComponent(ItemStack item_stack) {
+  public static ItemStack addQuickAccessItemComponent(ItemStack item_stack) {
     if (isQuickAccessItem(item_stack)) {
       QuickAccessItemComponent comp = item_stack.getFromMetadataOrNull(QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
       if (comp == null) {
@@ -34,6 +34,19 @@ public class QuickAccessUtils {
       }
     }
     return item_stack;
+  }
+
+  public static QuickAccessPlayerComponent getAndAddQuickAccessPlayerComponent(Ref<EntityStore> playerRef, Store<EntityStore> store) {
+    QuickAccessPlayerComponent quickAccessPlayerComponent = null;
+    Player player = store.getComponent(playerRef, Player.getComponentType());
+    if (player != null) {
+      quickAccessPlayerComponent = store.getComponent(playerRef, QuickAccessPlayerComponent.getComponentType());
+      if (quickAccessPlayerComponent == null) {
+        quickAccessPlayerComponent = new QuickAccessPlayerComponent();
+        store.addComponent(playerRef, QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
+      }
+    }
+    return quickAccessPlayerComponent;
   }
 
   public static short getQuickAccessItemEquippedLocationOrDefault(Ref<EntityStore> playerRef, Store<EntityStore> store) {
@@ -53,17 +66,24 @@ public class QuickAccessUtils {
   }
 
   public static ItemStack getEquippedQaItemOrNull(PlayerRef player_ref, Store<EntityStore> store) {
+    WojosQuickAccessPlugin.LOGGER.atInfo().log("QuickAccessUtils.getEquippedQaItemOrNull");
     if (player_ref == null || player_ref.getReference() == null || !player_ref.isValid()) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: Player is NULL");
       return null;
     }
 
-    QuickAccessPlayerComponent playerComponent = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
+    QuickAccessPlayerComponent quickAccessPlayerComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
     Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
-    if (playerComponent == null || player == null) {
+    if (player == null) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: Player Comp is NULL");
       return null;
+    } else if (quickAccessPlayerComp == null) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: QaPlayerComp is NULL, Adding one to player.");
+      quickAccessPlayerComp = new QuickAccessPlayerComponent();
+      store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComp);
     }
 
-    int equippedPosition = playerComponent.getEquippedPosition();
+    int equippedPosition = quickAccessPlayerComp.getEquippedPosition();
     ItemStack quickAccessItem = player.getInventory().getHotbar().getItemStack((short) equippedPosition);
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
@@ -112,4 +132,17 @@ public class QuickAccessUtils {
     return ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
   }
 
+  public Class QuickAccessItemData {
+    QuickAccessConfig.ITEM_TIER tier;        // Tier of Quick Access Item (Common, Uncommon, Rare, Epic, etc)
+    Integer containerSize;
+
+    // ============================= config data =============================
+    //  (data stored in QuickAccessConfig bassed on item ID [Item Type & Tier])
+    QuickAccessConfig.ITEM_TYPE type;        // Type of Quick Access Item this is. (Quiver, Toolbelt, Unrestricted, etc)
+    Integer quickAccessSize;   // Current number of enabled buttons the item has
+  }
+
+  public static QuickAccessConfig.ITEM_TYPE getQuickAccessItemType(Item){
+
+  }
 }
