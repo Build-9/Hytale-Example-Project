@@ -13,6 +13,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.bson.BsonDocument;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -33,14 +34,9 @@ public class PrintItemComponentCommand extends AbstractPlayerCommand {
         ItemStack heldItem = player.getInventory().getActiveHotbarItem();
 
         if(QuickAccessUtils.isQuickAccessItem(heldItem)){
-            BsonDocument qaCompBSON = BsonDocument.parse(heldItem.getFromMetadataOrNull(QuickAccessItemComponent.KEY,QuickAccessItemComponent.CODEC).toString());
-            if (qaCompBSON != null){
-                commandContext.sendMessage(Message.raw("qaItemComp: \n"+qaCompBSON.toString()));
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("DEBUG: \n"+qaCompBSON.toString());
-            }else{
-                commandContext.sendMessage(Message.raw("ERROR: Failed to get QA comp data from quick-access item"));
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("ERROR: Failed to get QA comp data from quick-access item");
-            }
+            QuickAccessItemComponent qaItemComp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(heldItem);
+            commandContext.sendMessage(Message.raw("qaItemComp: \n"+qaItemComp.getPrintableString()));
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("DEBUG: \n"+qaItemComp.getPrintableString());
         }else{
             commandContext.sendMessage(Message.raw("ERROR: Held item does not have a Quick-Access component."));
         }

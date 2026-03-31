@@ -8,7 +8,6 @@ import org.wojo.wojosToolbelt.Commands.item.ItemCommandCollection;
 // WojosQuickAccess                 - wqa
 //      component                       - comp  (C)
 //          playerSettings                  - player   (PS)        // wqa comp player   <arg: enable, equipPos, targetPos> (Update player comp with new settings)
-//          itemSettings                    - item     (IS)        // wqa comp item     <arg: tier, contSize, type, size, gui> (Update item QA comp settings)
 //          printPlayer                     - printp   (PP)        // wqa comp printp   <arg: None> (Print player comp data)
 //          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
 //      item                            - item  (I)

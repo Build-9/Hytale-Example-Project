@@ -1,21 +1,32 @@
 package org.wojo.wojosToolbelt.Components;
 
+import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
+import com.nimbusds.jose.util.Container;
+import org.bson.BsonDocument;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
-import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 
 public class QuickAccessItemComponentFactory {
-    public static QuickAccessItemComponent createQuickAccessItemComponent(String item_id) {
-        QuickAccessItemComponent comp = new QuickAccessItemComponent();
 
-        switch (item_id){
-            case "Quick_Access_Item_Debug_Unrestricted":
-            comp.setItemTier(QuickAccessConfig.ITEM_TIER.DEBUG.getId());
-            comp.setItemType(QuickAccessConfig.ITEM_TYPE.UNRESTRICTED.getId());
-            comp.setContainerSize(QuickAccessConfig);
-            comp.setQuickAccessSize();
+    public static QuickAccessItemComponent createQuickAccessItemComponent(ItemStack item_stack) {
+        String itemId = item_stack.getItemId();
+        QuickAccessItemComponent comp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(item_stack.getItemId());
+
+
+        BsonDocument containerBSON = item_stack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
+        Short containerCapacity = ItemStackItemContainer.CAPACITY_CODEC.getOrNull(containerBSON, new ExtraInfo());
+        if (containerCapacity == null){
+            containerCapacity = 0;
         }
+
+        comp.setItemType(QuickAccessConfig.getQuickAccessItemType(item_stack.getItemId()).getId());
+        comp.setItemTier(QuickAccessConfig.getQuickAccessItemTier(item_stack.getItemId()).getId());
+        comp.setQuickAccessSize(QuickAccessConfig.getQuickAccessSize(comp));
+        comp.setContainerSize(containerCapacity);
+
         return comp;
     }
 }
