@@ -47,15 +47,6 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
             return;
         }
 
-        // Verify it has quick access data on the item and add it if not
-        quickAccessItem = QuickAccessUtils.addQuickAccessItemComponent(quickAccessItem);
-
-        // Replace players item on if it was updated
-        if (quickAccessItem != null){
-            player.getInventory().getHotbar().removeItemStackFromSlot(itemHotbarPosition);
-            player.getInventory().getHotbar().setItemStackForSlot(itemHotbarPosition, quickAccessItem);
-        }
-
         // ------ Run GUI event ------
         ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store);
         player.getPageManager().openCustomPage(ref, store, guiPage);
