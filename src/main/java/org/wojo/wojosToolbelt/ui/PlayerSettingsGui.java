@@ -26,11 +26,13 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         public Boolean isEnabled = false;
         public Integer equippedPos = 8;
         public Integer targetPos = 0;
+        public String guiFile = "";
     
-        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos) {
+        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file) {
             this.isEnabled = is_enabled;
             this.equippedPos = equipped_pos;
             this.targetPos = target_pos;
+            this.guiFile = gui_file;
         }
 
         public SettingsUiData(){
@@ -53,6 +55,12 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                 new KeyedCodec<>("TargetPos", Codec.INTEGER),
                 (obj, val) -> obj.targetPos = val,
                 obj -> obj.targetPos
+            )
+            .add()
+            .append(
+                new KeyedCodec<>("GuiFile", Codec.STRING),
+                (obj, val) -> obj.guiFile = val,
+                obj -> obj.guiFile
             )
             .add()
             .build();

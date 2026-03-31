@@ -275,10 +275,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
         } else if (buttonPressed.equals("settings")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Settings Pressed");
+            CommandManager.get().handleCommand(playerRef, "wqa gui settings --event open");
         } else if (buttonPressed.equals("equipped")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Pressed");
         } else{
-                CommandManager.get().handleCommand(playerRef, "wqa item swap --src-pos "+buttonPressed);
+            CommandManager.get().handleCommand(playerRef, "wqa item swap --src-pos "+buttonPressed);
         }
         this.close();
     }
