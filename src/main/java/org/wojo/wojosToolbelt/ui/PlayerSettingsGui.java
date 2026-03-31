@@ -27,12 +27,14 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         public Integer equippedPos = 8;
         public Integer targetPos = 0;
         public String guiFile = "";
+        public String buttonPressed = "";
     
-        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file) {
+        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file, String button_pressed) {
             this.isEnabled = is_enabled;
             this.equippedPos = equipped_pos;
             this.targetPos = target_pos;
             this.guiFile = gui_file;
+            this.buttonPressed = button_pressed;
         }
 
         public SettingsUiData(){
@@ -40,27 +42,33 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
 
         public static final BuilderCodec<SettingsUiData> CODEC = BuilderCodec.builder(SettingsUiData.class, SettingsUiData::new)
             .append(
-                new KeyedCodec<>("IsEnabled", Codec.BOOLEAN),
+                new KeyedCodec<>("@IsEnabledCheckbox", Codec.BOOLEAN),
                 (obj, val) -> obj.isEnabled = val,
                 obj -> obj.isEnabled
             )
             .add()
             .append(
-                new KeyedCodec<>("EquippedPos", Codec.INTEGER),
+                new KeyedCodec<>("@EquippedNumberField", Codec.INTEGER),
                 (obj, val) -> obj.equippedPos = val,
                 obj -> obj.equippedPos
             )
             .add()
             .append(
-                new KeyedCodec<>("TargetPos", Codec.INTEGER),
+                new KeyedCodec<>("@TargetNumberField", Codec.INTEGER),
                 (obj, val) -> obj.targetPos = val,
                 obj -> obj.targetPos
             )
             .add()
             .append(
-                new KeyedCodec<>("GuiFile", Codec.STRING),
+                new KeyedCodec<>("@GuiFileTextField", Codec.STRING),
                 (obj, val) -> obj.guiFile = val,
                 obj -> obj.guiFile
+            )
+            .add()
+            .append(
+                new KeyedCodec<>("ButtonPressed", Codec.String),
+                (obj, val) -> obj.submit = val,
+                obj -> obj.submit
             )
             .add()
             .build();
@@ -78,12 +86,42 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, 
                       @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
         uiCommandBuilder.append(SETTINGS_GUI_FILE);
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.ValueChanged, "#IsEnabledCheckbox", 
+            EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox.Value"), false
+        );
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.ValueChanged, "#EquippedNumberField", 
+            EventData.of("@EquippedNumberField", "#EquippedNumberField.Value"), false
+        );
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.ValueChanged, "#TargetNumberField", 
+            EventData.of("@TargetNumberField", "#TargetNumberField.Value"), false
+        );
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.ValueChanged, "#GuiFileTextField", 
+            EventData.of("@GuiFileTextField", "#GuiFileTextField.Value"), false
+        );
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.Activating, "#SubmitButton", 
+            EventData.of("ButtonPressed", "submit"), false
+        );
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.Activating, "#ResetButton", 
+            EventData.of("ButtonPressed", "reset"), false
+        );
     }
 
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, SettingsUiData data) {
         super.handleDataEvent(ref, store, data);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data:\n "+data+"------\n\n");
-        this.close();
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Settings Data:\n "+data+"------\n\n");
+
+        if (data.buttonPressed.contains("submit")){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - SUBMIT new settings values to player\n");
+        }else if (data.buttonPressed.contains("reset")){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
+        }
+        sendUpdate();
     }
 }

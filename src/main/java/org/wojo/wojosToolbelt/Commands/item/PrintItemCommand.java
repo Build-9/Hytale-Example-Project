@@ -30,10 +30,14 @@ public class PrintItemCommand extends AbstractPlayerCommand {
 
         ItemStack quickAccessItem = playerComponent.getInventory().getHotbar().getItemStack(equippedPosition.shortValue());
         if (quickAccessItem != null){
-            context.sendMessage(Message.raw(quickAccessItem.toString()));
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("DEBUG: Printing item data -- \n"+quickAccessItem.toString());
+            if (QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
+                context.sendMessage(Message.raw(quickAccessItem.toString()));
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Printing item data -- \n"+quickAccessItem.toString());
+            }else{
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: Item is not a Quick Access Item -- \n"+quickAccessItem.toString());
+            }
         }else{
-            context.sendMessage(Message.raw("No Item Equipped in quick access hotbar location "+equippedPosition));
+            context.sendMessage(Message.raw("[ERROR]: No Item Equipped in quick access hotbar location "+equippedPosition));
         }
     }
 }

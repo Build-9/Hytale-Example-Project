@@ -69,6 +69,25 @@ public class QuickAccessUtils {
     return quickAccessItem;
   }
 
+  public static ItemStack getHeldQaItemOrNull(PlayerRef player_ref, Store<EntityStore> store) {
+    WojosQuickAccessPlugin.LOGGER.atInfo().log("QuickAccessUtils.getHeldQaItemOrNull");
+    if (player_ref == null || player_ref.getReference() == null || !player_ref.isValid()) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: Player is NULL");
+      return null;
+    } else if (quickAccessPlayerComp == null) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: QaPlayerComp is NULL, Adding one to player.");
+      quickAccessPlayerComp = new QuickAccessPlayerComponent();
+      store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComp);
+    }
+
+    ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+
+    if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
+      return null;
+    }
+    return quickAccessItem;
+  }
+
   public static ItemStack getEquippedTargetItemOrNull(PlayerRef player_ref, Store<EntityStore> store) {
     if (player_ref == null || player_ref.getReference() == null || !player_ref.isValid()) {
       return null;

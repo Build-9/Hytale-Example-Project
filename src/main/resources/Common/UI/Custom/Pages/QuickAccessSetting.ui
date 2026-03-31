@@ -30,7 +30,7 @@ Group {
         Text: "Enable Quick Swap";
         Style: (TextColor: #ffffff);
       }
-      $C.@CheckBoxWithLabel #CheckBoxWithLabela0766ec9 {
+      $C.@CheckBoxWithLabel #IsEnabledCheckbox {
         @Text = "";
         LayoutMode: Top;
         Background: (Color: #333333);
@@ -49,7 +49,7 @@ Group {
         Text: "Equipped Hotbar Location";
         Style: (TextColor: #ffffff);
       }
-      $C.@NumberField #NumberFielde285706d {
+      $C.@NumberField #EquippedNumberField {
         Anchor: (Width: 50, Height: 25);
         Padding: (Full: 0);
       }
@@ -65,7 +65,7 @@ Group {
         Text: "Target Hotbar Location";
         Style: (TextColor: #ffffff);
       }
-      $C.@NumberField #NumberField3d33470d {
+      $C.@NumberField #TargetNumberField {
         Anchor: (Width: 50, Height: 25);
         Padding: (Full: 0);
       }
@@ -81,7 +81,7 @@ Group {
         Text: "Ui File";
         Style: (TextColor: #ffffff);
       }
-      $C.@TextField #TextField35a63b5d {
+      $C.@TextField #GuiFileTextField {
         Anchor: (Width: 275, Height: 25);
         Padding: (Full: 0);
         Value: "Pages/ThreeByThreeQuickAccess.ui";

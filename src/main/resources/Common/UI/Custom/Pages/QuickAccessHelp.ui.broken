@@ -6,6 +6,9 @@ Group {
     The plugin allows the player to not clutter up their hotbar with tools by placing them in their own container and 
     allowing the user to use a radial menu to quickly swap between items on the menu.
     
+    ## IMPLEMENTED ITEMS
+        - Quick_Access_Item_Debug_Unrestricted
+
     ## USEAGE
         - Holding the item and left-clicking will open the Selection GUI
         - Holding the item and right-clicking will open the Storage GUI
@@ -13,6 +16,23 @@ Group {
         - Dropping the item and running the equip button
             will still run the gui logic 1 last time and revert their selected hotbar slot before the player data gets updated
             (This is a hytale limitation due to multithreading and inablity to use itemDropEvent)
+
+    ## COMMANDS
+    ```java
+    // WojosQuickAccess                 - wqa
+    //      component                       - comp  (C)
+    //          playerSettings                  - player   (PS)        // wqa comp player   <arg: enable, equipPos, targetPos> (Update player comp with new settings)
+    //          printPlayer                     - printp   (PP)        // wqa comp printp   <arg: None> (Print player comp data)
+    //          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
+    //      item                            - item  (I)
+    //          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
+    //          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
+    //      gui                              -guis  (G)
+    //          itemSelectionPage               - select   (SEL)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)
+    //          itemStoragePage                 - store    (STO)       // wqa guis store     <arg: qaInvId, qaInvPos, (o/c)> (Open or close item storage page tied to set Quick Access Item)
+    //          settingsPage                    - settings (SET)       // wqa guis settings  <arg: qaInvId, qaInvPos, (o/c)> (Open or close item settings page tied to quick access item)
+    //          helpPage                        - help     (HEL)       // wqa guis help      <arg: (o/c)>                    (Open or close global help page)
+    ```
 
     ## DEFAULTS
         - Eqipping: The item is required to be placed in hotbar slot 9 to be "Eqipped"

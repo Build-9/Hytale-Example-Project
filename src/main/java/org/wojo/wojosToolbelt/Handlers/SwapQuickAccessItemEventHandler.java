@@ -23,20 +23,16 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         Ref<EntityStore> playerRef = swapQuickAccessItemEvent.playerRef();
         Store<EntityStore> store = swapQuickAccessItemEvent.store();
         short sourceInventoryPosition = swapQuickAccessItemEvent.sourceInventoryPosition();
-        short quickAccessItemHotbarPosition = QuickAccessUtils.getQuickAccessItemEquippedLocationOrDefault(playerRef, store);
-        short targetHotbarPostion = 0;
+        short equippedPosition = swapQuickAccessItemEvent.equippedPosition();
+        short targetPosition = swapQuickAccessItemEvent.targetPosition();
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
-        ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(quickAccessItemHotbarPosition);
-        QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(playerRef, QuickAccessPlayerComponent.getComponentType());
-        Integer intPos = quickAccessPlayerComponent.getTargetPosition();
-        targetHotbarPostion = intPos.shortValue();
-
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetHotbarPostion+"\n - Source Pos: "+sourceInventoryPosition);
+        ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(equippedPosition);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetPosition+"\n - Source Pos: "+sourceInventoryPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item
-        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(targetHotbarPostion);
+        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(targetPosition);
 
         // Get Item in Quick Access Component Storage to swap into hotbar
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
@@ -45,9 +41,9 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         // ------ Set Container Items ------
         // Set Quick Access item to hotbar item
-        player.getInventory().getHotbar().removeItemStackFromSlot(targetHotbarPostion);
+        player.getInventory().getHotbar().removeItemStackFromSlot(targetPosition);
         if (itemStoredInQaComp != null) {
-            player.getInventory().getHotbar().setItemStackForSlot(targetHotbarPostion, itemStoredInQaComp);
+            player.getInventory().getHotbar().setItemStackForSlot(targetPosition, itemStoredInQaComp);
         }
 
         // Set Hotbar Item to quickaccess Item
@@ -67,5 +63,4 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         }
     }
-    final short activeSlot = 0;
 }

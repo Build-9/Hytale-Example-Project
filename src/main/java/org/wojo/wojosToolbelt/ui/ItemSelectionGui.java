@@ -77,6 +77,8 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     private List<ButtonData> _quickAccessButtons = new ArrayList<>();
     private ButtonData _settingsButton = new ButtonData(null,"","","true");
     private ButtonData _equipedItemButton =  new ButtonData(null,"","","true");
+    private boolean _isQuickAccessItemHeld = false;
+    private QuickAccessPlayerComponent _playerQaComp = null;
 
     // ------ UI Interaction Data ------
     public static class SelectionUiData {
@@ -171,14 +173,24 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Loaded settings btn info");
     }
 
-    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store) {
+    public ItemSelectionGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store, Boolean is_item_held) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, SelectionUiData.CODEC);
+        this._isQuickAccessItemHeld = is_item_held;
+        this._playerQaComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
+        Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
 
         for (int i=0; i<_QUICK_SWAP_BUTTON_IDS.length; i++){
             _quickAccessButtons.add(new ButtonData(null,"","","true"));
         }
 
-        ItemStack quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
+        ItemStack quickAccessItem = null;
+        if (this._isQuickAccessItemHeld){
+            quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store)
+            this._playerQaComp.setEquippedPosition(player.getActiveHotbarSlot());
+        }else{
+            quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
+        }
+
         this.loadSelectionButtonData(quickAccessItem);
 
         ItemStack targetItem = QuickAccessUtils.getEquippedTargetItemOrNull(player_ref, store);
@@ -270,12 +282,16 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         if (buttonPressed.equals("N/A")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
         } else if (buttonPressed.equals("settings")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Settings Pressed");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Settings Pressed");
             CommandManager.get().handleCommand(playerRef, "wqa gui settings --event open");
         } else if (buttonPressed.equals("equipped")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Pressed");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Equipped Pressed");
         } else{
-            CommandManager.get().handleCommand(playerRef, "wqa item swap --src-pos "+buttonPressed);
+            String cmd = String.format("wqa item swap --container-pos %d --equipped-pos %d --target-pos %d",
+                buttonPressed,
+                _playerQaComp.getEquippedPosition(),
+                _playerQaComp.getTargetPosition()
+            );
         }
         this.close();
     }

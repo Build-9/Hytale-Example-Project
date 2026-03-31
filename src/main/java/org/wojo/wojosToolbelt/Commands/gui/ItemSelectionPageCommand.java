@@ -37,18 +37,29 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         // ------ Get Data ------
         Player player = store.getComponent(ref, Player.getComponentType());
-        ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+        QuickAccessPlayerComponent qaPlayerComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
+
         Integer hotbarPos = commandContext.get(itemHotbarPosition);
         short itemHotbarPosition = hotbarPos.shortValue();
+
+        // ------ Check For Quick Access Item ------
+        ItemStack heldItem = player.getInventory().getActiveHotbarItem();
+        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(qaPlayerComp.getEquippedPosition());
         
         // ------ Verify item is Quick Access Item ------
-        if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Item is not a QuickAccessComponent! Not opening selection GUI");
+        Boolean isItemHeld = false;
+        if (!QuickAccessUtils.isQuickAccessItem(heldItem) && !QuickAccessUtils.isQuickAccessItem(equippedItem)){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: Item held or equipped is not a QuickAccess Item");
             return;
+        }else if (QuickAccessUtils.isQuickAccessItem(heldItem)){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Held Items Quick Access Selection Gui");
+            isItemHeld = true;
+        }else{
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Equipped Items Quick Access Selection Gui");
         }
 
         // ------ Run GUI event ------
-        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store);
+        ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store, isItemHeld);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 }
