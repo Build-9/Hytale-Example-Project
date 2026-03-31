@@ -14,6 +14,7 @@ import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
 import org.wojo.wojosToolbelt.Systems.QuickAccessPlayerComponentSystem;
+import org.wojo.wojosToolbelt.Systems.QuickAccessPlayerSystem;
 
 import javax.annotation.Nonnull;
 
@@ -34,14 +35,13 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     }
 
     private void registerComponents(){
-        var itemCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessItemComponent.class, QuickAccessItemComponent.QUICK_ACCESS_ITEM_COMPONENT_ID, QuickAccessItemComponent.CODEC);
         var plyrCompType = this.getEntityStoreRegistry().registerComponent(QuickAccessPlayerComponent.class, QuickAccessPlayerComponent.QUICK_ACCESS_PLAYER_COMPONENT_ID, QuickAccessPlayerComponent.CODEC);
-        QuickAccessItemComponent.setComponentType(itemCompType);
         QuickAccessPlayerComponent.setComponentType(plyrCompType);
     }
     
     private void registerSystems(){
         this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerComponentSystem(QuickAccessPlayerComponent.getComponentType()));
+        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerSystem());
     }
 
     private void registerEvents(){

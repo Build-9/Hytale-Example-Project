@@ -5,38 +5,39 @@ import com.hypixel.hytale.component.dependency.Dependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
-public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStore, Player> {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Set;
 
-    private final ComponentType<EntityStore, Player> playerComponentType;
-    public QuickAccessPlayerComponentSystem(ComponentType<EntityStore, Player> player_component_type){
-        this.playerComponentType = player_component_type;
+public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player> {
+
+    public QuickAccessPlayerSystem(){
     }
 
     @NonNullDecl
     @Override
-    public ComponentType<EntityStore, QuickAccessPlayerComponent> componentType() {
-        return playerComponentType.getComponentType();
+    public ComponentType<EntityStore, Player> componentType() {
+        return Player.getComponentType();
     }
 
     @Override
     public void onComponentAdded(@Nonnull Ref<EntityStore> ref,
-                                 @Nonnull QuickAccessPlayerComponent component,
+                                 @Nonnull Player component,
                                  @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
     {
-        super.onComponentAdded(ref, component, store, commandBuffer);
-
         // A player was added to the game, Add QuickAccessPlayerComponent to them if needed
 
-        QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponentType(ref, QuickAccessPlayerComponent.getComponentType());
+        QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
         if (quickAccessPlayerComponent == null) {
             quickAccessPlayerComponent = new QuickAccessPlayerComponent();
-            store.componentAdd(ref, QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
+            store.addComponent(ref, QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
             WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded - We added a comp to a player!");
         }
 
@@ -45,18 +46,16 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
 
     @Override
     public void onComponentRemoved(@Nonnull Ref<EntityStore> ref,
-        @Nonnull QuickAccessPlayerComponent component, 
+        @Nonnull Player component,
         @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
-        super.onComponentRemoved(ref, component, commandBuffer);
     }
 
     @Override
     public void onComponentSet(@Nonnull Ref<EntityStore> ref,
-                               @Nullable QuickAccessPlayerComponent old_component, @Nonnull QuickAccessPlayerComponent new_component,
+                               @Nullable Player old_component, @Nonnull Player new_component,
                                @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
         {
-            super.onComponentSet(ref, old_component, new_component, store, commandBuffer);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(playerComponentComponentType);
+        return Query.and(Player.getComponentType());
     }
 
     @Override

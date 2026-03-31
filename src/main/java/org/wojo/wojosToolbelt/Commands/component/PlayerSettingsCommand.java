@@ -18,6 +18,7 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
     private final DefaultArg<Boolean> _enable;
     private final DefaultArg<Integer> _equipPos;
     private final DefaultArg<Integer> _targetPos;
+    private final DefaultArg<String> _guiFile;
 
     PlayerSettingsCommand() 
     {
@@ -41,6 +42,12 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
             ArgTypes.INTEGER,
             0, "Hotbar position 0 (Button #1)."
         );
+
+        this._guiFile = withDefaultArg(
+            "gui-file", "The file used to change max number of possible quick access buttons.",
+            ArgTypes.STRING,
+            "Pages/ThreeByThreeQuickAccess.ui", "Default UI has 3x3 grid with 8 sleections"
+        );
     }
 
     @Override
@@ -53,7 +60,10 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
         Integer equipped = commandContext.get(this._equipPos);
         Integer target = commandContext.get(this._targetPos);
 
-        QuickAccessPlayerComponent newQuickAccessPlayerComponent = new QuickAccessPlayerComponent(enabled, equipped, target);
+        QuickAccessPlayerComponent newQuickAccessPlayerComponent = new QuickAccessPlayerComponent();
+        newQuickAccessPlayerComponent.setEquippedPosition(equipped);
+        newQuickAccessPlayerComponent.setTargetPosition(target);
+        newQuickAccessPlayerComponent.setIsEnabled(enabled);
 
         store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
     }
