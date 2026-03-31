@@ -11,6 +11,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 
 import java.util.Arrays;
 
+// NOTE: This is not an ECS component. This is instead a metadata component for an item. Each item has this info tied to it
 public class QuickAccessItemComponent {
     // ============================= json data =============================
     // (data stored in items json)

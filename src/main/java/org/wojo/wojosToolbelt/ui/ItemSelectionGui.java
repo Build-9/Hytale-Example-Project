@@ -62,10 +62,16 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         }
     }
 
-    private static final String _GUI_FILE = "Pages/ThreeByThreeQuickAccess.ui";
-    private static final String[] _QUICK_SWAP_BUTTON_IDS = {
+    // NOTE: Max size of quick swap UI is 20 items!
+    private static final String     _GUI_FILE_DEFAULT = "Pages/ThreeByThreeQuickAccess.ui";
+    private static final String[]   _GUI_FILES = {_GUI_FILE_DEFAULT};
+    private static final String[]   _QUICK_SWAP_BUTTON_IDS = {
         "#QuickAccessButton0","#QuickAccessButton1","#QuickAccessButton2","#QuickAccessButton3",
-        "#QuickAccessButton4","#QuickAccessButton5","#QuickAccessButton6","#QuickAccessButton7"
+        "#QuickAccessButton4","#QuickAccessButton5","#QuickAccessButton6","#QuickAccessButton7",
+        "#QuickAccessButton8","#QuickAccessButton9","#QuickAccessButton10","#QuickAccessButton11",
+        "#QuickAccessButton12","#QuickAccessButton13","#QuickAccessButton14","#QuickAccessButton15",
+        "#QuickAccessButton16","#QuickAccessButton17","#QuickAccessButton18","#QuickAccessButton19",
+        "#QuickAccessButton20","#QuickAccessButton21","#QuickAccessButton22","#QuickAccessButton23",
     };
 
     private List<ButtonData> _quickAccessButtons = new ArrayList<>();
@@ -93,19 +99,9 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         ItemStack[] storedItems = null;
         if (quick_access_item != null){
             storedItems = QuickAccessUtils.getContainerItems(quick_access_item);
+
             if (storedItems == null){
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("Stored Items: NONE!");
-            }else{
-                StringBuilder debugOutput = new StringBuilder("[DEBUG] [ ");
-                for (ItemStack stack : storedItems){
-                    if (stack != null){
-                        debugOutput.append(stack.getItemId()).append(' ');
-                    }else{
-                        debugOutput.append("null ");
-                    }
-                }
-                debugOutput.append(']');
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("Stored Items: "+debugOutput);
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN]: Stored items in container is null!");
             }
         }
 
