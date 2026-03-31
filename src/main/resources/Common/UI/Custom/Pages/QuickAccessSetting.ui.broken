@@ -1,59 +1,113 @@
 $C = "../Common.ui";
 Group {
+  LayoutMode: Top;
   Background: (Color: #333333);
   Anchor: (Width: 600, Height: 450);
   Padding: (Left: 10, Top: 10);
-  Group #R0 {
-    LayoutMode: Left;
+  Group #R0Title {
+    LayoutMode: CenterMiddle;
     Background: (Color: #333333);
-    Anchor: (Height: 50);
     Padding: (Full: 0);
-    Label #EqippedHotbarSlotLabel {
-      TooltipText: "Hotbar slot ID that Quick Access Item needs to be placed in to open GUI. (Values: 0-8 where 0 hotbar key 1)";
-      Anchor: (Width: 450);
+    Label #TitleLabel {
       Padding: (Full: 0);
-      Text: "Quick Access Equipped Hotbar Position (Default: 9)";
+      Text: "Quick Access Player Settings";
       Style: (TextColor: #ffffff);
     }
-    $C.@NumberField #EqippedHotbarSlotInput {
-      Anchor: (Width: 50);
-      Padding: (Full: 0);
-      Value: 0;
-      Min: 0;
-      Max: 8;
-    }
   }
-  Group #R1 {
-    LayoutMode: Left;
+  Group #R1Body {
+    LayoutMode: Top;
     Background: (Color: #333333);
-    Anchor: (Height: 50);
+    Anchor: (Width: 542, Height: 323, Left: 21, Right: 16, Top: 19, Bottom: 108);
     Padding: (Full: 0);
-    Label #TargetHotbarSlotLabel {
-      LayoutMode: LeftCenterWrap;
-      TooltipText: "Must be different from Equipped Position (Values: 0-8 where 0 hotbar key 1)";
-      Anchor: (Width: 450);
+    Group #BodyR0Checkbox {
+      LayoutMode: Left;
+      Background: (Color: #333333);
+      Anchor: (Height: 50);
       Padding: (Full: 0);
-      Text: "Quick Access Target Hotbar Position (Default: 0)";
-      Style: (TextColor: #ffffff);
+      Label #EquippedLabel {
+        Anchor: (Width: 200);
+        Padding: (Full: 0);
+        Text: "Enable Quick Swap";
+        Style: (TextColor: #ffffff);
+      }
+      $C.@CheckBoxWithLabel #CheckBoxWithLabela0766ec9 {
+        @Text = "";
+        LayoutMode: Top;
+        Background: (Color: #333333);
+        Anchor: (Height: 25);
+        Padding: (Full: 0);
+      }
     }
-    $C.@NumberField #TargetHotbarSlotInput {
-      Anchor: (Width: 50, Height: 0);
+    Group #BodyR1NumberInput {
+      LayoutMode: Left;
+      Background: (Color: #333333);
+      Anchor: (Height: 50);
       Padding: (Full: 0);
-      Value: 0;
-      Min: 0;
-      Max: 8;
+      Label #Labelf1fa64b3 {
+        Anchor: (Width: 200);
+        Padding: (Full: 0);
+        Text: "Equipped Hotbar Location";
+        Style: (TextColor: #ffffff);
+      }
+      $C.@NumberField #NumberFielde285706d {
+        Anchor: (Width: 50, Height: 25);
+        Padding: (Full: 0);
+      }
     }
-  }
-  Group #R2 {
-    LayoutMode: Middle;
-    Background: (Color: #333333);
-    Anchor: (Height: 50);
-    Padding: (Full: 0);
-    $C.@TextButton #Save {
-      TooltipText: "Save updated values";
-      Anchor: (Width: 100);
+    Group #BodyR2NumberInput {
+      LayoutMode: Left;
+      Background: (Color: #333333);
+      Anchor: (Height: 50);
       Padding: (Full: 0);
-      Text: "Save";
+      Label #Label8e37c11f {
+        Anchor: (Width: 200);
+        Padding: (Full: 0);
+        Text: "Target Hotbar Location";
+        Style: (TextColor: #ffffff);
+      }
+      $C.@NumberField #NumberField3d33470d {
+        Anchor: (Width: 50, Height: 25);
+        Padding: (Full: 0);
+      }
+    }
+    Group #BodyR3StringInput {
+      LayoutMode: Left;
+      Background: (Color: #333333);
+      Anchor: (Height: 100);
+      Padding: (Full: 0);
+      Label #Labelba698751 {
+        Anchor: (Width: 200, Height: 100);
+        Padding: (Full: 0);
+        Text: "Ui File";
+        Style: (TextColor: #ffffff);
+      }
+      $C.@TextField #TextField35a63b5d {
+        Anchor: (Width: 275, Height: 25);
+        Padding: (Full: 0);
+        Value: "Pages/ThreeByThreeQuickAccess.ui";
+        PlaceholderText: "Pages/ThreeByThreeQuickAccess.ui";
+      }
+    }
+    Group #BodyR4Button {
+      LayoutMode: CenterMiddle;
+      Background: (Color: #333333);
+      Anchor: (Height: 75);
+      Padding: (Full: 0);
+      $C.@TextButton #SubmitButton {
+        Anchor: (Width: 150, Height: 50);
+        Padding: (Full: 0);
+        Text: "Submit";
+      }
+      Group #SpacerHoriz {
+        LayoutMode: Top;
+        Background: (Color: #333333);
+        Padding: (Full: 0);
+      }
+      $C.@TextButton #ResetButton {
+        Anchor: (Width: 150, Height: 50);
+        Padding: (Full: 0);
+        Text: "Reset";
+      }
     }
   }
 }
