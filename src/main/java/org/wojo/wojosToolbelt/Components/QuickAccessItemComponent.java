@@ -41,7 +41,7 @@ public class QuickAccessItemComponent {
 
     @NullableDecl
     @Override
-    public Component<EntityStore> clone() {
+    public QuickAccessItemComponent clone() {
         QuickAccessItemComponent copy = new QuickAccessItemComponent();
         copy._itemTier = this._itemTier;
         copy._containerSize = this._containerSize;

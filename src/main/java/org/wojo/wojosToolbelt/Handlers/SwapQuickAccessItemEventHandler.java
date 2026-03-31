@@ -12,12 +12,14 @@ import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.function.Consumer;
 
 public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccessItemEvent> {
     @Override
     public void accept(SwapQuickAccessItemEvent swapQuickAccessItemEvent) {
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Running Swap event handler");
         Ref<EntityStore> playerRef = swapQuickAccessItemEvent.playerRef();
         Store<EntityStore> store = swapQuickAccessItemEvent.store();
         short sourceInventoryPosition = swapQuickAccessItemEvent.sourceInventoryPosition();
@@ -26,10 +28,11 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
         ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(quickAccessItemHotbarPosition);
-        QuickAccessItemComponent quickAccessItemComponent = QuickAccessUtils.getQuickAccessItemComponentOrNull(quickAccessItemStack);
         QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(playerRef, QuickAccessPlayerComponent.getComponentType());
         Integer intPos = quickAccessPlayerComponent.getTargetPosition();
         targetHotbarPostion = intPos.shortValue();
+
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetHotbarPostion+"\n - Source Pos: "+sourceInventoryPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item

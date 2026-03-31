@@ -4,7 +4,7 @@
     "Items.Tools",
     "Items.Armors"
   ],
-  "Icon": "Icons/ItemsGenerated/Quick_Access_Item_Creative.png",
+  "Icon": "Icons/ItemsGenerated/Utility_Leather_Quiver.png",
   "Model": "Items/Back/Quiver.blockymodel",
   "Texture": "Items/Back/Quiver_Texture.png",
   "Quality": "Common",
@@ -29,7 +29,7 @@
     ]
   },
   "Container": {
-    "Capacity": 8
+    "Capacity": 20
   },
   "Interactions": {
     "Primary": {
@@ -81,18 +81,6 @@
   "BlockType": {
     "TextureSideMask": "Items/Back/Quiver_Texture.png",
     "CustomModel": "Items/Back/Quiver.blockymodel",
-    "DrawType": "Model",
-    "Components": {
-      "WojosToolbelt:WojosQuickAccess_Component_ID": {
-        "QuickAccessItemTier": 7,
-        "QuickAccessItemType": 7,
-        "QuickAccessMaxTotalItems": 8,
-        "QuickAccessGuiButton": 8,
-        "QuickAccessTargetLocation": 0,
-        "QuickAccessItemUuids": [],
-        "QuickAccessItemNames": [],
-        "QuickAccessItemsDisabled": []
-      }
-    }
+    "DrawType": "Model"
   }
 }

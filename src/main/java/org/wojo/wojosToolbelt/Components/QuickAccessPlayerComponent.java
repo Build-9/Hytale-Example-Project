@@ -91,6 +91,8 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         return this._targetPosition;
     }
 
+    public String getGuiFile() { return this._selectionGui;}
+
     // ------------ Setters ------------
     public void setIsEnabled(boolean is_enabled){
         this._isEnabled = is_enabled;
@@ -104,6 +106,8 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
         this._targetPosition = target_position;
     }
 
+    public void setGuiFile(String gui_file) { this._selectionGui = gui_file;}
+
     // ------------ Debug ------------
     public String getPrintableString(){
         String debugResult = String.format(
@@ -111,9 +115,11 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
             "- Is Enabled: %b \n"+
             "- Equipped Pos: %d \n" +
             "- Target Pos: %d \n",
+            "- Gui File: %s",
             this.getIsEnabled(),
             this.getEquippedPosition(),
-            this.getTargetPosition()
+            this.getTargetPosition(),
+            this.getGuiFile()
         );
 
         return debugResult;

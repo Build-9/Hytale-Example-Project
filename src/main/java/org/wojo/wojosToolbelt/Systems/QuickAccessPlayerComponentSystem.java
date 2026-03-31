@@ -89,7 +89,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(playerComponentComponentType);
+        return Query.and(QuickAccessPlayerComponent.getComponentType());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -41,7 +42,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     
     private void registerSystems(){
         this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerComponentSystem(QuickAccessPlayerComponent.getComponentType()));
-        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerSystem());
+        this.getEntityStoreRegistry().registerSystem(new QuickAccessPlayerSystem(Player.getComponentType()));
     }
 
     private void registerEvents(){

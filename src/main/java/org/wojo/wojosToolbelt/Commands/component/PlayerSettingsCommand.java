@@ -59,11 +59,13 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
         boolean enabled = commandContext.get(this._enable);
         Integer equipped = commandContext.get(this._equipPos);
         Integer target = commandContext.get(this._targetPos);
+        String guiFile = commandContext.get(this._guiFile);
 
         QuickAccessPlayerComponent newQuickAccessPlayerComponent = new QuickAccessPlayerComponent();
         newQuickAccessPlayerComponent.setEquippedPosition(equipped);
         newQuickAccessPlayerComponent.setTargetPosition(target);
         newQuickAccessPlayerComponent.setIsEnabled(enabled);
+        newQuickAccessPlayerComponent.setGuiFile(guiFile);
 
         store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
     }

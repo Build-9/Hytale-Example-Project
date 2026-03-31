@@ -12,8 +12,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 public class QuickAccessItemComponentFactory {
 
     public static QuickAccessItemComponent createQuickAccessItemComponent(ItemStack item_stack) {
-        String itemId = item_stack.getItemId();
-        QuickAccessItemComponent comp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(item_stack.getItemId());
+        QuickAccessItemComponent comp = new QuickAccessItemComponent();
 
 
         BsonDocument containerBSON = item_stack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);

@@ -2,10 +2,14 @@ package org.wojo.wojosToolbelt.Systems;
 
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.dependency.Dependency;
+import com.hypixel.hytale.component.dependency.Order;
+import com.hypixel.hytale.component.dependency.SystemDependency;
+import com.hypixel.hytale.component.dependency.SystemGroupDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.player.PlayerSystems;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
@@ -18,7 +22,9 @@ import java.util.Set;
 
 public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player> {
 
-    public QuickAccessPlayerSystem(){
+    ComponentType<EntityStore, Player> _playerComponentType;
+    public QuickAccessPlayerSystem(ComponentType<EntityStore, Player> player_component_type){
+        this._playerComponentType = player_component_type;
     }
 
     @NonNullDecl
@@ -66,7 +72,7 @@ public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(Player.getComponentType());
+        return Query.and();
     }
 
     @Override
@@ -85,10 +91,13 @@ public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player
         return super.getGroup();
     }
 
-    @NonNullDecl
-    @Override
-    public Set<Dependency<EntityStore>> getDependencies() {
-        return super.getDependencies();
-    }
+//    @NonNullDecl
+//    @Override
+//    public Set<Dependency<EntityStore>> getDependencies() {
+//        return new Set<Dependency<>>;
+//        return Set.of(
+//                new SystemDependency<>(Order.AFTER, PlayerSystems.PlayerAddedSystem.class)
+//        );
+//    }
 
 }

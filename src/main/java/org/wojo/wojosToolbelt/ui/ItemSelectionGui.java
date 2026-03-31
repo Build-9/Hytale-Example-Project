@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.QuickAccessUtils.*;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -44,6 +45,21 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             this.isButtonDisabled = is_disabled;
             this.buttonStyle = style;
         }
+
+        public String getDebugString() {
+            String output = "-----------\n[DEBUG] ButtonData: \n";
+            if (buttonMsg != null){
+                output += (" - msg: "+buttonMsg.getRawText())+"\n";
+            }else{
+                output += " - msg: null\n";
+            }
+
+            output += " - text: "+buttonText+"\n";
+            output += " - icon: "+buttonIcon+"\n";
+            output += " - isDis: "+isButtonDisabled+"\n";
+            output += " - style: "+buttonStyle+"\n";
+            return output;
+        }
     }
 
     private static final String _GUI_FILE = "Pages/ThreeByThreeQuickAccess.ui";
@@ -52,7 +68,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         "#QuickAccessButton4","#QuickAccessButton5","#QuickAccessButton6","#QuickAccessButton7"
     };
 
-    private List<ButtonData> _quickAccessButtons = new ArrayList<>(Collections.nCopies(_QUICK_SWAP_BUTTON_IDS.length, new ButtonData(null,"","","true")));
+    private List<ButtonData> _quickAccessButtons = new ArrayList<>();
     private ButtonData _settingsButton = new ButtonData(null,"","","true");
     private ButtonData _equipedItemButton =  new ButtonData(null,"","","true");
 
@@ -77,6 +93,20 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         ItemStack[] storedItems = null;
         if (quick_access_item != null){
             storedItems = QuickAccessUtils.getContainerItems(quick_access_item);
+            if (storedItems == null){
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("Stored Items: NONE!");
+            }else{
+                StringBuilder debugOutput = new StringBuilder("[DEBUG] [ ");
+                for (ItemStack stack : storedItems){
+                    if (stack != null){
+                        debugOutput.append(stack.getItemId()).append(' ');
+                    }else{
+                        debugOutput.append("null ");
+                    }
+                }
+                debugOutput.append(']');
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("Stored Items: "+debugOutput);
+            }
         }
 
 
@@ -84,7 +114,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         //  - Translated-Item-Name
         //  - Item-ID  (If there is no translation key)
         //  - `------` (If the item slot is empty on the player's container)
-        for (Integer i=0; i < this._quickAccessButtons.size(); i++){
+        for (int i = 0; i < this._quickAccessButtons.size(); i++){
             ButtonData buttonInfo = this._quickAccessButtons.get(i);
             buttonInfo.isButtonDisabled = QuickAccessConfig.getIsButtonDisabled(quick_access_item, i);
             if (storedItems!=null && i<storedItems.length){
@@ -93,9 +123,12 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                     // Get Translation key, otherwise use item_id
                     try {
                         String translatedName = Item.getAssetMap().getAsset(storedItems[i].getItemId()).getTranslationKey();
-                        buttonInfo.buttonMsg = Message.translation(translatedName);
+                        Message translated = Message.translation(translatedName);
+                        buttonInfo.buttonMsg = translated;
+                        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Saving translated button name");
                     } catch (Exception e) {
                         buttonInfo.buttonText = storedItem.getItemId();
+                        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Saving Item ID Name");
                     }
                 }else{
                     // No item Stored in container location
@@ -107,8 +140,13 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 buttonInfo.isButtonDisabled = "true";
             }
             this._quickAccessButtons.set(i, buttonInfo);
+            WojosQuickAccessPlugin.LOGGER.atInfo().log(_quickAccessButtons.get(i).getDebugString());
         }
+
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Loaded selection btn info");
+        for (ButtonData button : this._quickAccessButtons){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Button: "+button+"\n"+button.getDebugString());
+        }
     }
 
     private void loadEquippedButtonData(ItemStack target_item) {
@@ -140,6 +178,10 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     public ItemSelectionGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, SelectionUiData.CODEC);
 
+        for (int i=0; i<_QUICK_SWAP_BUTTON_IDS.length; i++){
+            _quickAccessButtons.add(new ButtonData(null,"","","true"));
+        }
+
         ItemStack quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
         this.loadSelectionButtonData(quickAccessItem);
 
@@ -149,7 +191,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         this.loadSettingsButtonData();
 
         WojosQuickAccessPlugin.LOGGER.atInfo().log("------ Item Stack Data ------\n"+quickAccessItem.toString());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("------ Quick Access Item Component ------\n"+QuickAccessUtils.getQuickAccessItemComponentOrNull(quickAccessItem).toString());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
     }
 
     @Override
@@ -181,10 +223,10 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonText);
         }
 
-        if (_quickAccessButtons.getFirst().buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.getFirst().buttonMsg);
+        if (_quickAccessButtons.get(0).buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonMsg);
         }else{
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.getFirst().buttonText);
+            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonText);
         }
         if (_quickAccessButtons.get(1).buttonMsg != null){
             uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonMsg);
@@ -236,7 +278,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         } else if (buttonPressed.equals("equipped")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Equipped Pressed");
         } else{
-                CommandManager.get().handleCommand(playerRef, "swap --src-pos "+buttonPressed);
+                CommandManager.get().handleCommand(playerRef, "wqa item swap --src-pos "+buttonPressed);
         }
         this.close();
     }

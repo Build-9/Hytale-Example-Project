@@ -18,11 +18,10 @@ public class SwapItemCommand extends AbstractPlayerCommand {
     private final DefaultArg<Integer> _srcInventoryPostition;
 
     public SwapItemCommand(){
-        super("swapItem","Swap Item from QuickAccessItem(stored at hotbar 9) sub container (positon 0) into hotbar slot 0");
+        super("swap","Swap Item from QuickAccessItem(stored at hotbar 9) sub container (positon 0) into hotbar slot 0");
         this._srcInventoryPostition = this.withDefaultArg("src-pos","Inventory position in QuickAccess Item to pull item from",
                 ArgTypes.INTEGER,
                 0, "Pull from first position in inventory by default");
-
     }
 
     @Override
