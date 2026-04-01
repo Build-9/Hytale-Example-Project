@@ -74,12 +74,13 @@ public class QuickAccessUtils {
     if (player_ref == null || player_ref.getReference() == null || !player_ref.isValid()) {
       WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: Player is NULL");
       return null;
-    } else if (quickAccessPlayerComp == null) {
+    } else if (store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType()) == null) {
       WojosQuickAccessPlugin.LOGGER.atInfo().log("WARN: QaPlayerComp is NULL, Adding one to player.");
-      quickAccessPlayerComp = new QuickAccessPlayerComponent();
-      store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComp);
+      QuickAccessPlayerComponent quickAccessPlayerComponent = new QuickAccessPlayerComponent();
+      store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
     }
 
+    Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
     ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {

@@ -62,7 +62,7 @@ Group {
       Label #Label8e37c11f {
         Anchor: (Width: 200);
         Padding: (Full: 0);
-        Text: "Target Hotbar Location";
+        Text: "Target Hotbar Location [-1(active slot) | 1(hotbar key 1) - 8(hotbar key 9)]";
         Style: (TextColor: #ffffff);
       }
       $C.@NumberField #TargetNumberField {
@@ -78,7 +78,7 @@ Group {
       Label #Labelba698751 {
         Anchor: (Width: 200, Height: 100);
         Padding: (Full: 0);
-        Text: "Ui File";
+        Text: "Ui File (I was unable to get a dropdown working) Valid options are: - Pages/ThreeByThreeQuickAccess.ui - Pages/FourByFourQuickAccess.ui";
         Style: (TextColor: #ffffff);
       }
       $C.@TextField #GuiFileTextField {
@@ -100,6 +100,7 @@ Group {
       }
       Group #SpacerHoriz {
         LayoutMode: Top;
+        Anchor: (Width: 150);
         Background: (Color: #333333);
         Padding: (Full: 0);
       }

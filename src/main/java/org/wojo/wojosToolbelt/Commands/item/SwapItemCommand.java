@@ -2,6 +2,7 @@ package org.wojo.wojosToolbelt.Commands.item;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
@@ -38,8 +39,8 @@ public class SwapItemCommand extends AbstractPlayerCommand {
         Integer targetPosition = context.get(_targetQaItemHotbarPosition);
         Integer containerPosition = context.get(_qaContainerItemToSwapPostition);
 
-        if (equipped_pos == target_position){
-            context.sendMessage(Message.raw("[ERROR]: Trying to swap item from Quick Access Container to hotbar location the container is in."))
+        if (equippedPosition.shortValue() == targetPosition.shortValue()){
+            context.sendMessage(Message.raw("[ERROR]: Trying to swap item from Quick Access Container to hotbar location the container is in."));
         }
         SwapQuickAccessItemEvent.dispatch(playerRef.getReference(), store, containerPosition.shortValue(), equippedPosition.shortValue(), targetPosition.shortValue());
     }

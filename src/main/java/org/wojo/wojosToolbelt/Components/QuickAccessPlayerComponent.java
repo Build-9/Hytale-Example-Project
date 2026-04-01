@@ -114,7 +114,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
             "[DEBUG] Quick-Access Player Component Data:\n"+
             "- Is Enabled: %b \n"+
             "- Equipped Pos: %d \n" +
-            "- Target Pos: %d \n",
+            "- Target Pos: %d \n"+
             "- Gui File: %s",
             this.getIsEnabled(),
             this.getEquippedPosition(),

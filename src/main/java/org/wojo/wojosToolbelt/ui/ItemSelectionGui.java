@@ -10,6 +10,7 @@ import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -19,6 +20,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.QuickAccessUtils.*;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
@@ -79,6 +81,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     private ButtonData _equipedItemButton =  new ButtonData(null,"","","true");
     private boolean _isQuickAccessItemHeld = false;
     private QuickAccessPlayerComponent _playerQaComp = null;
+    private Integer _quickAccessItemHotbarPosition = 8;
 
     // ------ UI Interaction Data ------
     public static class SelectionUiData {
@@ -185,9 +188,10 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
         ItemStack quickAccessItem = null;
         if (this._isQuickAccessItemHeld){
-            quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store)
-            this._playerQaComp.setEquippedPosition(player.getActiveHotbarSlot());
+            quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store);
+            this._quickAccessItemHotbarPosition = (int) player.getInventory().getActiveHotbarSlot();
         }else{
+            this._quickAccessItemHotbarPosition = _playerQaComp.getEquippedPosition();
             quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
         }
 
@@ -198,8 +202,8 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
         this.loadSettingsButtonData();
 
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("------ Item Stack Data ------\n"+quickAccessItem.toString());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("\n\n------ Item Stack Data ------\n"+quickAccessItem.toString());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("\n------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
     }
 
     @Override
@@ -215,7 +219,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "7"), true);
 
-        uiCommandBuilder.append(ItemSelectionGui._GUI_FILE);
+        uiCommandBuilder.append(ItemSelectionGui._GUI_FILE_DEFAULT);
 
         if (_equipedItemButton.buttonMsg != null){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Msg");
@@ -274,26 +278,31 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     }
 
     @Override
-    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, SelectionUiData data) {
+    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl SelectionUiData data) {
         super.handleDataEvent(ref, store, data);
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data! "+data.buttonSelected);
         String buttonPressed = data.buttonSelected;
 
         if (buttonPressed.equals("N/A")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
+            this.close();
         } else if (buttonPressed.equals("settings")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Settings Pressed");
-            CommandManager.get().handleCommand(playerRef, "wqa gui settings --event open");
+            PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
+            Player player = store.getComponent(ref, Player.getComponentType());
+            player.getPageManager().openCustomPage(ref, store, guiPage);
         } else if (buttonPressed.equals("equipped")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Equipped Pressed");
+            this.close();
         } else{
-            String cmd = String.format("wqa item swap --container-pos %d --equipped-pos %d --target-pos %d",
+            this.close();
+            String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",
                 buttonPressed,
-                _playerQaComp.getEquippedPosition(),
+                _quickAccessItemHotbarPosition,
                 _playerQaComp.getTargetPosition()
             );
+            CommandManager.get().handleCommand(this.playerRef, cmd);
         }
-        this.close();
     }
 
 }

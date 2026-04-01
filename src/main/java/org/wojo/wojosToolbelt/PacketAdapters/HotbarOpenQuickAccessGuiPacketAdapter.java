@@ -125,7 +125,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
-            InventoryComponent.HOTBAR_SECTION_ID,   // -1 indicates the hotbar
+            Inventory.HOTBAR_SECTION_ID,   // -1 indicates the hotbar
             originalHotbarSlot                      // The slot index to select
         );
         playerRef.getPacketHandler().write(setActiveSlotPacket);

@@ -6,13 +6,17 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
+import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
+import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import javax.annotation.Nonnull;
@@ -27,15 +31,33 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         public Integer equippedPos = 8;
         public Integer targetPos = 0;
         public String guiFile = "";
-        public String buttonPressed = "";
-    
-        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file, String button_pressed) {
+        public String buttonSelected = "";
+
+        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file, String button_selected) {
             this.isEnabled = is_enabled;
             this.equippedPos = equipped_pos;
             this.targetPos = target_pos;
             this.guiFile = gui_file;
-            this.buttonPressed = button_pressed;
+            this.buttonSelected = button_selected;
         }
+
+        public String getDebugString(){
+            return String.format("------ SettingsUiData ------\n - IsEnabled: %b\n - equippedPos: %d\n - targetPos: %d\n - guiFile: %s\n - buttonSelected: %s",
+                this.isEnabled,
+                this.equippedPos,
+                this.targetPos,
+                this.guiFile,
+                this.buttonSelected
+            );
+        }
+
+        public void update(SettingsUiData data){
+            this.isEnabled = data.isEnabled;
+            this.equippedPos = data.equippedPos;
+            this.targetPos = data.targetPos;
+            this.guiFile = data.guiFile;
+            this.buttonSelected = data.buttonSelected;
+        };
 
         public SettingsUiData(){
         }
@@ -66,62 +88,121 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             )
             .add()
             .append(
-                new KeyedCodec<>("ButtonPressed", Codec.String),
-                (obj, val) -> obj.submit = val,
-                obj -> obj.submit
+                new KeyedCodec<>("ButtonSelected", Codec.STRING),
+                (obj, val) -> obj.buttonSelected = val,
+                obj -> obj.buttonSelected
             )
             .add()
             .build();
     }
+
     // ------------ END UI DATA ------------
   
     public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
+    SettingsUiData _uiData = new SettingsUiData();
 
     
-    public PlayerSettingsGui(@Nonnull PlayerRef player_ref, Player player) {
+    public PlayerSettingsGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, SettingsUiData.CODEC);
+
+        QuickAccessPlayerComponent qaPlayerComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
+        if (qaPlayerComp != null){
+            this._uiData.isEnabled = qaPlayerComp.getIsEnabled();
+            this._uiData.equippedPos = qaPlayerComp.getEquippedPosition();
+            this._uiData.targetPos = qaPlayerComp.getTargetPosition();
+            this._uiData.guiFile = qaPlayerComp.getGuiFile();
+        }
     }
 
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, 
                       @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
+        uiEventBuilder.addEventBinding(
+            CustomUIEventBindingType.ValueChanged, "#IsEnabledCheckbox #CheckBox",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","IsEnabledCheckbox"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.ValueChanged, "#EquippedNumberField",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","EquippedNumberField"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.ValueChanged, "#TargetNumberField",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","TargetNumberField"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.ValueChanged, "#GuiFileTextField",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","GuiFileTextField"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#ResetButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","ResetButton"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#SubmitButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","SubmitButton"), false
+        );
+
         uiCommandBuilder.append(SETTINGS_GUI_FILE);
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.ValueChanged, "#IsEnabledCheckbox", 
-            EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox.Value"), false
-        );
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.ValueChanged, "#EquippedNumberField", 
-            EventData.of("@EquippedNumberField", "#EquippedNumberField.Value"), false
-        );
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.ValueChanged, "#TargetNumberField", 
-            EventData.of("@TargetNumberField", "#TargetNumberField.Value"), false
-        );
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.ValueChanged, "#GuiFileTextField", 
-            EventData.of("@GuiFileTextField", "#GuiFileTextField.Value"), false
-        );
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.Activating, "#SubmitButton", 
-            EventData.of("ButtonPressed", "submit"), false
-        );
-        uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.Activating, "#ResetButton", 
-            EventData.of("ButtonPressed", "reset"), false
-        );
+
+        uiCommandBuilder.set("#IsEnabledCheckbox #CheckBox.Value", _uiData.isEnabled);
+        uiCommandBuilder.set("#EquippedNumberField.Value", _uiData.equippedPos);
+        uiCommandBuilder.set("#TargetNumberField.Value", _uiData.targetPos);
+        uiCommandBuilder.set("#GuiFileTextField.Value", _uiData.guiFile);
     }
 
     @Override
-    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, SettingsUiData data) {
+    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl SettingsUiData data) {
         super.handleDataEvent(ref, store, data);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Settings Data:\n "+data+"------\n\n");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Output Settings Data:\n "+data.getDebugString()+"\n\n");
 
-        if (data.buttonPressed.contains("submit")){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - SUBMIT new settings values to player\n");
-        }else if (data.buttonPressed.contains("reset")){
+        if (data.buttonSelected.contains("SubmitButton")){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - SUBMIT new settings values to player with data\n"+data.getDebugString());
+
+            QuickAccessPlayerComponent newPlayerComp = new QuickAccessPlayerComponent();
+            newPlayerComp.setIsEnabled(this._uiData.isEnabled);
+            newPlayerComp.setTargetPosition(this._uiData.targetPos);
+            newPlayerComp.setEquippedPosition(this._uiData.equippedPos);
+            //newPlayerComp.setGuiFile(this._uiData.guiFile);
+            // TODO: Validate values are in range and not colliding before update
+            if (this._uiData.targetPos < -1 || this._uiData.targetPos > 8){
+
+            }else if (this._uiData.equippedPos < 0 || this._uiData.equippedPos > 8){
+
+            }
+            store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newPlayerComp);
+            this.close();
+        }else if (data.buttonSelected.contains("ResetButton")){
+            this._uiData = new SettingsUiData();
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
+        }else {
+            this._uiData.update(data);
         }
+
+        //CommandManager.get().handleCommand(playerRef,"wqa gui select --event open");
         sendUpdate();
     }
 }

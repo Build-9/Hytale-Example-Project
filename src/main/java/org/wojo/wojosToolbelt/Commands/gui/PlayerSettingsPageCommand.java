@@ -42,7 +42,7 @@ public class PlayerSettingsPageCommand extends AbstractPlayerCommand {
         }
 
         // ------ Run GUI event ------
-        PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, player);
+        PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
         player.getPageManager().openCustomPage(ref, store, guiPage);
     }
 }

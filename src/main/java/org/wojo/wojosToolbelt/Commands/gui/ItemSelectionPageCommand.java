@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
@@ -20,7 +21,6 @@ import java.sql.Array;
 
 public class ItemSelectionPageCommand extends AbstractPlayerCommand {
     private final DefaultArg<String> eventArg;
-    private final DefaultArg<Integer> itemHotbarPosition;
 
     // Constructor
     public ItemSelectionPageCommand(){
@@ -28,7 +28,6 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         addAliases("select", "SEL");
 
         this.eventArg = this.withDefaultArg("event", "Run gui event like open/close/reset", ArgTypes.STRING, "open", "Default is to open the gui");
-        this.itemHotbarPosition = this.withDefaultArg("pos", "Quick Access Item's position in the hotbar", ArgTypes.INTEGER, 8, "Default position is 8 (Button 9)");
     };
 
     // Run the command
@@ -39,15 +38,12 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         Player player = store.getComponent(ref, Player.getComponentType());
         QuickAccessPlayerComponent qaPlayerComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
 
-        Integer hotbarPos = commandContext.get(itemHotbarPosition);
-        short itemHotbarPosition = hotbarPos.shortValue();
-
         // ------ Check For Quick Access Item ------
         ItemStack heldItem = player.getInventory().getActiveHotbarItem();
-        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(qaPlayerComp.getEquippedPosition());
+        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack((short)qaPlayerComp.getEquippedPosition());
         
         // ------ Verify item is Quick Access Item ------
-        Boolean isItemHeld = false;
+        boolean isItemHeld = false;
         if (!QuickAccessUtils.isQuickAccessItem(heldItem) && !QuickAccessUtils.isQuickAccessItem(equippedItem)){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: Item held or equipped is not a QuickAccess Item");
             return;
