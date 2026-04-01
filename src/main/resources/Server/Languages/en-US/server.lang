@@ -1,4 +1,6 @@
 items.Quick_Access_Item_Debug_Unrestricted.name=Quick Access Toolbelt
 items.Quick_Access_Item_Debug_Unrestricted.description=(Crude-Unrestricted Quick-Access Toolbelt) An item used to quickswap tools in the players hotbar. (By default the item needs to be in slot 9 to be equipped and it swaps items into slot 1)
 items.Quick_Access_Item_Debug_Unrestricted.tooltip= Crude-Unrestricted Quick-Access Toolbelt. Place in Hotbar Slot 9 to work!
-general.qualities.common=Crude
+itemCategory.QuickAccessItems.name=Wojos Quick Access
+itemCategory.QuickAccessItems.description=Wojos Quick Access Items: Toolbelts, Slings and More!
+itemCategory.child.containers.name=ContainerItems

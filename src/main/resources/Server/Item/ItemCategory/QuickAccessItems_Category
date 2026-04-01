@@ -1,0 +1,11 @@
+{
+    "Icon": "Icons/ItemCategories/Items-Tools.png",
+    "Order": 5,
+    "Children": [
+        {
+            "Id": "Quick Access Items",
+            "Name": "itemCategory.child.containers.name",
+            "Icon":"Icons/ItemCategories/Items-Tools.png"
+        }
+    ]
+}
