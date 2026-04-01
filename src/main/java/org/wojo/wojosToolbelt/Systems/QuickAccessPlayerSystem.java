@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
+// NOTE: This is a system to effect the Player. Its used to add a quick access component to any player that joins the game
 public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player> {
 
     ComponentType<EntityStore, Player> _playerComponentType;
@@ -44,10 +45,10 @@ public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player
         if (quickAccessPlayerComponent == null) {
             quickAccessPlayerComponent = new QuickAccessPlayerComponent();
             store.addComponent(ref, QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded - We added a comp to a player!");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerSystem.onComponentAdded - We added a comp to a player!");
+        }else{
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerSystem.onComponentAdded - Player allready had a QuickAccessPlayerComponent!");
         }
-
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerSystem.onComponentAdded - Player allready had a QuickAccessPlayerComponent!");
     }
 
     @Override

@@ -44,7 +44,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
 
         quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
         quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
-        quickAccessPlayerUuidMap.putIfAbsent(ref,playerUuid);
+        quickAccessPlayerUuidMap.putIfAbsent(ref, playerUuid);
 
         WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentAdded");
     }
