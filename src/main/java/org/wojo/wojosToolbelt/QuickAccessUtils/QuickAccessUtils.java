@@ -17,6 +17,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 
 public class QuickAccessUtils {
 
@@ -39,7 +40,7 @@ public class QuickAccessUtils {
     }
 
     String guiFile = component.getGuiFile();
-    if (!QuickAccessConfig.SELECTION_GUI_FILES.contains(guiFile)){
+    if (!Arrays.asList(QuickAccessConfig.SELECTION_GUI_FILES).contains(guiFile)){
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.guiFile is not one of the expected. Resetting to default (Pages/ThreeByThreeQuickAccess.ui)");
       component.setGuiFile(QuickAccessConfig.SELECTION_GUI_FILES[0]);
     }

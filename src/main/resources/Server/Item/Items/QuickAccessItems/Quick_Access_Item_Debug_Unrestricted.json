@@ -2,7 +2,7 @@
   "PlayerAnimationsId": "Item",
   "Categories": [
     "Items.Tools",
-    "WojosQuickAccess_Category.Containers"
+    "WojosQuickAccess.Containers"
   ],
   "Icon": "Icons/ItemsGenerated/Utility_Leather_Quiver.png",
   "Model": "Items/Back/Quiver.blockymodel",

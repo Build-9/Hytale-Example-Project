@@ -1,0 +1,11 @@
+{
+  "Icon": "Icons/ItemCategories/Natural.png",
+  "Order": 5,
+  "Children": [
+    {
+      "Id": "Containers",
+      "Name": "Category.CreativeLibrary.containers.name",
+      "Icon":"Icons/ItemCategories/Items-Tools.png"
+    }
+  ]
+}

@@ -82,22 +82,6 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     }
 
     @Override
-    public void onComponentReplaced(@Nonnull Ref<EntityStore> ref,
-                               @Nullable QuickAccessPlayerComponent old_component, @Nonnull QuickAccessPlayerComponent new_component,
-                               @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
-        {
-
-        // Quick Access Component replaced on a player that already has it
-        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
-        UUID playerUuid = uuidComponent.getUuid();
-        
-        quickAccessBtnEnabledMap.put(playerUuid, new_component.getIsEnabled());
-        quickAccessHotbarLocationEquipMap.put(playerUuid, new_component.getEquippedPosition());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentReplaced");
-    }
-
-
-    @Override
     public boolean test(ComponentRegistry<EntityStore> componentRegistry, Archetype<EntityStore> archetype) {
         return super.test(componentRegistry, archetype);
     }
