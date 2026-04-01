@@ -76,7 +76,7 @@
   },
   "ItemLevel": 100,
   "Utility": {
-    "Usable": true
+    "Usable": false
   },
   "BlockType": {
     "TextureSideMask": "Items/Back/Quiver_Texture.png",
