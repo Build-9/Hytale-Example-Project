@@ -20,6 +20,32 @@ import javax.annotation.Nonnull;
 
 public class QuickAccessUtils {
 
+  public static QuickAccessPlayerComponent validateQuickAccessPlayerComponent(QuickAccessPlayerComponent component){
+    if (component.getEquippedPosition() < 0 || component.getEquippedPosition() > 8) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.equipedPosition is out of range. Setting to default (8)");
+      component.setTargetPosition(0); // Reset to default value
+    }
+
+    if (component.getTargetPosition() < -1 || component.getTargetPosition() > 8) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.targetPosition is out of range. Setting to default (0).");
+      component.setTargetPosition(0); // Reset to default value
+    }else if ( component.getTargetPosition() == component.getEquippedPosition()) {
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.targetPosition is same as equippedPosition. Moving target location to (0 or 1 if taken)");
+      if (component.getTargetPosition() == 0) {
+        component.setTargetPosition(1);
+      }else{
+        component.setTargetPosition(0);
+      }
+    }
+
+    String guiFile = component.getGuiFile();
+    if (!QuickAccessConfig.SELECTION_GUI_FILES.contains(guiFile)){
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.guiFile is not one of the expected. Resetting to default (Pages/ThreeByThreeQuickAccess.ui)");
+      component.setGuiFile(QuickAccessConfig.SELECTION_GUI_FILES[0]);
+    }
+    return component;
+  }
+
   public static QuickAccessPlayerComponent getAndAddQuickAccessPlayerComponent(Ref<EntityStore> playerRef, Store<EntityStore> store) {
     QuickAccessPlayerComponent quickAccessPlayerComponent = null;
     Player player = store.getComponent(playerRef, Player.getComponentType());

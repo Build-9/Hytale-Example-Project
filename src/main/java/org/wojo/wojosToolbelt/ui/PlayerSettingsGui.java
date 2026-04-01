@@ -186,13 +186,9 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             newPlayerComp.setIsEnabled(this._uiData.isEnabled);
             newPlayerComp.setTargetPosition(this._uiData.targetPos);
             newPlayerComp.setEquippedPosition(this._uiData.equippedPos);
-            //newPlayerComp.setGuiFile(this._uiData.guiFile);
-            // TODO: Validate values are in range and not colliding before update
-            if (this._uiData.targetPos < -1 || this._uiData.targetPos > 8){
+            newPlayerComp.setGuiFile(this._uiData.guiFile);
 
-            }else if (this._uiData.equippedPos < 0 || this._uiData.equippedPos > 8){
-
-            }
+            QuickAccessUtils.validateQuickAccessPlayerComponent(newPlayerComp);
             store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newPlayerComp);
             this.close();
         }else if (data.buttonSelected.contains("ResetButton")){
@@ -202,7 +198,6 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             this._uiData.update(data);
         }
 
-        //CommandManager.get().handleCommand(playerRef,"wqa gui select --event open");
         sendUpdate();
     }
 }

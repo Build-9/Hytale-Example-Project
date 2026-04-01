@@ -25,6 +25,8 @@ public class QuickAccessConfig {
     // TODO: These can be changed so set names to 'DEFAULT'
     public static int HOTBAR_GUI_BUTTON = 8;            // Button 9
     public static int HOTBAR_SWAP_LOCATION = 0;         // Button 1
+
+    public static final String[] SELECTION_GUI_FILES = {"Pages/ThreeByThreeQuickAccess.ui", "Pages/FourByFourQuickAccess.ui"}
     
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
