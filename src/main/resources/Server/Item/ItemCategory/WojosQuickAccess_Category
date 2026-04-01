@@ -3,7 +3,7 @@
     "Order": 5,
     "Children": [
         {
-            "Id": "WojosQuickAccess",
+            "Id": "Containers",
             "Name": "itemCategory.child.containers.name",
             "Icon":"Icons/ItemCategories/Items-Tools.png"
         }
