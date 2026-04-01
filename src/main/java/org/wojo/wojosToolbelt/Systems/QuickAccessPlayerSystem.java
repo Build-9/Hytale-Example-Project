@@ -90,14 +90,4 @@ public class QuickAccessPlayerSystem extends RefChangeSystem<EntityStore, Player
     public SystemGroup<EntityStore> getGroup() {
         return super.getGroup();
     }
-
-//    @NonNullDecl
-//    @Override
-//    public Set<Dependency<EntityStore>> getDependencies() {
-//        return new Set<Dependency<>>;
-//        return Set.of(
-//                new SystemDependency<>(Order.AFTER, PlayerSystems.PlayerAddedSystem.class)
-//        );
-//    }
-
 }

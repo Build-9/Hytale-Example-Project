@@ -46,7 +46,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
         quickAccessPlayerUuidMap.putIfAbsent(ref,playerUuid);
 
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentAdded");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentAdded");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         quickAccessBtnEnabledMap.put(playerUuid, component.getIsEnabled());
         quickAccessHotbarLocationEquipMap.put(playerUuid, component.getEquippedPosition());
 
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentRemoved");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentRemoved");
     }
 
     @Override
@@ -78,8 +78,24 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
         
         quickAccessBtnEnabledMap.put(playerUuid, new_component.getIsEnabled());
         quickAccessHotbarLocationEquipMap.put(playerUuid, new_component.getEquippedPosition());
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("INFO: quickAccessPlayerComponentSystem.onComponentSet");
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentSet");
     }
+
+    @Override
+    public void onComponentReplaced(@Nonnull Ref<EntityStore> ref,
+                               @Nullable QuickAccessPlayerComponent old_component, @Nonnull QuickAccessPlayerComponent new_component,
+                               @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer)
+        {
+
+        // Quick Access Component replaced on a player that already has it
+        UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
+        UUID playerUuid = uuidComponent.getUuid();
+        
+        quickAccessBtnEnabledMap.put(playerUuid, new_component.getIsEnabled());
+        quickAccessHotbarLocationEquipMap.put(playerUuid, new_component.getEquippedPosition());
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: quickAccessPlayerComponentSystem.onComponentReplaced");
+    }
+
 
     @Override
     public boolean test(ComponentRegistry<EntityStore> componentRegistry, Archetype<EntityStore> archetype) {
