@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
+import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.Set;
 
@@ -165,6 +166,8 @@ public class QuickAccessConfig {
         if (type.getId() >= ITEM_TYPE.NUM_TYPES.getId() || type.getId() < 0
                 || tier < 0 || tier >= ITEM_TIER.NUM_TIERS.getId()){
             return "true";}
+
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: get Is button disabled - Tier:"+type.getId()+" Type:"+type.getId());
 
         Integer numEnabledButtons = 0;
         switch (type){

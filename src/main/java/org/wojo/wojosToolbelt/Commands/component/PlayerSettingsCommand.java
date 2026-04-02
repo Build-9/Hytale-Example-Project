@@ -67,6 +67,11 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
         newQuickAccessPlayerComponent.setIsEnabled(enabled);
         newQuickAccessPlayerComponent.setGuiFile(guiFile);
 
-        store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
+        QuickAccessPlayerComponent existingComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
+        if (existingComp == null) {
+            store.addComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
+        }else{
+            store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newQuickAccessPlayerComponent);
+        }
     }
 }

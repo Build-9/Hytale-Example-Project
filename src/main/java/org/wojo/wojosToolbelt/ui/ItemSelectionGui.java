@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
@@ -181,6 +182,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         this._isQuickAccessItemHeld = is_item_held;
         this._playerQaComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
         Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
 
         for (int i=0; i<_QUICK_SWAP_BUTTON_IDS.length; i++){
             _quickAccessButtons.add(new ButtonData(null,"","","true"));
@@ -189,7 +191,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         ItemStack quickAccessItem = null;
         if (this._isQuickAccessItemHeld){
             quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store);
-            this._quickAccessItemHotbarPosition = (int) player.getInventory().getActiveHotbarSlot();
+            this._quickAccessItemHotbarPosition = (int) hotbar.getActiveSlot();
         }else{
             this._quickAccessItemHotbarPosition = _playerQaComp.getEquippedPosition();
             quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);

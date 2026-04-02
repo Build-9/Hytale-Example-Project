@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -17,7 +18,6 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 // Send Packet to player to tell them they are actually holding the original slected item not hotbar 9
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
-import com.hypixel.hytale.server.core.inventory.Inventory;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.UUID;
@@ -97,7 +97,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
             } // End chain packet for loop
         }// Bad entity Ref
 
-        // Something went wrong or user wasnt pressing key 9, so dont block sync packet. 
+        // Something went wrong or user wasn't pressing key 9, so don't block sync packet.
         return false;
     }
 
@@ -108,7 +108,7 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     private void revertSelectedHotbarItem(Integer originalHotbarSlot, PlayerRef playerRef) {
         Ref<EntityStore> entityRef = playerRef.getReference();
         if (entityRef == null || !entityRef.isValid()){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad entity ref when reverting sleected hotbar item.");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Bad entity ref when reverting selected hotbar item.");
             return;
         }
         Store<EntityStore> store = entityRef.getStore();
@@ -120,12 +120,13 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         }
 
         //Intentory playerInventory = store.getComponent(entityRef, Inventory.getComponentType());
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(entityRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
         byte hotbarPos = originalHotbarSlot.byteValue();
-        player.getInventory().setActiveHotbarSlot(entityRef, hotbarPos, store);
+        hotbar.setActiveSlot(hotbarPos);
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
-            Inventory.HOTBAR_SECTION_ID,   // -1 indicates the hotbar
+            InventoryComponent.HOTBAR_SECTION_ID,   // -1 indicates the hotbar
             originalHotbarSlot                      // The slot index to select
         );
         playerRef.getPacketHandler().write(setActiveSlotPacket);
@@ -137,6 +138,6 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     private void openQuickAccessUI(PlayerRef playerRef, short hotbar_position){
         playerRef.sendMessage(Message.raw("Showing UI Page with position "+String.valueOf(hotbar_position)));
         // Open QuickAccess UI by using a command
-        CommandManager.get().handleCommand(playerRef, "select --event open --pos "+String.valueOf(hotbar_position));
+        CommandManager.get().handleCommand(playerRef, "wqa gui select --event open");
     }
 }

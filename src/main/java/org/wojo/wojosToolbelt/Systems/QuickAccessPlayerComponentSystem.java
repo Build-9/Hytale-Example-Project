@@ -28,7 +28,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     @NonNullDecl
     @Override
     public ComponentType<EntityStore, QuickAccessPlayerComponent> componentType() {
-        return QuickAccessPlayerComponent.getComponentType();
+        return playerComponentComponentType;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class QuickAccessPlayerComponentSystem extends RefChangeSystem<EntityStor
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(QuickAccessPlayerComponent.getComponentType());
+        return Query.and(this.playerComponentComponentType);
     }
 
     @Override
