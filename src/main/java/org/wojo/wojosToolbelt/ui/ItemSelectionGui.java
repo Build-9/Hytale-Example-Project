@@ -78,7 +78,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     };
 
     private List<ButtonData> _quickAccessButtons = new ArrayList<>();
-    private ButtonData _helpButton = new ButtonData(null,",","true");
+    private ButtonData _helpButton = new ButtonData(null,"","","true");
     private ButtonData _settingsButton = new ButtonData(null,"","","true");
     private ButtonData _equipedItemButton =  new ButtonData(null,"","","true");
     private boolean _isQuickAccessItemHeld = false;

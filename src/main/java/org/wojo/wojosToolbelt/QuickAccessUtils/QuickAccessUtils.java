@@ -90,7 +90,7 @@ public class QuickAccessUtils {
 
     InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     int equippedPosition = quickAccessPlayerComp.getEquippedPosition();
-    ItemStack quickAccessItem = hotbar.getItemStack((short) equippedPosition);
+    ItemStack quickAccessItem = hotbar.getInventory().getItemStack((short) equippedPosition);
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
       return null;
@@ -110,7 +110,7 @@ public class QuickAccessUtils {
     }
 
     InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-    ItemStack quickAccessItem = hotbar.getActiveHotbarItem();
+    ItemStack quickAccessItem = hotbar.getActiveItem();
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
       return null;
@@ -133,9 +133,9 @@ public class QuickAccessUtils {
     ItemStack targetItem;
     InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     if (targetPosition == -1) {
-      targetItem = hotbar.getActiveHotbarItem();
+      targetItem = hotbar.getActiveItem();
     } else {
-      targetItem = hotbar.getItemStack((short) targetPosition);
+      targetItem = hotbar.getInventory().getItemStack((short) targetPosition);
     }
 
     return targetItem;

@@ -33,7 +33,7 @@ public class PrintItemComponentCommand extends AbstractPlayerCommand {
     {
         Player player = store.getComponent(ref, Player.getComponentType());
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-        ItemStack heldItem = hotbar.getActiveHotbarItem();
+        ItemStack heldItem = hotbar.getActiveItem() ;
 
         if(QuickAccessUtils.isQuickAccessItem(heldItem)){
             QuickAccessItemComponent qaItemComp = QuickAccessItemComponentFactory.createQuickAccessItemComponent(heldItem);

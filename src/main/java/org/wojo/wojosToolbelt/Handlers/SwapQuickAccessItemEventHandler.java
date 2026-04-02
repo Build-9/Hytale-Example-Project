@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt.Handlers;
 
 import com.hypixel.hytale.codec.ExtraInfo;
+import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -29,13 +30,13 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
         
-        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-        ItemStack quickAccessItemStack = hotbar.getItemStack(equippedPosition);
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+        ItemStack quickAccessItemStack = hotbar.getInventory().getItemStack(equippedPosition);
         WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetPosition+"\n - Source Pos: "+sourceInventoryPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item
-        ItemStack equippedItem = hotbar.getItemStack(targetPosition);
+        ItemStack equippedItem = hotbar.getInventory().getItemStack(targetPosition);
 
         // Get Item in Quick Access Component Storage to swap into hotbar
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
@@ -44,9 +45,9 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         // ------ Set Container Items ------
         // Set Quick Access item to hotbar item
-        hotbar.removeItemStackFromSlot(targetPosition);
+        hotbar.getInventory().removeItemStackFromSlot(targetPosition);
         if (itemStoredInQaComp != null) {
-            hotbar.setItemStackForSlot(targetPosition, itemStoredInQaComp);
+            hotbar.getInventory().setItemStackForSlot(targetPosition, itemStoredInQaComp);
         }
 
         // Set Hotbar Item to quickaccess Item
@@ -55,16 +56,20 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
             containerItems[sourceInventoryPosition] = equippedItem;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            hotbar.removeItemStackFromSlot((short)8);
-            hotbar.setItemStackForSlot((short)8, updatedQuickAccessItem);
-            store.replaceComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID), hotbar);
+            hotbar.getInventory().removeItemStackFromSlot((short)8);
+            hotbar.getInventory().setItemStackForSlot((short)8, updatedQuickAccessItem);
+
+            ComponentType componentType = InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID);
+            store.replaceComponent(playerRef, componentType, hotbar);
         }else{
             containerItems[sourceInventoryPosition] = null;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            hotbar.removeItemStackFromSlot((short)8);
-            hotbar.setItemStackForSlot((short)8, updatedQuickAccessItem);
-            store.replaceComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID), hotbar);
+            hotbar.getInventory().removeItemStackFromSlot((short)8);
+            hotbar.getInventory().setItemStackForSlot((short)8, updatedQuickAccessItem);
+
+            ComponentType componentType = InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID);
+            store.replaceComponent(playerRef, componentType, hotbar);
         }
     }
 }

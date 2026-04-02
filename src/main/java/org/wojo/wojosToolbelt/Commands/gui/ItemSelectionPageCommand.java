@@ -41,8 +41,8 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
 
         // ------ Check For Quick Access Item ------
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-        ItemStack heldItem = hotbar.getActiveHotbarItem();
-        ItemStack equippedItem = hotbar.getItemStack((short)qaPlayerComp.getEquippedPosition());
+        ItemStack heldItem = hotbar.getActiveItem();
+        ItemStack equippedItem = hotbar.getInventory().getItemStack((short)qaPlayerComp.getEquippedPosition());
         
         // ------ Verify item is Quick Access Item ------
         boolean isItemHeld = false;

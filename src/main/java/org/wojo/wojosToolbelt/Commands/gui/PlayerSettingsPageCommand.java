@@ -37,7 +37,7 @@ public class PlayerSettingsPageCommand extends AbstractPlayerCommand {
         Player player = store.getComponent(ref, Player.getComponentType());
         
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-        ItemStack quickAccessItem = hotbar.getActiveHotbarItem();
+        ItemStack quickAccessItem = hotbar.getActiveItem();
         
         // ------ Verify item is Quick Access Item ------
         if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)){

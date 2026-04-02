@@ -31,7 +31,7 @@ public class PrintItemCommand extends AbstractPlayerCommand {
         Integer equippedPosition = QuickAccessPlayerComponent.quickAccessHotbarLocationEquipMap.get(uuidComponent);
         
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-        ItemStack quickAccessItem = hotbar.getItemStack(equippedPosition.shortValue());
+        ItemStack quickAccessItem = hotbar.getInventory().getItemStack(equippedPosition.shortValue());
         if (quickAccessItem != null){
             if (QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
                 context.sendMessage(Message.raw(quickAccessItem.toString()));
