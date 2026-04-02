@@ -27,6 +27,18 @@ Group {
     Background: (Color: #00000000);
     Anchor: (Height: 60);
     Padding: (Full: 0);
+    $C.@TextButton #QuickAccessButtonHelp {
+      Anchor: (Width: 120, Height: 55);
+      Padding: (Full: 5);
+      Text: "Help";
+      Background: (Color: #04CC00);
+    }
+    Group #R0Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #00000000);
+      Anchor: (Width: 60, Height: 120);
+      Padding: (Full: 0);
+    }
     $C.@TextButton #QuickAccessButtonSettings {
       Anchor: (Width: 120, Height: 55);
       Padding: (Full: 5);

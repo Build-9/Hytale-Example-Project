@@ -78,6 +78,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     };
 
     private List<ButtonData> _quickAccessButtons = new ArrayList<>();
+    private ButtonData _helpButton = new ButtonData(null,",","true");
     private ButtonData _settingsButton = new ButtonData(null,"","","true");
     private ButtonData _equipedItemButton =  new ButtonData(null,"","","true");
     private boolean _isQuickAccessItemHeld = false;
@@ -170,11 +171,16 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Loaded equipped btn info");
     }
 
-    private void loadSettingsButtonData() {
+    private void loadSettingsAndHelpButtonData() {
         this._settingsButton.buttonText = "Settings";
         this._settingsButton.buttonIcon = "";
         this._settingsButton.isButtonDisabled = "false";
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Loaded settings btn info");
+        
+
+        this._helpButton.buttonText = "Help";
+        this._helpButton.buttonIcon = "";
+        this._helpButton.isButtonDisabled = "false";
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Loaded settings & help btn info");
     }
 
     public ItemSelectionGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store, Boolean is_item_held) {
@@ -202,7 +208,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         ItemStack targetItem = QuickAccessUtils.getEquippedTargetItemOrNull(player_ref, store);
         this.loadEquippedButtonData(targetItem);
 
-        this.loadSettingsButtonData();
+        this.loadSettingsAndHelpButtonData();
 
         WojosQuickAccessPlugin.LOGGER.atInfo().log("\n\n------ Item Stack Data ------\n"+quickAccessItem.toString());
         WojosQuickAccessPlugin.LOGGER.atInfo().log("\n------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
@@ -210,6 +216,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton0", new EventData().append("ButtonSelected", "0"), true);
@@ -231,6 +238,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonText);
         }
 
+        if (_helpButton.buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonText);
+        }
         if (_settingsButton.buttonMsg != null){
             uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonMsg);
         }else{
@@ -296,6 +308,9 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         } else if (buttonPressed.equals("equipped")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Equipped Pressed");
             this.close();
+        } else if (buttonPressed.equals("help")) {
+            // TODO: Open help GUI listing commands and guides
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Help Pressed");
         } else{
             this.close();
             String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",
