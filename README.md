@@ -1,28 +1,53 @@
 # Wojo's Quick Access Item's (Toolbelts, Slings & More)
 Adds a few new items that players can use to remove specific tools from the hotbar and place them in their own inventory while using a radial menu to access them.
 
-## Design.
-#### Description
-**Wojo's Quick Access Item's** is a mod that adds a new radial menu and storage items to allow a player to quickswap the containers items into the hotbar. The new container items are "equipable" in the sense that they are equpped by being placed in a specific hotbar location.
-One the item is placed in that location the user can press the corresponding hotbar key. It will open a GUI to a radial wheel allowing the player to more easily swap between specific items by opening a radial menu with fewer items instead of needing to open the full inventory. This allows the decluttering of the player inventory. 
+### Description
+**Wojo's Quick Access Item's** is a mod that adds a new quickswap feature to hytale. It does this by adding a series of new items that do the following:
+- New *Quick Access Items* are used to implement the feature.
+    - Holding the item and using **Right-Click** will open chest style inventory to hold items
+    - Holding the item and using **Left-Click** will open a radial menu with a smaller number of items for easy access
+- A settings page can be opened through the command line or by using the settings button in the radial menu allowing the user to set the following settings
+    - **Equipped Position:** What hotbar position does the item need to be in to have the item equipped
+    - **Target Position:** When selecting an item in the radial menu, where should it be moved to
+    - **Gui File:** What radial menu file do you want to see when left clicking
+    - **Is Enabled:** Intercept hotbar swaps to use the hotbars *Equipped Position* as a way to open the radial menu. 
 
-#### Quick Access Item Types
+The main purpose of this mod is to fix one of my major complaints with the inventory by allowing the player to convert 2 hotbar slots into 24 different positions.
+
+### Quick Access Item Types (Only checked items are implemented)
 - [ ] Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
 - [ ] Builders Pouch: Quick access radial that only holds blocks & hammer
 - [ ] Sling (Weapon Sling): Quick access radial that only hold weapons
 - [ ] Bandolier: Quick access radial that only holds Consumables (Potions, Food, Bombs etc)
 - [ ] Quiver: Quick access radial that only holds arrows
-- [ ] Custom: Quick access radial that only holds specified items
-- [ ] Unrestricted: Quick access radial that can hold anything
+- [X] Unrestricted: Quick access radial that can hold anything
 
-#### Quick Access Item Tiers
+### Quick Access Item Tiers (Only checked items are implemented)
 - [ ] Common: 2 slots
 - [ ] Uncommon: 4 slots
-- [ ] Rare: 6 slots 
-- [ ] Epic: 8 slots
-- [ ] Legendary: 10 slots
-- [ ] Mythic: 12 slots
-- [ ] Creative: 20 slots??
+- [ ] Rare: 8 slots 
+- [ ] Epic: 12 slots
+- [ ] Legendary: 20 slots
+- [X] Debug: 24 slots
+
+### Commands
+#### Key Command
+- `wqa gui help` Provides a list of all helpfull commands
+
+#### All Commands (Note: most commands have default args that are not specified here)
+```java
+wqa comp player // Set your QuickAccessPlayerComponent to defaults or specified values
+wqa comp printp // Print your QuickAccessPlayerComponent data
+wqa comp printi // Print held items QuickAccessItemComponent data
+
+wqa item swap   // Swap an item from a QuickAccess Item in the hotbar to the hotbar
+wqa item print  // Print everything associated with the held itemStack
+
+wqa gui select  // Show the radial selection menu
+wqa gui store   // Show the container storage menu
+wqa gui settings    // show the settings menu
+wqa gui help    // Show the help menu
+```
 
 ## Code Design 
 ### Code Description
@@ -43,46 +68,41 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 - Commands
     - Varous commands that are used for debugging, configuration, or help
 - Components
-    - The QuickAccessPlayerComponent
-    - The QuickAccessItemComponent
+    - The QuickAccessPlayerComponent (ECS component attached to the player)
+    - The QuickAccessItemComponent (This is not an ecs component, its used as a wrapper to get the items Json data & some config data)
 - Config
-    - All defined values that are either statically set or modifyable by admins & users
+    - All statically defined values
 - Events
-    - The mod heavily relies on player interaction so most if not all the funtionality will be bassed off events rather then systems
-        - Swap Item Event
+    - Mod involves player interaction so we use events as a trigger
 - Handlers
     - Logic for handling the triggered events
-        - Handle Swap Item Events
+- Interactions
+    - This is the handler for items. Items use interaction chains so we use this to open the UI when player is holding the item.
 - Packet Adapters
-    - Logic to convert player hotbar interaction to a UI button (Ideally this will be changed to better handle player button interactions)
+    - Logic to convert player hotbar interaction to a UI button (Ideally if keybinds get intoduced this can be replaced)
 - Systems
-    - Player Component System adds a component to every player uplon joining the server and watches for changes
+    - Do things when something happens to an ECS component. Main use is to keep Packet Adapter working when QuickAccessPlayerComponent gets updated
+- Utils
+    - ECS structure states components should have no methods so these are all static helper methods that do much of the validation & sanity checks. 
 - UI
-    - All ui objects that a player could iteract with and view
+    - All ui classes 
 
+---
 
-## Commands
-```java
-// NOTE: All open/close args can be one of the following: [o/c, Open/Close(case Insensitive), 1/0, True/False(case Insensitive)]
-// WojosQuickAccess                 - wqa
-//      component                       - comp  (C)
-//          playerSettings                  - player   (PS)        // wqa comp player   <arg: enable, equipPos, targetPos> (Update player comp with new settings)
-//          itemSettings                    - item     (IS)        // wqa comp item     <arg: tier, contSize, type, size, gui> (Update item QA comp settings)
-//          printPlayer                     - printp   (PP)        // wqa comp printp   <arg: None> (Print player comp data)
-//          printItem                       - printi   (PI)        // wqa comp printi   <arg: None> (Print held item's comp data)
-//      item                            - item  (I)
-//          swap                            - swap     (S)         // wqa item swap     <arg: qaInvId, qaInvPos, qaItemPos> (Swap Hotabar item with Item Stack in Quick Access)
-//          moveItem                        - move     (M)         // wqa item move     <arg: srcInContainer?, containerId, containerPos, srcInvId, srcInvPos, tgtInContainer?, tgtContainerId, tgtContainerPos, tgtInvId, tgtInvPos, tgtHdl[del,mv,swap]> (Move an item to another location and handle existing item appropriately)
-//          print                           - print    (P)         // wqa item print    <arg: invID (Default: Hotbar=-1) + invPos (Default: 0)> (print item container data & Quick access comp data
-//      gui                              -guis  (G)
-//          itemSelectionPage               - select   (SEL)       // wqa guis select    <arg: qaInvId, qaInvPos, (o/c)> (Open or close item selection page tied to set Quick Access Item)
-//          itemStoragePage                 - store    (STO)       // wqa guis store     <arg: qaInvId, qaInvPos, (o/c)> (Open or close item storage page tied to set Quick Access Item)
-//          settingsPage                    - settings (SET)       // wqa guis settings  <arg: qaInvId, qaInvPos, (o/c)> (Open or close item settings page tied to quick access item)
-//          helpPage                        - help     (HEL)       // wqa guis help      <arg: (o/c)> 
-```
+### TODO:
+##### High Priority (No set order)
+- [ ] Custom Item model
+- [ ] Allow item to be placed in world & used like chest
+- [ ] Add animation to using item
+- [ ] Update Radial UI to look better
+
+##### Low Priority (No set order)
+- [ ] Implement Other Item Types
+- [ ] Allow equipping items in utility slot/armor?
+- [ ] Have way to *wear* QuickAccess items so others can see when player has it equipped
+
 
 ### Special Thanks
-- Thanks to Hytalemodding.dev website for some great info on how to set most of this up. [Modding Documentation Website](https://hytalemodding.dev/en)
-- Thanks to TroubleDEV for some amazing youtube tutorials [TroubleDEV Youtube Link](https://www.youtube.com/channel/UC8IirsfaLXk7WFn55j1zs-g)
-- Thanks to TroubleDEV's Discord to helping me through various issues. 
+- **Hytalemodding.dev** website and discord needs all the praise I can give them. They are great source of info and helped me to many times to count during the development. [Modding Documentation Website](https://hytalemodding.dev/en)
+- Thanks to TroubleDEV for the best early Hytale youtube tutorials [TroubleDEV Youtube Link](https://www.youtube.com/channel/UC8IirsfaLXk7WFn55j1zs-g)
 - Thanks to Plugin Template for code template. [Template Link](https://github.com/Build-9/Hytale-Example-Project)
