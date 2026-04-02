@@ -4,6 +4,7 @@ import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -27,12 +28,14 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         short targetPosition = swapQuickAccessItemEvent.targetPosition();
 
         Player player = store.getComponent(playerRef, Player.getComponentType());
-        ItemStack quickAccessItemStack = player.getInventory().getHotbar().getItemStack(equippedPosition);
+        
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+        ItemStack quickAccessItemStack = hotbar.getItemStack(equippedPosition);
         WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetPosition+"\n - Source Pos: "+sourceInventoryPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item
-        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack(targetPosition);
+        ItemStack equippedItem = hotbar.getItemStack(targetPosition);
 
         // Get Item in Quick Access Component Storage to swap into hotbar
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
@@ -41,9 +44,9 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
 
         // ------ Set Container Items ------
         // Set Quick Access item to hotbar item
-        player.getInventory().getHotbar().removeItemStackFromSlot(targetPosition);
+        hotbar.removeItemStackFromSlot(targetPosition);
         if (itemStoredInQaComp != null) {
-            player.getInventory().getHotbar().setItemStackForSlot(targetPosition, itemStoredInQaComp);
+            hotbar.setItemStackForSlot(targetPosition, itemStoredInQaComp);
         }
 
         // Set Hotbar Item to quickaccess Item
@@ -52,15 +55,16 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
             containerItems[sourceInventoryPosition] = equippedItem;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-            player.getInventory().getHotbar().setItemStackForSlot((short)8, updatedQuickAccessItem);
+            hotbar.removeItemStackFromSlot((short)8);
+            hotbar.setItemStackForSlot((short)8, updatedQuickAccessItem);
+            store.replaceComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID), hotbar);
         }else{
             containerItems[sourceInventoryPosition] = null;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            player.getInventory().getHotbar().removeItemStackFromSlot((short)8);
-            player.getInventory().getHotbar().setItemStackForSlot((short)8, updatedQuickAccessItem);
-
+            hotbar.removeItemStackFromSlot((short)8);
+            hotbar.setItemStackForSlot((short)8, updatedQuickAccessItem);
+            store.replaceComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID), hotbar);
         }
     }
 }

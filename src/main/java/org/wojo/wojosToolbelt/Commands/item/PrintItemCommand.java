@@ -7,6 +7,7 @@ import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -28,8 +29,9 @@ public class PrintItemCommand extends AbstractPlayerCommand {
         UUIDComponent uuidComponent = store.getComponent(ref,UUIDComponent.getComponentType());
 
         Integer equippedPosition = QuickAccessPlayerComponent.quickAccessHotbarLocationEquipMap.get(uuidComponent);
-
-        ItemStack quickAccessItem = playerComponent.getInventory().getHotbar().getItemStack(equippedPosition.shortValue());
+        
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+        ItemStack quickAccessItem = hotbar.getItemStack(equippedPosition.shortValue());
         if (quickAccessItem != null){
             if (QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
                 context.sendMessage(Message.raw(quickAccessItem.toString()));

@@ -7,6 +7,7 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -39,8 +40,9 @@ public class ItemSelectionPageCommand extends AbstractPlayerCommand {
         QuickAccessPlayerComponent qaPlayerComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
 
         // ------ Check For Quick Access Item ------
-        ItemStack heldItem = player.getInventory().getActiveHotbarItem();
-        ItemStack equippedItem = player.getInventory().getHotbar().getItemStack((short)qaPlayerComp.getEquippedPosition());
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+        ItemStack heldItem = hotbar.getActiveHotbarItem();
+        ItemStack equippedItem = hotbar.getItemStack((short)qaPlayerComp.getEquippedPosition());
         
         // ------ Verify item is Quick Access Item ------
         boolean isItemHeld = false;

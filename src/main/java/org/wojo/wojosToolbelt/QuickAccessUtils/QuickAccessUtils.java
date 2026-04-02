@@ -6,6 +6,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -87,8 +88,9 @@ public class QuickAccessUtils {
       store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComp);
     }
 
+    InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     int equippedPosition = quickAccessPlayerComp.getEquippedPosition();
-    ItemStack quickAccessItem = player.getInventory().getHotbar().getItemStack((short) equippedPosition);
+    ItemStack quickAccessItem = hotbar.getItemStack((short) equippedPosition);
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
       return null;
@@ -107,8 +109,8 @@ public class QuickAccessUtils {
       store.addComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType(), quickAccessPlayerComponent);
     }
 
-    Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
-    ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+    InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+    ItemStack quickAccessItem = hotbar.getActiveHotbarItem();
 
     if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)) {
       return null;
@@ -129,10 +131,11 @@ public class QuickAccessUtils {
 
     int targetPosition = playerComponent.getTargetPosition();
     ItemStack targetItem;
+    InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     if (targetPosition == -1) {
-      targetItem = player.getInventory().getActiveHotbarItem();
+      targetItem = hotbar.getActiveHotbarItem();
     } else {
-      targetItem = player.getInventory().getHotbar().getItemStack((short) targetPosition);
+      targetItem = hotbar.getItemStack((short) targetPosition);
     }
 
     return targetItem;

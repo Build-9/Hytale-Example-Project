@@ -7,6 +7,7 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -34,7 +35,9 @@ public class PlayerSettingsPageCommand extends AbstractPlayerCommand {
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         // ------ Get Data ------
         Player player = store.getComponent(ref, Player.getComponentType());
-        ItemStack quickAccessItem = player.getInventory().getActiveHotbarItem();
+        
+        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+        ItemStack quickAccessItem = hotbar.getActiveHotbarItem();
         
         // ------ Verify item is Quick Access Item ------
         if (!QuickAccessUtils.isQuickAccessItem(quickAccessItem)){
