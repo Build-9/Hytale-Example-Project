@@ -46,7 +46,7 @@ Group {
       Label #Labelf1fa64b3 {
         Anchor: (Width: 200);
         Padding: (Full: 0);
-        Text: "Equipped Hotbar Location";
+        Text: "Equipped Hotbar Location [0 -> 8]";
         Style: (TextColor: #ffffff);
       }
       $C.@NumberField #EquippedNumberField {
@@ -62,7 +62,7 @@ Group {
       Label #Label8e37c11f {
         Anchor: (Width: 200);
         Padding: (Full: 0);
-        Text: "Target Hotbar Location [-1(active slot) | 1(hotbar key 1) - 8(hotbar key 9)]";
+        Text: "Target Hotbar Location [-1 -> 8]";
         Style: (TextColor: #ffffff);
       }
       $C.@NumberField #TargetNumberField {
@@ -73,19 +73,48 @@ Group {
     Group #BodyR3StringInput {
       LayoutMode: Left;
       Background: (Color: #333333);
-      Anchor: (Height: 100);
+      Anchor: (Height: 250);
       Padding: (Full: 0);
       Label #Labelba698751 {
         Anchor: (Width: 200, Height: 100);
         Padding: (Full: 0);
-        Text: "Ui File (I was unable to get a dropdown working) Valid options are: - Pages/ThreeByThreeQuickAccess.ui - Pages/FourByFourQuickAccess.ui";
+        Text: "Radial Menu Layout";
         Style: (TextColor: #ffffff);
       }
-      $C.@TextField #GuiFileTextField {
-        Anchor: (Width: 275, Height: 25);
-        Padding: (Full: 0);
-        Value: "Pages/ThreeByThreeQuickAccess.ui";
-        PlaceholderText: "Pages/ThreeByThreeQuickAccess.ui";
+      Group #FilePicker {
+        LayoutMode: Top;
+        Anchor: (Width: 275, Height: 250);
+        $C.@TextField #GuiFileTextField {
+          Anchor: (Width: 275, Height: 25);
+          Padding: (Full: 0);
+          Value: "Pages/TwoByTwoQuickAccess.ui";
+          PlaceholderText: "Pages/TwoByTwoQuickAccess.ui";
+        }
+        Group #FileSelectSpacer {
+          LayoutMode: Top;
+          Padding: (Full: 0);
+          Anchor: (Height: 5);
+        }
+        $C.@TextButton #TwoByTwoUiButton {
+          Anchor: (Width: 150, Height: 50);
+          Padding: (Full: 0);
+          Text: "Two-By-Two Radial";
+        }
+        $C.@TextButton #ThreeByThreeUiButton {
+          Anchor: (Width: 150, Height: 50);
+          Padding: (Full: 0);
+          Text: "Three-By-Three Radial";
+        }
+        $C.@TextButton #FourByFourUiButton {
+          Anchor: (Width: 150, Height: 50);
+          Padding: (Full: 0);
+          Text: "Four-By-Four Radial";
+        }
+        $C.@TextButton #FiveByFiveUiButton {
+          Anchor: (Width: 150, Height: 50);
+          Padding: (Full: 0);
+          Text: "Five-By-Five Radial";
+        }
       }
     }
     Group #BodyR4Button {

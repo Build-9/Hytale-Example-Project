@@ -24,7 +24,7 @@ public class QuickAccessPlayerComponent implements Component<EntityStore> {
     Boolean _isEnabled = false;  // Allow hotbar button to opens the quickswap UI
     Integer _equippedPosition = 8;   // Hotbar location that quick access items need to be placed in / Button used to open swap UI
     Integer _targetPosition = 0;     // Where items get quickswapped into (-1 means to target players active hotbar slot instead)
-    String _selectionGui = "Pages/ThreeByThreeQuickAccess.ui"; // Quick Accesss UI file
+    String _selectionGui = "Pages/Radials/ThreeByThreeQuickAccess.ui"; // Quick Accesss UI file
 
     public QuickAccessPlayerComponent() {
     }

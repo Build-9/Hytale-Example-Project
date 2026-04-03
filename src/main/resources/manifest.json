@@ -17,7 +17,10 @@
         
     },
     "Documents": [
-        "Common/UI/Custom/Pages/ThreeByThreeQuickAccess.ui",
+        "Common/UI/Custom/Pages/Radials/TwoByTwoQuickAccess.ui",
+        "Common/UI/Custom/Pages/Radials/ThreeByThreeQuickAccess.ui",
+        "Common/UI/Custom/Pages/Radials/FourByFourQuickAccess.ui",
+        "Common/UI/Custom/Pages/Radials/FiveByFiveQuickAccess.ui",
         "Common/UI/Custom/Pages/QuickAccessSettings.ui"
     ],
     "DisabledByDefault": false,

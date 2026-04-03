@@ -96,8 +96,6 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
     }
 
     // ------------ END UI DATA ------------
-  
-    public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
     SettingsUiData _uiData = new SettingsUiData();
 
     
@@ -148,6 +146,40 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
                         .append("ButtonSelected","GuiFileTextField"), false
         );
+
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#TwoByTwoUiButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","TwoByTwoUiButton"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#ThreeByThreeUiButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","ThreeByThreeUiButton"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#FourByFourUiButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","FourByFourUiButton"), false
+        );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#FiveByFiveUiButton",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","FiveByFiveUiButton"), false
+        );
+
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#ResetButton",
                 EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
@@ -165,7 +197,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("ButtonSelected","SubmitButton"), false
         );
 
-        uiCommandBuilder.append(SETTINGS_GUI_FILE);
+        uiCommandBuilder.append(QuickAccessConfig.SETTINGS_GUI_FILE);
 
         uiCommandBuilder.set("#IsEnabledCheckbox #CheckBox.Value", _uiData.isEnabled);
         uiCommandBuilder.set("#EquippedNumberField.Value", _uiData.equippedPos);
@@ -190,13 +222,23 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             QuickAccessUtils.validateQuickAccessPlayerComponent(newPlayerComp);
             store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newPlayerComp);
             this.close();
-        }else if (data.buttonSelected.contains("ResetButton")){
+        }else if (data.buttonSelected.contains("ResetButton")) {
             this._uiData = new SettingsUiData();
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
-        }else {
-            this._uiData.update(data);
+        }else if (data.buttonSelected.contains("TwoByTwoUiButton")) {
+            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[0];
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to TwoByTwo\n");
+        }else if (data.buttonSelected.contains("ThreeByThreeUiButton")) {
+            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[1];
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to ThreeByThree\n");
+        }else if (data.buttonSelected.contains("FourByFourUiButton")) {
+            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[2];
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FourByFour\n");
+        }else if (data.buttonSelected.contains("FiveByFiveUiButton")) {
+            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[3];
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FiveByFive\n");
         }
-
+        this._uiData.update(data);
         sendUpdate();
     }
 }

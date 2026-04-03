@@ -12,7 +12,8 @@ Adds a few new items that players can use to remove specific tools from the hotb
     - **Gui File:** What radial menu file do you want to see when left clicking
     - **Is Enabled:** Intercept hotbar swaps to use the hotbars *Equipped Position* as a way to open the radial menu. 
 
-The main purpose of this mod is to fix one of my major complaints with the inventory by allowing the player to convert 2 hotbar slots into 24 different positions.
+The main purpose of this mod is to fix one of my major complaints with the inventory by allowing the player to convert 2 hotbar slots into up to 24 different positions.
+
 
 ### Quick Access Item Types (Only checked items are implemented)
 - [ ] Toolbelt: Quick access radial item that holds only holds tools (Shovel, Pickaxe, axe, hammer)
@@ -98,8 +99,9 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 
 ##### Low Priority (No set order)
 - [ ] Implement Other Item Types
-- [ ] Allow equipping items in utility slot/armor?
+- [ ] Allow equipping items in utility slot
 - [ ] Have way to *wear* QuickAccess items so others can see when player has it equipped
+- [ ] Add server configurations to modify config values
 
 
 ### Special Thanks

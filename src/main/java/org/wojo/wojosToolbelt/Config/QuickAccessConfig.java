@@ -27,8 +27,11 @@ public class QuickAccessConfig {
     public static int HOTBAR_GUI_BUTTON = 8;            // Button 9
     public static int HOTBAR_SWAP_LOCATION = 0;         // Button 1
 
-    public static final String[] SELECTION_GUI_FILES = {"Pages/ThreeByThreeQuickAccess.ui", "Pages/FourByFourQuickAccess.ui"};
-    
+    public static final String[] SELECTION_GUI_FILES = {"Pages/Radials/TwoByTwoQuickAccess.ui","Pages/Radials/ThreeByThreeQuickAccess.ui", "Pages/Radials/FourByFourQuickAccess.ui", "Pages/Radials/FiveByFiveQuickAccess.ui"};
+    public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILES[1]; // Default to 3x3 grid with 8 selections
+    public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
+    public static final String HELPP_GUI_FILE = "Pages/QuickAccessHelp.ui";
+
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {
         UNKNOWN(0),
@@ -74,7 +77,7 @@ public class QuickAccessConfig {
 
     // ============= Quick Access Item Type Arrays =============
     // The following are configs that correspond to the number of items the QA storage can hold bassed on the item tier
-    // EX: {0,1,3,10,15,16,17,20} -> Unknown(0), Crude(1), Common(3), Rare(10), Epic(15), Legendary(16), Mythic(17), Creative(20)
+    // EX: {0,4,8,12,16,20,24} -> Unknown(0), Common(4), Uncommon(8), Rare(12), Epic(16), Legendary(20), Debug(24)
     // As stated above, there's only a set number of UI files made so if the number is larger then the largest desiged UI file it will not display
     //    - the additional items. Its best to have the numbers correspond to one of the desiged UI files so there's not invalid buttons that the user
     //    - can see and interact with. 
@@ -95,7 +98,7 @@ public class QuickAccessConfig {
     public static Integer[] QUIVER_ARRAY =           {0,2,3,4,5,6,8,8};
 
     // Unrestricted array can hold anything
-    public static Integer[] UNRESTRICTED_ARRAY =     {0,2,3,4,5,6,8,8};
+    public static Integer[] UNRESTRICTED_ARRAY =     {0,4,8,12,16,20,24};
 
     // Get the number of different items the QuickAccess Item can swap between
     public static Integer getQuickAccessSize(QuickAccessItemComponent item) {

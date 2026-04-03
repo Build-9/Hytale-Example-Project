@@ -25,11 +25,11 @@
   "Tags": {
     "Type": [
       "Utility",
-      "WojoQuickAccessItem"
+      "WojosQuickAccess"
     ]
   },
   "Container": {
-    "Capacity": 20
+    "Capacity": 24
   },
   "Interactions": {
     "Primary": {
@@ -71,7 +71,7 @@
       }
     ],
     "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Crude_Unrestricted"
+      "ItemId": "Quick_Access_Item_Debug_Unrestricted"
     }
   },
   "ItemLevel": 100,

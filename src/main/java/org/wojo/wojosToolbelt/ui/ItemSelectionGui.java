@@ -65,9 +65,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         }
     }
 
-    // NOTE: Max size of quick swap UI is 20 items!
-    private static final String     _GUI_FILE_DEFAULT = "Pages/ThreeByThreeQuickAccess.ui";
-    private static final String[]   _GUI_FILES = {_GUI_FILE_DEFAULT};
+    // NOTE: Max size of quick swap UI is 24 items!
     private static final String[]   _QUICK_SWAP_BUTTON_IDS = {
         "#QuickAccessButton0","#QuickAccessButton1","#QuickAccessButton2","#QuickAccessButton3",
         "#QuickAccessButton4","#QuickAccessButton5","#QuickAccessButton6","#QuickAccessButton7",
@@ -77,6 +75,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         "#QuickAccessButton20","#QuickAccessButton21","#QuickAccessButton22","#QuickAccessButton23",
     };
 
+    private String _guiFile = QuickAccessConfig.DEFAULT_SELECTION_GUI_FILE;
     private List<ButtonData> _quickAccessButtons = new ArrayList<>();
     private ButtonData _helpButton = new ButtonData(null,"","","true");
     private ButtonData _settingsButton = new ButtonData(null,"","","true");
@@ -117,13 +116,25 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         //  - Translated-Item-Name
         //  - Item-ID  (If there is no translation key)
         //  - `------` (If the item slot is empty on the player's container)
+        Integer maxQaButtons = QuickAccessConfig.getQuickAccessSize(QuickAccessItemComponentFactory.createQuickAccessItemComponent(quick_access_item));
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: QA Button Count: "+maxQaButtons);
+
         for (int i = 0; i < this._quickAccessButtons.size(); i++){
             ButtonData buttonInfo = this._quickAccessButtons.get(i);
-            buttonInfo.isButtonDisabled = QuickAccessConfig.getIsButtonDisabled(quick_access_item, i);
+
+            // Disable all buttons outside max QA item has
+            if (i < maxQaButtons) {
+                buttonInfo.isButtonDisabled = "false";
+            }else{
+                buttonInfo.isButtonDisabled = "true";
+                buttonInfo.buttonText = "XXX\nXXX\nXXX";
+            }
+
+            // Set button info from stored items
             if (storedItems!=null && i<storedItems.length){
                 ItemStack storedItem = storedItems[i];
                 if (storedItem != null){
-                    // Get Translation key, otherwise use item_id
+                    // Try to get Translation key from item, otherwise use item_id
                     try {
                         String translatedName = Item.getAssetMap().getAsset(storedItems[i].getItemId()).getTranslationKey();
                         Message translated = Message.translation(translatedName);
@@ -137,10 +148,6 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                     // No item Stored in container location
                     buttonInfo.buttonText = "------";
                 }
-            }else{
-                // Container size is smaller than possible buttons so disable button entirely
-                buttonInfo.buttonText = "XXX\nXXX\nXXX";
-                buttonInfo.isButtonDisabled = "true";
             }
             this._quickAccessButtons.set(i, buttonInfo);
             WojosQuickAccessPlugin.LOGGER.atInfo().log(_quickAccessButtons.get(i).getDebugString());
@@ -214,8 +221,125 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         WojosQuickAccessPlugin.LOGGER.atInfo().log("\n------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
     }
 
+    private void buildGui(UICommandBuilder uiCommandBuilder, UIEventBuilder uiEventBuilder, String guiFile){
+        switch(guiFile){
+            case QuickAccessConfig.SELECTION_GUI_FILES[3]:
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton23", new EventData().append("ButtonSelected", "23"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton22", new EventData().append("ButtonSelected", "22"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton21", new EventData().append("ButtonSelected", "21"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton20", new EventData().append("ButtonSelected", "20"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton19", new EventData().append("ButtonSelected", "19"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton18", new EventData().append("ButtonSelected", "18"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton17", new EventData().append("ButtonSelected", "17"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton16", new EventData().append("ButtonSelected", "16"), true);
+
+            case QuickAccessConfig.SELECTION_GUI_FILES[2]:
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton15", new EventData().append("ButtonSelected", "15"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton14", new EventData().append("ButtonSelected", "14"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton13", new EventData().append("ButtonSelected", "13"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton12", new EventData().append("ButtonSelected", "12"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton11", new EventData().append("ButtonSelected", "11"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton10", new EventData().append("ButtonSelected", "10"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton9", new EventData().append("ButtonSelected", "9"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton8", new EventData().append("ButtonSelected", "8"), true);
+
+            case QuickAccessConfig.SELECTION_GUI_FILES[1]:
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "7"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton5", new EventData().append("ButtonSelected", "5"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton4", new EventData().append("ButtonSelected", "4"), true);
+            
+            default:
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton3", new EventData().append("ButtonSelected", "3"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton2", new EventData().append("ButtonSelected", "2"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton1", new EventData().append("ButtonSelected", "1"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton0", new EventData().append("ButtonSelected", "0"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
+        }
+
+        switch(guiFile){
+            case QuickAccessConfig.SELECTION_GUI_FILES[0]: // Two By Two
+                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILES[0]);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[1]: // Three By Three
+                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILES[1]);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[2]: // Four By Four
+                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILES[2]);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[3]: // Five By Five
+                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILES[3]);
+                break;
+            default:
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3");
+                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILES[1]);
+                break;
+        }
+
+        if (_equipedItemButton.buttonMsg != null){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Msg");
+            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonMsg);
+        }else{
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Text");
+            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonText);
+        }
+
+        if (_helpButton.buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonText);
+        }
+        if (_settingsButton.buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonText);
+        }
+
+        if (_quickAccessButtons.get(0).buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonText);
+        }
+        if (_quickAccessButtons.get(1).buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonText);
+        }
+        if (_quickAccessButtons.get(2).buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonText);
+        }
+        if (_quickAccessButtons.get(3).buttonMsg != null){
+            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonMsg);
+        }else{
+            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonText);
+        }
+    }
+
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
+        switch(this._guiFile){
+            case QuickAccessConfig.SELECTION_GUI_FILES[0]:
+                this.buildTwoByTwoGui(uiCommandBuilder, uiEventBuilder);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[1]:
+                this.buildThreeByThreeGui(uiCommandBuilder, uiEventBuilder);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[2]:
+                this.buildFourByFourGui(uiCommandBuilder, uiEventBuilder);
+                break;
+            case QuickAccessConfig.SELECTION_GUI_FILES[3]:
+                this.buildFiveByFiveGui(uiCommandBuilder, uiEventBuilder);
+                break;
+            default:
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3");
+                this.buildThreeByThreeGui(uiCommandBuilder, uiEventBuilder);
+                break;
+        }
+
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
@@ -228,7 +352,8 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "7"), true);
 
-        uiCommandBuilder.append(ItemSelectionGui._GUI_FILE_DEFAULT);
+        uiCommandBuilder.append(this._guiFile);
+
 
         if (_equipedItemButton.buttonMsg != null){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Msg");

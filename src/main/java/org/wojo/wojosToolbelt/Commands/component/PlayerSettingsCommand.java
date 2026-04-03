@@ -46,7 +46,7 @@ public class PlayerSettingsCommand extends AbstractPlayerCommand {
         this._guiFile = withDefaultArg(
             "gui-file", "The file used to change max number of possible quick access buttons.",
             ArgTypes.STRING,
-            "Pages/ThreeByThreeQuickAccess.ui", "Default UI has 3x3 grid with 8 sleections"
+            "Pages/Radials/ThreeByThreeQuickAccess.ui", "Default UI has 3x3 grid with 8 sleections"
         );
     }
 
