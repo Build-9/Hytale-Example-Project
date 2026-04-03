@@ -210,6 +210,12 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
         }
 
+        if (this._playerQaComp == null){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Player QA Component is null when opening selection GUI, Using Default of Three By Three Radial");
+        } else {
+            this._guiFile = _playerQaComp.getGuiFile();
+        }
+
         this.loadSelectionButtonData(quickAccessItem);
 
         ItemStack targetItem = QuickAccessUtils.getEquippedTargetItemOrNull(player_ref, store);
@@ -221,8 +227,17 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         WojosQuickAccessPlugin.LOGGER.atInfo().log("\n------ Quick Access Item Component ------\n"+ QuickAccessItemComponentFactory.createQuickAccessItemComponent(quickAccessItem).getPrintableString());
     }
 
-    private void buildGui(UICommandBuilder uiCommandBuilder, UIEventBuilder uiEventBuilder, String guiFile){
-        switch(guiFile){
+    private void setItemText(UICommandBuilder command_builder, String button_id, ButtonData button_data){
+        if (button_data.buttonMsg != null){
+            command_builder.set(button_id+".Text", button_data.buttonMsg);
+        }else{
+            command_builder.set(button_id+".Text", button_data.buttonText);
+        }
+    }
+
+    @Override
+    public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
+        switch(this._guiFile){
             case QuickAccessConfig.SELECTION_GUI_FILES[3]:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton23", new EventData().append("ButtonSelected", "23"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton22", new EventData().append("ButtonSelected", "22"), true);
@@ -254,6 +269,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton2", new EventData().append("ButtonSelected", "2"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton1", new EventData().append("ButtonSelected", "1"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton0", new EventData().append("ButtonSelected", "0"), true);
+
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
@@ -278,142 +294,32 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 break;
         }
 
-        if (_equipedItemButton.buttonMsg != null){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Msg");
-            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonMsg);
-        }else{
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Text");
-            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonText);
-        }
-
-        if (_helpButton.buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonText);
-        }
-        if (_settingsButton.buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonText);
-        }
-
-        if (_quickAccessButtons.get(0).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonText);
-        }
-        if (_quickAccessButtons.get(1).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonText);
-        }
-        if (_quickAccessButtons.get(2).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonText);
-        }
-        if (_quickAccessButtons.get(3).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonText);
-        }
-    }
-
-    @Override
-    public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
-        switch(this._guiFile){
-            case QuickAccessConfig.SELECTION_GUI_FILES[0]:
-                this.buildTwoByTwoGui(uiCommandBuilder, uiEventBuilder);
+        switch (guiFile){
+            case QuickAccessConfig.SELECTION_GUI_FILES[3]: // Five By Five
+                for (int i=0; i<24; i++){
+                    setItemText(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
+                }
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILES[1]:
-                this.buildThreeByThreeGui(uiCommandBuilder, uiEventBuilder);
+            case QuickAccessConfig.SELECTION_GUI_FILES[2]: // Four By Four
+                for (int i=0; i<16; i++){
+                    setItemText(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
+                }
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILES[2]:
-                this.buildFourByFourGui(uiCommandBuilder, uiEventBuilder);
+            case QuickAccessConfig.SELECTION_GUI_FILES[1]: // Three By Three
+                for (int i=0; i<9; i++){
+                    setItemText(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
+                }
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILES[3]:
-                this.buildFiveByFiveGui(uiCommandBuilder, uiEventBuilder);
-                break;
-            default:
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3");
-                this.buildThreeByThreeGui(uiCommandBuilder, uiEventBuilder);
+            case QuickAccessConfig.SELECTION_GUI_FILES[0]: // Two By Two
+                for (int i=0; i<4; i++){
+                    setItemText(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
+                }
                 break;
         }
 
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton0", new EventData().append("ButtonSelected", "0"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton1", new EventData().append("ButtonSelected", "1"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton2", new EventData().append("ButtonSelected", "2"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton3", new EventData().append("ButtonSelected", "3"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton4", new EventData().append("ButtonSelected", "4"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton5", new EventData().append("ButtonSelected", "5"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "7"), true);
-
-        uiCommandBuilder.append(this._guiFile);
-
-
-        if (_equipedItemButton.buttonMsg != null){
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Msg");
-            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonMsg);
-        }else{
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("Setting Button Text");
-            uiCommandBuilder.set("#QuickAccessButtonEquipped.Text", _equipedItemButton.buttonText);
-        }
-
-        if (_helpButton.buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButtonHelp.Text", _helpButton.buttonText);
-        }
-        if (_settingsButton.buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButtonSettings.Text", _settingsButton.buttonText);
-        }
-
-        if (_quickAccessButtons.get(0).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton0.Text", _quickAccessButtons.get(0).buttonText);
-        }
-        if (_quickAccessButtons.get(1).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton1.Text", _quickAccessButtons.get(1).buttonText);
-        }
-        if (_quickAccessButtons.get(2).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton2.Text", _quickAccessButtons.get(2).buttonText);
-        }
-        if (_quickAccessButtons.get(3).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton3.Text", _quickAccessButtons.get(3).buttonText);
-        }
-        if (_quickAccessButtons.get(4).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton4.Text", _quickAccessButtons.get(4).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton4.Text", _quickAccessButtons.get(4).buttonText);
-        }
-        if (_quickAccessButtons.get(5).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton5.Text", _quickAccessButtons.get(5).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton5.Text", _quickAccessButtons.get(5).buttonText);
-        }
-        if (_quickAccessButtons.get(6).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton6.Text", _quickAccessButtons.get(6).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton6.Text", _quickAccessButtons.get(6).buttonText);
-        }
-        if (_quickAccessButtons.get(7).buttonMsg != null){
-            uiCommandBuilder.set("#QuickAccessButton7.Text", _quickAccessButtons.get(7).buttonMsg);
-        }else{
-            uiCommandBuilder.set("#QuickAccessButton7.Text", _quickAccessButtons.get(7).buttonText);
-        }
+        setItemText(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
+        setItemText(uiCommandBuilder, "#QuickAccessButtonSettings", this._settingsButton);
+        setItemText(uiCommandBuilder, "#QuickAccessButtonHelp", this._helpButton);
     }
 
     @Override
