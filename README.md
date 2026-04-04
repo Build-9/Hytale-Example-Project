@@ -87,7 +87,7 @@ When a user presses the eqipped hotbar location the code checks to see if the us
     - ECS structure states components should have no methods so these are all static helper methods that do much of the validation & sanity checks. 
 - UI
     - All ui classes
-- resources
+- Resources
   - The different resource components that are made through Hytale's Asset Editior
 
 ---
