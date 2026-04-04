@@ -33,26 +33,26 @@ The main purpose of this mod is to fix one of my major complaints with the inven
 
 ### Commands
 #### Key Command
-- `wqa gui help` Provides a list of all helpfull commands
+- `/wqa gui help` Provides a UI list of various mod info 
 
 #### All Commands (Note: most commands have default args that are not specified here)
 ```java
-wqa comp player // Set your QuickAccessPlayerComponent to defaults or specified values
-wqa comp printp // Print your QuickAccessPlayerComponent data
-wqa comp printi // Print held items QuickAccessItemComponent data
+/wqa comp player    // Set your QuickAccessPlayerComponent to defaults or specified values
+/wqa comp printp    // Print your QuickAccessPlayerComponent data
+/wqa comp printi    // Print held items QuickAccessItemComponent data
 
-wqa item swap   // Swap an item from a QuickAccess Item in the hotbar to the hotbar
-wqa item print  // Print everything associated with the held itemStack
+/wqa item swap      // Swap an item from a QuickAccess Item in the hotbar to the hotbar
+/wqa item print     // Print everything associated with the held itemStack
 
-wqa gui select  // Show the radial selection menu
-wqa gui store   // Show the container storage menu
-wqa gui settings    // show the settings menu
-wqa gui help    // Show the help menu
+/wqa gui select     // Show the radial selection menu
+/wqa gui store      // Show the container storage menu
+/wqa gui settings   // show the settings menu
+/wqa gui help       // Show the help menu
 ```
 
 ## Code Design 
 ### Code Description
-The desing layout has 2 data the player and the item. 
+The plugin layout has 2 data storage locations; **The player** and **The Quick Access item**. 
 - The PlayerComponent: Houses player settings like
     - What hotbar slot is the 'equipped' location / what hotbar button pressed to open ui
     - Is the hotbar button enabled?
@@ -62,8 +62,8 @@ The desing layout has 2 data the player and the item.
     - Item tier (Common, Uncommon, Rare, etc)
     - Container Size
     - Quick Access Size
-    - guiPageString
-When a user presses the eqipped hotbar location the code checks to see if the user care's about equipped items. If so, grab the data of the items in the component and open the gui. When the user selects an item on the gui swap that item with whatever is in the defined location.
+      - guiPageString
+When a user presses the eqipped hotbar location the code checks to see if the user has QuickSwap Enabled. If so, grab the data of the items in the component and open the gui. When the user selects an item on the gui swap that item with whatever is in the defined location.
 
 ### Code Components
 - Commands
@@ -74,19 +74,21 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 - Config
     - All statically defined values
 - Events
-    - Mod involves player interaction so we use events as a trigger
+    - Mod involves player interaction so the async nature requiures the use of events instead of a system for the swap functionality
 - Handlers
     - Logic for handling the triggered events
 - Interactions
-    - This is the handler for items. Items use interaction chains so we use this to open the UI when player is holding the item.
+    - This is the handler for when players use items. Items use interaction chains so we use this to open the UI when player is holding the item.
 - Packet Adapters
-    - Logic to convert player hotbar interaction to a UI button (Ideally if keybinds get intoduced this can be replaced)
+    - Logic to convert player hotbar interaction to a UI button (Ideally when player keybinds get intoduced this can be replaced)
 - Systems
     - Do things when something happens to an ECS component. Main use is to keep Packet Adapter working when QuickAccessPlayerComponent gets updated
 - Utils
     - ECS structure states components should have no methods so these are all static helper methods that do much of the validation & sanity checks. 
 - UI
-    - All ui classes 
+    - All ui classes
+- resources
+  - The different resource components that are made through Hytale's Asset Editior
 
 ---
 
@@ -94,14 +96,22 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 ##### High Priority (No set order)
 - [ ] Custom Item model
 - [ ] Allow item to be placed in world & used like chest
-- [ ] Add animation to using item
 - [ ] Update Radial UI to look better
+- [ ] Add hud elements to show item buttons to user
+- [ ] All Unrestricted item tiers
+- [ ] Crafting reciepe design for all QuickAccessUnrestricted items
 
 ##### Low Priority (No set order)
-- [ ] Implement Other Item Types
+- [ ] Creative mode tab settings
+- [ ] Add animation to using item
+- [ ] Implement other QuickAccessItemTypes
 - [ ] Allow equipping items in utility slot
 - [ ] Have way to *wear* QuickAccess items so others can see when player has it equipped
 - [ ] Add server configurations to modify config values
+  - [ ] Add configurable equip costs 
+    - [ ] Swap speed
+    - [ ] Move Speed while swapping
+    - [ ] Stamina Cost
 
 
 ### Special Thanks
