@@ -50,6 +50,8 @@ The main purpose of this mod is to fix one of my major complaints with the inven
 /wqa gui help       // Show the help menu
 ```
 
+--- 
+
 ## Code Design 
 ### Code Description
 The plugin layout has 2 data storage locations; **The player** and **The Quick Access item**. 
