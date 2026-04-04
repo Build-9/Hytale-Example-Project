@@ -53,18 +53,20 @@ The main purpose of this mod is to fix one of my major complaints with the inven
 --- 
 
 ## Code Design 
-### Code Description
+### Code Data Description
 The plugin layout has 2 data storage locations; **The player** and **The Quick Access item**. 
-- The PlayerComponent: Houses player settings like
+- The **QuickAccessPlayerComponent**: Houses player settings like the following;
     - What hotbar slot is the 'equipped' location / what hotbar button pressed to open ui
     - Is the hotbar button enabled?
     - Where to swap the items into
-- The ItemComponent: Houses item info
-    - Item type (Unrestricted, Toolbelt, sling, etc)
-    - Item tier (Common, Uncommon, Rare, etc)
-    - Container Size
-    - Quick Access Size
-      - guiPageString
+    - GuiPageString
+- The **QuickAccessItemComponent**: Holds the following item into
+    - Asset Info
+      - Item tier (Common, Uncommon, Rare, etc)
+      - Container Size
+    - Config Info
+      - Quick Access Size (Must be <= Container Size; likely same as Container Size)
+      - Item type (Unrestricted, Toolbelt, sling, etc)
 When a user presses the eqipped hotbar location the code checks to see if the user has QuickSwap Enabled. If so, grab the data of the items in the component and open the gui. When the user selects an item on the gui swap that item with whatever is in the defined location.
 
 ### Code Components
