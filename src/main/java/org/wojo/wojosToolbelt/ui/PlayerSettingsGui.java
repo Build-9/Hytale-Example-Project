@@ -30,16 +30,8 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         public Boolean isEnabled = false;
         public Integer equippedPos = 8;
         public Integer targetPos = 0;
-        public String guiFile = "";
+        public String guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
         public String buttonSelected = "";
-
-        public SettingsUiData (Boolean is_enabled, Integer equipped_pos, Integer target_pos, String gui_file, String button_selected) {
-            this.isEnabled = is_enabled;
-            this.equippedPos = equipped_pos;
-            this.targetPos = target_pos;
-            this.guiFile = gui_file;
-            this.buttonSelected = button_selected;
-        }
 
         public String getDebugString(){
             return String.format("------ SettingsUiData ------\n - IsEnabled: %b\n - equippedPos: %d\n - targetPos: %d\n - guiFile: %s\n - buttonSelected: %s",
@@ -154,7 +146,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","TwoByTwoUiButton"), false
+                        .append("ButtonSelected","TwoByTwo"), false
         );
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#ThreeByThreeUiButton",
@@ -162,7 +154,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","ThreeByThreeUiButton"), false
+                        .append("ButtonSelected","ThreeByThree"), false
         );
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#FourByFourUiButton",
@@ -170,7 +162,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","FourByFourUiButton"), false
+                        .append("ButtonSelected","FourByFour"), false
         );
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#FiveByFiveUiButton",
@@ -178,7 +170,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","FiveByFiveUiButton"), false
+                        .append("ButtonSelected","FiveByFive"), false
         );
 
         uiEventBuilder.addEventBinding(
@@ -210,7 +202,6 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl SettingsUiData data) {
         super.handleDataEvent(ref, store, data);
         WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Output Settings Data:\n "+data.getDebugString()+"\n\n");
-
         if (data.buttonSelected.contains("SubmitButton")){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - SUBMIT new settings values to player with data\n"+data.getDebugString());
 
@@ -220,26 +211,27 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             newPlayerComp.setEquippedPosition(this._uiData.equippedPos);
             newPlayerComp.setGuiFile(this._uiData.guiFile);
 
-            QuickAccessUtils.validateQuickAccessPlayerComponent(newPlayerComp);
+            newPlayerComp = QuickAccessUtils.validateQuickAccessPlayerComponent(newPlayerComp);
             store.replaceComponent(ref, QuickAccessPlayerComponent.getComponentType(), newPlayerComp);
             this.close();
         }else if (data.buttonSelected.contains("ResetButton")) {
-            this._uiData = new SettingsUiData();
+            data = new SettingsUiData();
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
-        }else if (data.buttonSelected.contains("TwoByTwoUiButton")) {
-            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[0];
+        }else if (data.buttonSelected.contains("TwoByTwo")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to TwoByTwo\n");
-        }else if (data.buttonSelected.contains("ThreeByThreeUiButton")) {
-            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[1];
+        }else if (data.buttonSelected.contains("ThreeByThree")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to ThreeByThree\n");
-        }else if (data.buttonSelected.contains("FourByFourUiButton")) {
-            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[2];
+        }else if (data.buttonSelected.contains("FourByFour")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FourByFour\n");
-        }else if (data.buttonSelected.contains("FiveByFiveUiButton")) {
-            this._uiData.guiFile = QuickAccessConfig.SELECTION_GUI_FILES[3];
+        }else if (data.buttonSelected.contains("FiveByFive")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FiveByFive\n");
         }
+
         this._uiData.update(data);
-        sendUpdate();
+        this.rebuild();
     }
 }

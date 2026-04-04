@@ -21,7 +21,6 @@ Group {
   Group #R1Body {
     LayoutMode: Top;
     Background: (Color: #003300);
-
     Padding: (Full: 0);
     Group #BodyR0Checkbox {
       LayoutMode: Left;

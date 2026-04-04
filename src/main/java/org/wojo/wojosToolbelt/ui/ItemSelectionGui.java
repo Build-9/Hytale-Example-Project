@@ -276,26 +276,27 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
         }
 
-        switch(this._guiFile){
-            case QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO: // Two By Two
-                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO);
-                break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE: // Three By Three
-                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
-                break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
-                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR);
-                break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
-                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE);
-                break;
-            default:
-                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3. \n File Got:"+this._guiFile);
-                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
-                break;
-        }
+        uiCommandBuilder.append(this._guiFile);
+//        switch(this._guiFile){
+//            case QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO: // Two By Two
+//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO);
+//                break;
+//            case QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE: // Three By Three
+//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
+//                break;
+//            case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
+//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR);
+//                break;
+//            case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
+//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE);
+//                break;
+//            default:
+//                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3. \n File Got:"+this._guiFile);
+//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
+//                break;
+//        }
 
-        switch (_guiFile){
+        switch (this._guiFile){
             case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
                 for (int i=0; i<23; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
