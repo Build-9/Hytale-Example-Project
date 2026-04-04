@@ -2,6 +2,9 @@ package org.wojo.wojosToolbelt;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -11,6 +14,7 @@ import org.wojo.wojosToolbelt.Commands.WojosQuickAccessCommandCollection;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
+import org.wojo.wojosToolbelt.Handlers.PlayerReadyEventHandler;
 import org.wojo.wojosToolbelt.Handlers.SwapQuickAccessItemEventHandler;
 import org.wojo.wojosToolbelt.Interactions.OpenQuickAccessSelectionGuiInteraction;
 import org.wojo.wojosToolbelt.PacketAdapters.HotbarOpenQuickAccessGuiPacketAdapter;
@@ -47,6 +51,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
 
     private void registerEvents(){
         getEventRegistry().register(SwapQuickAccessItemEvent.class, new SwapQuickAccessItemEventHandler());
+        getEventRegistry().registerGlobal(PlayerReadyEvent.class, PlayerReadyEventHandler::handle);
     }
 
     private void registerInteractions(){

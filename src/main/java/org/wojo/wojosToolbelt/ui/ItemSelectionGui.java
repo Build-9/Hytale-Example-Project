@@ -192,6 +192,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
     public ItemSelectionGui(@Nonnull PlayerRef player_ref, Store<EntityStore> store, Boolean is_item_held) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, SelectionUiData.CODEC);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[Debug] Is item held: "+String.valueOf(is_item_held));
         this._isQuickAccessItemHeld = is_item_held;
         this._playerQaComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
         Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
@@ -277,24 +278,6 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         }
 
         uiCommandBuilder.append(this._guiFile);
-//        switch(this._guiFile){
-//            case QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO: // Two By Two
-//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO);
-//                break;
-//            case QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE: // Three By Three
-//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
-//                break;
-//            case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
-//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR);
-//                break;
-//            case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
-//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE);
-//                break;
-//            default:
-//                WojosQuickAccessPlugin.LOGGER.atInfo().log("[WARN] Building invalid GUI File, defaulting to 3x3. \n File Got:"+this._guiFile);
-//                uiCommandBuilder.append(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
-//                break;
-//        }
 
         switch (this._guiFile){
             case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
@@ -351,6 +334,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 _quickAccessItemHotbarPosition,
                 _playerQaComp.getTargetPosition()
             );
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Running command: "+cmd);
             CommandManager.get().handleCommand(this.playerRef, cmd);
         }
     }

@@ -27,12 +27,10 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         short sourceInventoryPosition = swapQuickAccessItemEvent.sourceInventoryPosition();
         short equippedPosition = swapQuickAccessItemEvent.equippedPosition();
         short targetPosition = swapQuickAccessItemEvent.targetPosition();
-
-        Player player = store.getComponent(playerRef, Player.getComponentType());
         
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(playerRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
         ItemStack quickAccessItemStack = hotbar.getInventory().getItemStack(equippedPosition);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetPosition+"\n - Source Pos: "+sourceInventoryPosition);
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG] Handler Data: \n - Target Pos: "+targetPosition+"\n - Source Pos: "+sourceInventoryPosition+"\n - Equipped Pos: "+equippedPosition);
 
         // ------ Get Currently Stored Items ------
         // Get current target hotbar item
@@ -56,8 +54,8 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
             containerItems[sourceInventoryPosition] = equippedItem;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            hotbar.getInventory().removeItemStackFromSlot((short)8);
-            hotbar.getInventory().setItemStackForSlot((short)8, updatedQuickAccessItem);
+            hotbar.getInventory().removeItemStackFromSlot(equippedPosition);
+            hotbar.getInventory().setItemStackForSlot(equippedPosition, updatedQuickAccessItem);
 
             ComponentType componentType = InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID);
             store.replaceComponent(playerRef, componentType, hotbar);
@@ -65,8 +63,8 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
             containerItems[sourceInventoryPosition] = null;
             ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
             ItemStack updatedQuickAccessItem = quickAccessItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
-            hotbar.getInventory().removeItemStackFromSlot((short)8);
-            hotbar.getInventory().setItemStackForSlot((short)8, updatedQuickAccessItem);
+            hotbar.getInventory().removeItemStackFromSlot(equippedPosition);
+            hotbar.getInventory().setItemStackForSlot(equippedPosition, updatedQuickAccessItem);
 
             ComponentType componentType = InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID);
             store.replaceComponent(playerRef, componentType, hotbar);
