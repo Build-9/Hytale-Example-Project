@@ -1,10 +1,8 @@
 package org.wojo.wojosToolbelt.Config;
 
-import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
-import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
 import java.util.Set;
@@ -27,8 +25,13 @@ public class QuickAccessConfig {
     public static int HOTBAR_GUI_BUTTON = 8;            // Button 9
     public static int HOTBAR_SWAP_LOCATION = 0;         // Button 1
 
-    public static final String[] SELECTION_GUI_FILES = {"Pages/Radials/TwoByTwoQuickAccess.ui","Pages/Radials/ThreeByThreeQuickAccess.ui", "Pages/Radials/FourByFourQuickAccess.ui", "Pages/Radials/FiveByFiveQuickAccess.ui"};
-    public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILES[1]; // Default to 3x3 grid with 8 selections
+    public static final String SELECTION_GUI_FILE_TWO_BY_TWO = "Pages/Radials/TwoByTwoQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_THREE_BY_THREE = "Pages/Radials/ThreeByThreeQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_FOUR_BY_FOUR = "Pages/Radials/FourByFourQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_FIVE_BY_FIVE = "Pages/Radials/FiveByFiveQuickAccess.ui";
+    public static final String[] SELECTION_GUI_FILES = {SELECTION_GUI_FILE_TWO_BY_TWO, SELECTION_GUI_FILE_THREE_BY_THREE, SELECTION_GUI_FILE_FOUR_BY_FOUR, SELECTION_GUI_FILE_FIVE_BY_FIVE};
+
+    public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_THREE_BY_THREE; // Default to 3x3 grid with 8 selections
     public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
     public static final String HELPP_GUI_FILE = "Pages/QuickAccessHelp.ui";
 

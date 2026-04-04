@@ -1,4 +1,4 @@
-$C = "../Common.ui";
+$C = "../../Common.ui";
 
 // Quick Access Basig design is a 10x10 grid:
 // * * * * * * * * * X <- Settings Btn
