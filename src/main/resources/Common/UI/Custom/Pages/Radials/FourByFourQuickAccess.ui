@@ -40,13 +40,13 @@ Group {
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton8 {
-      Anchor: (Width: 100, Height: 100, Top: 0, Bottom: 60);
+      Anchor: (Width: 100, Height: 100, Top: 0, Bottom: 65);
       Text: "8";
       Disabled: false;
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton9 {
-      Anchor: (Width: 100, Height: 100, Bottom: 60);
+      Anchor: (Width: 100, Height: 100, Bottom: 65);
       Text: "9";
       Disabled: false;
     }
@@ -70,13 +70,13 @@ Group {
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton0 {
-      Anchor: (Width: 100, Height: 100);
+      Anchor: (Width: 110, Height: 110);
       Text: "0";
       Disabled: false;
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton1 {
-      Anchor: (Width: 100, Height: 100);
+      Anchor: (Width: 110, Height: 110);
       Text: "1";
       Disabled: false;
     }
@@ -104,13 +104,13 @@ Group {
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton3 {
-      Anchor: (Width: 100, Height: 100);
+      Anchor: (Width: 110, Height: 110);
       Text: "3";
       Disabled: false;
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton2 {
-      Anchor: (Width: 100, Height: 100);
+      Anchor: (Width: 110, Height: 110);
       Text: "2";
       Disabled: false;
     }
@@ -134,13 +134,13 @@ Group {
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton11 {
-      Anchor: (Width: 100, Height: 100, Top: 60, Bottom: 0);
+      Anchor: (Width: 100, Height: 100, Top: 65, Bottom: 0);
       Text: "11";
       Disabled: false;
     }
     Group #ButtonSpacer {}
     $C.@TextButton #QuickAccessButton10 {
-      Anchor: (Width: 100, Height: 100, Top: 60, Bottom: 0);
+      Anchor: (Width: 100, Height: 100, Top: 65, Bottom: 0);
       Text: "10";
       Disabled: false;
     }
