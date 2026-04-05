@@ -1,4 +1,71 @@
 $C = "../../Common.ui";
 Group {
-    
+  LayoutMode: Top;
+  Background: (Color: #41414133);
+  Anchor: (Width: 600, Height: 600, Bottom: 50);
+  Padding: (Left: 2, Right: 5, Top: 2);
+  Group #R0 {
+    LayoutMode: Right;
+    Background: (Color: #00000000);
+    Anchor: (Height: 60);
+    $C.@TextButton #QuickAccessButtonHelp {
+      Background: (Color: #04CC00);
+      Anchor: (Width: 120, Height: 55);
+      Text: "Help";
+    }
+    Group #R0Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #00000000);
+      Anchor: (Width: 60, Height: 120);
+    }
+    $C.@TextButton #QuickAccessButtonSettings {
+      Background: (Color: #04CC00);
+      Anchor: (Width: 120, Height: 55);
+      Text: "Settings";
+    }
+  }
+  Group #R1 {
+    LayoutMode: MiddleCenter;
+    Background: (Color: #000000aa);
+    Anchor: (Width: 600, Height: 200);
+    $C.@TextButton #QuickAccessButton0 {
+      Anchor: (Width: 200, Height: 200, Bottom: -75);
+      Text: "BTN 5";
+      Disabled: true;
+    }
+    Group #ButtonSpacer {
+      Anchor: (Width: 100, Height: 200);
+    }
+    $C.@TextButton #QuickAccessButton1 {
+      Anchor: (Width: 200, Height: 200, Left: 0, Right: 0, Bottom: -75);
+      Text: "BTN 5";
+      Disabled: true;
+    }
+  }
+  Group #R2Equipped {
+    LayoutMode: Center;
+    $C.@TextButton #QuickAccessButtonEquipped {
+      Anchor: (Width: 120, Height: 120);
+      Text: "Equipped Item";
+      Disabled: false;
+    }
+  }
+  Group #R3 {
+    LayoutMode: MiddleCenter;
+    Background: (Color: #000000aa);
+    Anchor: (Width: 600, Height: 200);
+    $C.@TextButton #QuickAccessButton2 {
+      Anchor: (Width: 200, Height: 200, Top: -75);
+      Text: "BTN 5";
+      Disabled: true;
+    }
+    Group #ButtonSpacer {
+      Anchor: (Width: 100, Height: 200);
+    }
+    $C.@TextButton #QuickAccessButton3 {
+      Anchor: (Width: 200, Height: 200, Top: -75);
+      Text: "BTN 5";
+      Disabled: true;
+    }
+  }
 }
