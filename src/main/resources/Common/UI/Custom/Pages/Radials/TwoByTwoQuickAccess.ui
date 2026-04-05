@@ -46,11 +46,6 @@ Group {
   Group #R2Equipped {
     LayoutMode: Center;
     Anchor: (Height: 120);
-    $C.@TextButton #QuickAccessButtonEquipped {
-      Anchor: (Width: 75, Height: 75);
-      Text: "X";
-      Disabled: false;
-    }
   }
   Group #R3 {
     LayoutMode: MiddleCenter;
