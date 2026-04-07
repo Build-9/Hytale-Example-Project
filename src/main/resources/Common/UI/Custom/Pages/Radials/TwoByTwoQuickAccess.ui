@@ -3,7 +3,7 @@ $C = "../../Common.ui";
 Group {
   LayoutMode: Top;
   Background: (Color: #41414133);
-  Anchor: (Width: 600, Height: 600, Bottom: 50);
+  Anchor: (Width: 600, Height: 600);
   Padding: (Left: 2, Right: 5, Top: 2);
   Group #R0 {
     LayoutMode: Right;
@@ -26,7 +26,7 @@ Group {
     }
   }
   Group #R1 {
-    LayoutMode: MiddleCenter;
+    LayoutMode: CenterMiddle;
     Background: (Color: #000000aa);
     Anchor: (Width: 600, Height: 200);
     $C.@TextButton #QuickAccessButton0 {
@@ -48,7 +48,7 @@ Group {
     Anchor: (Height: 120);
   }
   Group #R3 {
-    LayoutMode: MiddleCenter;
+    LayoutMode: CenterMiddle;
     Background: (Color: #000000aa);
     Anchor: (Width: 600, Height: 200);
     $C.@TextButton #QuickAccessButton3 {
