@@ -281,12 +281,12 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
         switch (this._guiFile){
             case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
-                for (int i=0; i<23; i++){
+                for (int i=0; i<24; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
                 break;
             case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
-                for (int i=0; i<15; i++){
+                for (int i=0; i<16; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
                 break;
