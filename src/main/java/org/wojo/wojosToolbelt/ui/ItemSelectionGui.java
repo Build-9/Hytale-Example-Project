@@ -249,6 +249,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton18", new EventData().append("ButtonSelected", "18"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton17", new EventData().append("ButtonSelected", "17"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton16", new EventData().append("ButtonSelected", "16"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
 
             case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton15", new EventData().append("ButtonSelected", "15"), true);
@@ -265,6 +266,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton5", new EventData().append("ButtonSelected", "5"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton4", new EventData().append("ButtonSelected", "4"), true);
+                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
             
             default:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton3", new EventData().append("ButtonSelected", "3"), true);
@@ -274,7 +276,6 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
 
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
-                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
         }
 
         uiCommandBuilder.append(this._guiFile);
@@ -284,6 +285,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 for (int i=0; i<24; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
+                setItemData(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
                 break;
             case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
                 for (int i=0; i<16; i++){
@@ -294,6 +296,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 for (int i=0; i<8; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
+                setItemData(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
                 break;
             case QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO: // Two By Two
                 for (int i=0; i<4; i++){
@@ -302,7 +305,6 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 break;
         }
 
-        setItemData(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
         setItemData(uiCommandBuilder, "#QuickAccessButtonSettings", this._settingsButton);
         setItemData(uiCommandBuilder, "#QuickAccessButtonHelp", this._helpButton);
     }
