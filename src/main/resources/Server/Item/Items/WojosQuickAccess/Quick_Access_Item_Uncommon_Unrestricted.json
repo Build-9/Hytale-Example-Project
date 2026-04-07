@@ -7,7 +7,7 @@
   "Icon": "Icons/ItemsGenerated/Utility_Leather_Quiver.png",
   "Model": "Items/Back/Quiver.blockymodel",
   "Texture": "Items/Back/Quiver_Texture.png",
-  "Quality": "Debug",
+  "Quality": "Uncommon",
   "MaxStack": 1,
   "IconProperties": {
     "Scale": 0.5,
@@ -29,7 +29,7 @@
     ]
   },
   "Container": {
-    "Capacity": 24
+    "Capacity": 8
   },
   "Interactions": {
     "Primary": {
@@ -71,7 +71,7 @@
       }
     ],
     "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Debug_Unrestricted"
+      "ItemId": "Quick_Access_Item_Uncommon_Unrestricted"
     }
   },
   "ItemLevel": 100,
