@@ -54,26 +54,6 @@
       ]
     }
   },
-  "Recipe": {
-    "Input": [
-      {
-        "ItemId": "Ingredient_Hide_Medium",
-        "Quantity": 4
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Id": "Workbench",
-        "Type": "Crafting",
-        "Categories": [
-          "Workbench_Survival"
-        ]
-      }
-    ],
-    "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Debug_Unrestricted"
-    }
-  },
   "ItemLevel": 100,
   "Utility": {
     "Usable": false

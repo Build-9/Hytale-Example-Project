@@ -57,8 +57,8 @@
   "Recipe": {
     "Input": [
       {
-        "ItemId": "Ingredient_Hide_Medium",
-        "Quantity": 4
+        "ItemId": "Ingredient_Leather_Light",
+        "Quantity": 10
       }
     ],
     "BenchRequirement": [
@@ -66,12 +66,13 @@
         "Id": "Workbench",
         "Type": "Crafting",
         "Categories": [
-          "Workbench_Survival"
+          "Workbench_Tools"
         ]
       }
     ],
     "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Common_Unrestricted"
+      "ItemId": "Quick_Access_Item_Common_Unrestricted",
+      "Quantity": 1
     }
   },
   "ItemLevel": 100,

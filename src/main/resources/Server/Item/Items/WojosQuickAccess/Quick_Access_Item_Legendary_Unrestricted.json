@@ -57,8 +57,16 @@
   "Recipe": {
     "Input": [
       {
-        "ItemId": "Ingredient_Hide_Medium",
-        "Quantity": 4
+        "ItemId": "Ingredient_Leather_Heavy",
+        "Quantity": 30
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 10
+      },
+      {
+        "ItemId": "Quick_Access_Item_Epic_Unrestricted",
+        "Quantity": 1
       }
     ],
     "BenchRequirement": [
@@ -66,12 +74,13 @@
         "Id": "Workbench",
         "Type": "Crafting",
         "Categories": [
-          "Workbench_Survival"
+          "Workbench_Tools"
         ]
       }
     ],
     "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Legendary_Unrestricted"
+      "ItemId": "Quick_Access_Item_Common_Unrestricted",
+      "Quantity": 1
     }
   },
   "ItemLevel": 100,
