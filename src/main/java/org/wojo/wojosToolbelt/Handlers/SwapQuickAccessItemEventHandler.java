@@ -4,6 +4,7 @@ import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
@@ -39,6 +40,13 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         // Get Item in Quick Access Component Storage to swap into hotbar
         BsonDocument containerBSON = quickAccessItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
         ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
+        if ( containerItems == null ){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Trying to use unused container, Add item to get it working");
+            return;
+        } else if ( sourceInventoryPosition >= containerItems.length){
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Trying to access position out of range, Button disable not working");
+            return;
+        }
         ItemStack itemStoredInQaComp = containerItems[sourceInventoryPosition];
 
         // ------ Set Container Items ------
