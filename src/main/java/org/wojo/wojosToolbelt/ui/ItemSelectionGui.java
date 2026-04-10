@@ -336,6 +336,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         } else if (buttonPressed.equals("help")) {
             // TODO: Open help GUI listing commands and guides
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Help Pressed");
+            this.close();
         } else{
             this.close();
             String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",

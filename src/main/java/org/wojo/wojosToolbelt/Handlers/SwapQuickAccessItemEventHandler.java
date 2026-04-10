@@ -5,10 +5,15 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.command.system.CommandManager;
+import com.hypixel.hytale.server.core.command.system.CommandSender;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.bson.BsonDocument;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
@@ -17,6 +22,7 @@ import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccessItemEvent> {
@@ -42,6 +48,10 @@ public class SwapQuickAccessItemEventHandler implements Consumer<SwapQuickAccess
         ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
         if ( containerItems == null ){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Trying to use unused container, Add item to get it working");
+            String cmd = "echo \"You need to add an item to the Quick Access Container Inventory to get UI to work! Open the Ui with the USE key (Default: f)\"";
+            UUID uuid = store.getComponent(playerRef, UUIDComponent.getComponentType()).getUuid();
+            PlayerRef ref = Universe.get().getPlayer(uuid);
+            CommandManager.get().handleCommand(ref, cmd);
             return;
         } else if ( sourceInventoryPosition >= containerItems.length){
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Trying to access position out of range, Button disable not working");
