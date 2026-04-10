@@ -23,6 +23,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
+import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.QuickAccessUtils.*;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 
@@ -339,13 +340,18 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             this.close();
         } else{
             this.close();
-            String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",
-                buttonPressed,
-                _quickAccessItemHotbarPosition,
-                _playerQaComp.getTargetPosition()
-            );
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Running command: "+cmd);
-            CommandManager.get().handleCommand(this.playerRef, cmd);
+//            String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",
+//                buttonPressed,
+//                _quickAccessItemHotbarPosition,
+//                _playerQaComp.getTargetPosition()
+//            );
+//            CommandManager.get().handleCommand(this.playerRef, cmd);
+//            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Running command: "+cmd);
+
+            short containerPos = Short.parseShort(buttonPressed);
+            short equippedPos = _quickAccessItemHotbarPosition.shortValue();
+            short targetPos = (short)_playerQaComp.getTargetPosition();
+            SwapQuickAccessItemEvent.dispatch(playerRef.getReference(), store, containerPos, equippedPos, targetPos);
         }
     }
 
