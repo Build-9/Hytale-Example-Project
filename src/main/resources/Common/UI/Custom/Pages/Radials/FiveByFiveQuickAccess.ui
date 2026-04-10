@@ -2,7 +2,7 @@ $C = "../../Common.ui";
 Group {
   LayoutMode: Top;
   Background: (Color: #41414133);
-  Anchor: (Width: 600, Height: 600);
+  Anchor: (Width: 600, Height: 700);
   Padding: (Left: 2, Right: 5, Top: 2, Bottom: 2);
   Group #R0 {
     LayoutMode: Right;
@@ -34,7 +34,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton20 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "20";
       Disabled: true;
     }
@@ -42,7 +42,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton16 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "16";
       Disabled: true;
     }
@@ -50,7 +50,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton10 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "10";
       Disabled: true;
     }
@@ -58,7 +58,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton17 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "17";
       Disabled: true;
     }
@@ -66,7 +66,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton21 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "21";
       Disabled: true;
     }
@@ -84,7 +84,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton12 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "12";
       Disabled: true;
     }
@@ -92,7 +92,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton4 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "4";
       Disabled: true;
     }
@@ -100,7 +100,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton2 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "2";
       Disabled: true;
     }
@@ -108,7 +108,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton5 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "5";
       Disabled: true;
     }
@@ -116,7 +116,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton13 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "13";
       Disabled: true;
     }
@@ -134,7 +134,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton8 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "8";
       Disabled: true;
     }
@@ -142,7 +142,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton0 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "0";
       Disabled: true;
     }
@@ -150,7 +150,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButtonEquipped {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "Equip";
       Disabled: true;
     }
@@ -158,7 +158,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton1 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "1";
       Disabled: true;
     }
@@ -166,7 +166,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton9 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "9";
       Disabled: true;
     }
@@ -184,7 +184,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton15 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "15";
       Disabled: true;
     }
@@ -192,7 +192,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton7 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "7";
       Disabled: true;
     }
@@ -200,7 +200,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton3 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "3";
       Disabled: true;
     }
@@ -208,7 +208,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton6 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "6";
       Disabled: true;
     }
@@ -216,7 +216,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton14 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "14";
       Disabled: true;
     }
@@ -234,7 +234,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton23 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "23";
       Disabled: true;
     }
@@ -242,7 +242,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton19 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "19";
       Disabled: true;
     }
@@ -250,7 +250,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton11 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "11";
       Disabled: true;
     }
@@ -258,7 +258,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton18 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "18";
       Disabled: true;
     }
@@ -266,7 +266,7 @@ Group {
         Anchor: (Width: 20);
     }
     $C.@TextButton #QuickAccessButton22 {
-      Anchor: (Width: 75, Height: 75);
+      Anchor: (Width: 100, Height: 100);
       Text: "22";
       Disabled: true;
     }

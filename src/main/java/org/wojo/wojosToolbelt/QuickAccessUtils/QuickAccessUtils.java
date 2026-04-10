@@ -28,7 +28,7 @@ public class QuickAccessUtils {
       component.setTargetPosition(0); // Reset to default value
     }
 
-    if (component.getTargetPosition() < -1 || component.getTargetPosition() > 8) {
+    if (component.getTargetPosition() < 0 || component.getTargetPosition() > 8) {
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.targetPosition is out of range. Setting to default (0).");
       component.setTargetPosition(0); // Reset to default value
     }else if ( component.getTargetPosition() == component.getEquippedPosition()) {

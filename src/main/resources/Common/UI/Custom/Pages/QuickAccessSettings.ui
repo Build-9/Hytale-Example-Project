@@ -74,7 +74,7 @@ Group {
         Label #Label8e37c11f {
           Anchor: (Width: 300);
           Padding: (Full: 0);
-          Text: "Target Hotbar Location [-1 -> 8]";
+          Text: "Target Hotbar Location [0 -> 8]";
           Style: (TextColor: #ffffff);
         }
       }
