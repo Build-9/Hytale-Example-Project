@@ -24,12 +24,12 @@ The main purpose of this mod is to fix one of my major complaints with the inven
 - [X] Unrestricted: Quick access radial that can hold anything
 
 ### Quick Access Item Tiers (Only checked items are implemented)
-- [ ] Common: 2 slots
-- [ ] Uncommon: 4 slots
-- [ ] Rare: 8 slots 
-- [ ] Epic: 12 slots
-- [ ] Legendary: 20 slots
-- [X] Debug: 24 slots
+- Common: 2 slots
+- Uncommon: 4 slots
+- Rare: 8 slots 
+- Epic: 12 slots
+- Legendary: 20 slots
+- Debug: 24 slots
 
 ### Commands
 #### Key Command
@@ -106,6 +106,7 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 - [ ] Crafting reciepe design for all QuickAccessUnrestricted items
 
 ##### Low Priority (No set order)
+- [ ] Allow swap item to/from Selected hotbar instead of specific value 
 - [ ] Creative mode tab settings
 - [ ] Add animation to using item
 - [ ] Implement other QuickAccessItemTypes
