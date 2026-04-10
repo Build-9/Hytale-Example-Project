@@ -234,7 +234,11 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
         }else{
             command_builder.set(button_id+".Text", button_data.buttonText);
         }
-        command_builder.set(button_id+".Disabled", Boolean.getBoolean(button_data.isButtonDisabled));
+        boolean isDiabled = true;
+        if ("false".equals(button_data.isButtonDisabled)){
+            isDiabled = false;
+        }
+        command_builder.set(button_id+".Disabled", isDiabled);
     }
 
     @Override

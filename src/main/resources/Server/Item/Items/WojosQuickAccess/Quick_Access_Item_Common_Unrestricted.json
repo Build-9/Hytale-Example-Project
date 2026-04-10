@@ -77,10 +77,5 @@
   "ItemLevel": 100,
   "Utility": {
     "Usable": false
-  },
-  "BlockType": {
-    "TextureSideMask": "Items/Back/Quiver_Texture.png",
-    "CustomModel": "Items/Back/Quiver.blockymodel",
-    "DrawType": "Model"
   }
 }
