@@ -4,11 +4,14 @@ import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.container.ItemStackItemContainer;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.bson.BsonDocument;
 import org.wojo.wojosToolbelt.Components.QuickAccessItemComponentFactory;
@@ -16,9 +19,11 @@ import org.wojo.wojosToolbelt.Components.QuickAccessItemComponent;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
+import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class QuickAccessUtils {
 
@@ -157,5 +162,39 @@ public class QuickAccessUtils {
   public static ItemStack[] getContainerItems(ItemStack itemStack) {
     BsonDocument containerBSON = itemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
     return ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
+  }
+
+  public static void openQuickAccessUI(Store<EntityStore>store, Ref<EntityStore> ref) {
+    // ------ Get Data ------
+    Player player = store.getComponent(ref, Player.getComponentType());
+    QuickAccessPlayerComponent qaPlayerComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
+
+    // ------ Check For Quick Access Item ------
+    InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
+    ItemStack heldItem = hotbar.getActiveItem();
+    ItemStack equippedItem = hotbar.getInventory().getItemStack((short)qaPlayerComp.getEquippedPosition());
+
+    // ------ Verify item is Quick Access Item ------
+    boolean isItemHeld = false;
+    if (!QuickAccessUtils.isQuickAccessItem(heldItem) && !QuickAccessUtils.isQuickAccessItem(equippedItem)){
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: Item held or equipped is not a QuickAccess Item");
+      return;
+    }else if (QuickAccessUtils.isQuickAccessItem(heldItem)){
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Held Items Quick Access Selection Gui");
+      isItemHeld = true;
+    }else{
+      WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Equipped Items Quick Access Selection Gui");
+    }
+
+    // ------ Run GUI event ------
+    PlayerRef playerRef = getPlayerRef(store, ref);
+    ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store, isItemHeld);
+    player.getPageManager().openCustomPage(ref, store, guiPage);
+  }
+
+  public static PlayerRef getPlayerRef(Store<EntityStore>store, Ref<EntityStore> ref) {
+    UUIDComponent uuidComponent = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID uuid = uuidComponent.getUuid();
+    return Universe.get().getPlayer(uuid);
   }
 }

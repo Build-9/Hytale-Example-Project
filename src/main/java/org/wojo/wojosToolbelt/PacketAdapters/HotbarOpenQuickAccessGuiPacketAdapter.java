@@ -11,6 +11,7 @@ import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -18,7 +19,10 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 // Send Packet to player to tell them they are actually holding the original slected item not hotbar 9
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
+import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
+import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
 
 import java.util.UUID;
 
@@ -88,7 +92,8 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
                         revertSelectedHotbarItem(chain.activeHotbarSlot, playerRef);
 
                         // Open UI
-                        openQuickAccessUI(playerRef, equippedHotbarPos.shortValue());
+                        //openQuickAccessUI(playerRef, equippedHotbarPos.shortValue());
+                        QuickAccessUtils.openQuickAccessUI(world.getEntityStore().getStore(), playerRef.getReference());
                     });
 
                     // Block Packet as we don't want player to actually change to hotbar 9
@@ -135,9 +140,9 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
     // Open the Quick Access Gui 
     // Params:
     // - PlayerRef playerRef: Refrence to the player entity. 
-    private void openQuickAccessUI(PlayerRef playerRef, short hotbar_position){
-        playerRef.sendMessage(Message.raw("Showing UI Page with position "+String.valueOf(hotbar_position)));
+    private void openQuickAccessUI(PlayerRef playerRef, short hotbar_position) {
+        playerRef.sendMessage(Message.raw("Showing UI Page with position " + String.valueOf(hotbar_position)));
         // Open QuickAccess UI by using a command
-        CommandManager.get().handleCommand(playerRef, "wqa gui select --event open");
+        //CommandManager.get().handleCommand(playerRef, "wqa gui select --event open");
     }
 }

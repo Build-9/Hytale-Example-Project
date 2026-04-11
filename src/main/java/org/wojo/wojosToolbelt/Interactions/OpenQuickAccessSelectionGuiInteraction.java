@@ -17,6 +17,7 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.ser
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
+import org.wojo.wojosToolbelt.QuickAccessUtils.QuickAccessUtils;
 
 public class OpenQuickAccessSelectionGuiInteraction extends SimpleInstantInteraction {
 
@@ -42,7 +43,8 @@ public class OpenQuickAccessSelectionGuiInteraction extends SimpleInstantInterac
 
 
         if (player != null) {
-            CommandManager.get().handleCommand(player,"wqa gui select --event open");
+            QuickAccessUtils.openQuickAccessUI(interactionContext.getEntity().getStore(), ref);
+            //CommandManager.get().handleCommand(player,"wqa gui select --event open");
         }
     }
 }
