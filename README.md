@@ -49,13 +49,23 @@ The current design only includes the *Unrestricted Quick Access Item* with the g
 /wqa comp printp    // Print your QuickAccessPlayerComponent data
 /wqa comp printi    // Print held items QuickAccessItemComponent data
 
-/wqa item swap      // Swap an item from a QuickAccess Item in the hotbar to the hotbar
-/wqa item print     // Print everything associated with the held itemStack
+/wqa item swap      // Swap an item from held(Higher priority) or equiped(Lower Priority) QuickAccess Item to the defined hotbar position
+/wqa item print     // Print Hytale item data associated with the held itemStack
 
 /wqa gui select     // Show the radial selection menu
 /wqa gui store      // Show the container storage menu
-/wqa gui settings   // show the settings menu
+/wqa gui settings   // Show the settings menu
 /wqa gui help       // Show the help menu
+
+// ======== Perm's Info ========
+// - Default Access
+/wqa item swap
+/wqa gui *
+
+// - Admin Needed
+/wqa comp *
+/wqa item print
+
 ```
 
 --- 
@@ -119,6 +129,7 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 
 ### TODO:
 ##### High Priority (No set order)
+- [ ] Fix permissions issues - Default perms should allow player to use item
 - [ ] Custom Item model
 - [ ] Allow item to be placed in world & used like chest
 - [ ] Update Radial UI to look better
