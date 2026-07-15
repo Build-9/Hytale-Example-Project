@@ -127,7 +127,6 @@ public class HotbarOpenQuickAccessGuiPacketAdapter implements PlayerPacketFilter
         //Intentory playerInventory = store.getComponent(entityRef, Inventory.getComponentType());
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(entityRef, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
         byte hotbarPos = originalHotbarSlot.byteValue();
-        hotbar.setActiveSlot(hotbarPos);
         
         // Send packet to force client to the correct slot
         SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
