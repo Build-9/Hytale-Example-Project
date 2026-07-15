@@ -100,11 +100,23 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButtonEquipped {
-      Anchor: (Width: 120, Height: 120);
-      Padding: (Full: 0);
-      Text: "Equipped Item";
-      Disabled: false;
+    ItemSlotButton #QuickAccessButtonEquipped {
+          Anchor: (Width: 120, Height: 120);
+          Padding: (Full: 0);
+          TooltipText: "Equipped Item";
+          Visible: true;
+          HitTestVisible: true;
+          TextTooltipShowDelay: 4.0;
+          Disabled: false;
+          Background: #aaaaaa(0.5);
+
+          ItemSlot #QuickAccessButtonEquippedImg {
+            Anchor: (Width: 75, Height: 75);
+            Padding: (Full: 0);
+            Visible: true;
+            HitTestVisible: false;
+            TextTooltipShowDelay: 4.0;
+          }
     }
     Group #R4andR5Spacer2 {
       LayoutMode: Top;

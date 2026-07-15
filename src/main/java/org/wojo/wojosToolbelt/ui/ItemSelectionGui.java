@@ -230,16 +230,20 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     }
 
     private void setItemData(UICommandBuilder command_builder, String button_id, ButtonData button_data){
-        if (button_data.buttonMsg != null){
-            command_builder.set(button_id+".Text", button_data.buttonMsg);
-        }else{
-            command_builder.set(button_id+".Text", button_data.buttonText);
+        if (button_id.equals("#QuickAccessButtonEquipped")){
+            command_builder.set("#QuickAccessButtonEquippedImg.ItemId", "Quick_Access_Item_Common_Unrestricted");
+        }else {
+            if (button_data.buttonMsg != null) {
+                command_builder.set(button_id + ".Text", button_data.buttonMsg);
+            } else {
+                command_builder.set(button_id + ".Text", button_data.buttonText);
+            }
+            boolean isDiabled = true;
+            if ("false".equals(button_data.isButtonDisabled)) {
+                isDiabled = false;
+            }
+            command_builder.set(button_id + ".Disabled", isDiabled);
         }
-        boolean isDiabled = true;
-        if ("false".equals(button_data.isButtonDisabled)){
-            isDiabled = false;
-        }
-        command_builder.set(button_id+".Disabled", isDiabled);
     }
 
     @Override
