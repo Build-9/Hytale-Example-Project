@@ -53,10 +53,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton4 {
+    ItemSlotButton #QuickAccessButton4 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 5";
+      TooltipText: "BTN 5";
       Disabled: true;
     }
     Group #R1andR2Spacer1 {
@@ -65,10 +65,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton2 {
+    ItemSlotButton #QuickAccessButton2 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 3";
+      TooltipText: "BTN 3";
       Disabled: true;
     }
     Group #R1andR2Spacer2 {
@@ -77,10 +77,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton6 {
+    ItemSlotButton #QuickAccessButton6 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 7";
+      TooltipText: "BTN 7";
       Disabled: true;
     }
   }
@@ -101,10 +101,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton0 {
+    ItemSlotButton #QuickAccessButton0 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 1";
+      TooltipText: "BTN 1";
       Disabled: false;
     }
     Group #R4andR5Spacer1 {
@@ -137,10 +137,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton1 {
+    ItemSlotButton #QuickAccessButton1 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 2";
+      TooltipText: "BTN 2";
       Disabled: false;
     }
   }
@@ -161,10 +161,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton7 {
+    ItemSlotButton #QuickAccessButton7 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 8";
+      TooltipText: "BTN 8";
       Disabled: true;
     }
     Group #R7andR7Spacer1 {
@@ -173,10 +173,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton3 {
+    ItemSlotButton #QuickAccessButton3 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 4";
+      TooltipText: "BTN 4";
       Disabled: true;
     }
     Group #R7andR7Spacer2 {
@@ -185,10 +185,10 @@ Group {
       Anchor: (Width: 60, Height: 120);
       Padding: (Full: 0);
     }
-    $C.@TextButton #QuickAccessButton5 {
+    ItemSlotButton #QuickAccessButton5 {
       Anchor: (Width: 120, Height: 120);
       Padding: (Full: 0);
-      Text: "BTN 6";
+      TooltipText: "BTN 6";
       Disabled: true;
     }
   }
