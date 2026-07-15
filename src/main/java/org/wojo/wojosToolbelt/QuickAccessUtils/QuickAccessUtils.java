@@ -165,27 +165,37 @@ public class QuickAccessUtils {
   }
 
   public static void openQuickAccessUI(Store<EntityStore>store, Ref<EntityStore> ref) {
-    // ------ Get Data ------
+    // ------ Get Needed Data Stores ------
     Player player = store.getComponent(ref, Player.getComponentType());
     QuickAccessPlayerComponent qaPlayerComp = store.getComponent(ref, QuickAccessPlayerComponent.getComponentType());
 
-    // ------ Check For Quick Access Item ------
+    // ------ Get Quick Access Item ------
     InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     ItemStack heldItem = hotbar.getActiveItem();
     ItemStack equippedItem = hotbar.getInventory().getItemStack((short)qaPlayerComp.getEquippedPosition());
 
-    // ------ Verify item is Quick Access Item ------
+    // ------ Verify Held or Equipped Item is a QuickAccessItem ------
     boolean isItemHeld = false;
     if (!QuickAccessUtils.isQuickAccessItem(heldItem) && !QuickAccessUtils.isQuickAccessItem(equippedItem)){
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: Item held or equipped is not a QuickAccess Item");
       return;
     }else if (QuickAccessUtils.isQuickAccessItem(heldItem)){
+      // Priority to use held item over equipped item
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Held Items Quick Access Selection Gui");
       isItemHeld = true;
     }else{
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Equipped Items Quick Access Selection Gui");
     }
 
+    // ------ TODO: Update Selection GUI's to have a object for each UI instead of single monolithic UI file with multiple switch cases
+    // ------ Get Needed GUI Object ------
+    // -- Have a different class for each file type instead of a single UI file --
+    // -- Get ANy Needed Vars needed for GUI File --
+    // PlayerRef playerRef = getPlayerRef(store, ref);
+    // InteractiveCustomUIPage<ItemSelectionGui.SelectionUiData> quickAccessSelectionUI = QuickAccessUtils.getSelectorGui(qaPlayerComp, playerRef, store, isItemHeld);
+    // -- Open UI --
+    // player.getPageManager().openCustomPage(ref, store, quickAccessSelectionUI)
+    
     // ------ Run GUI event ------
     PlayerRef playerRef = getPlayerRef(store, ref);
     ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store, isItemHeld);
