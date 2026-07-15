@@ -36,7 +36,7 @@ public class WojosQuickAccessPlugin extends JavaPlugin {
     public WojosQuickAccessPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         _instance = this;
-        LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
+        LOGGER.atInfo().log("[Info] Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
     }
 
     private void registerComponents(){
