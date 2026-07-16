@@ -5,7 +5,7 @@ import com.hypixel.hytale.server.core.Message;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-public static class GuiButtonData {
+public class GuiButtonData {
         public Message buttonMsg = null;
         public String buttonText = "";
         public String tooltipText = "";
@@ -18,7 +18,7 @@ public static class GuiButtonData {
         public String buttonHighlightImage = "";  // Background image to show when hovering over Icon
         public String buttonPressImage = "";      // Background image to show when pressing the button
 
-        public ButtonData (Message msg, String text, String tooltip, String icon, String is_disabled, String style, String btn_html_id, String icn_html_id, String btn_highlight_img, String btn_press_img){
+        public GuiButtonData (Message msg, String text, String tooltip, String icon, String is_disabled, String style, String btn_html_id, String icn_html_id, String btn_highlight_img, String btn_press_img){
             this.buttonMsg = msg;
             this.buttonText = "";
             this.tooltipText = "";

@@ -27,7 +27,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.Events.SwapQuickAccessItemEvent;
 import org.wojo.wojosToolbelt.QuickAccessUtils.*;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
-import org.wojo.wojosToolbelt.GuiButtonData;
+import org.wojo.wojosToolbelt.ui.GuiButtonData;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -40,7 +40,7 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     public static class RadialGuiInteractionData {
         public String buttonSelected = "N/A";
         public String backgroundImage = "";
-        public static final BuilderCodec<SelectionUiData> CODEC = BuilderCodec.builder(RadialGuiInteractionData.class, RadialGuiInteractionData::new)
+        public static final BuilderCodec<RadialGuiInteractionData> CODEC = BuilderCodec.builder(RadialGuiInteractionData.class, RadialGuiInteractionData::new)
                 .append(
                         new KeyedCodec<>("ButtonSelected", Codec.STRING),
                         (obj, val) -> obj.buttonSelected = val,
@@ -79,10 +79,10 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     // private ButtonData _quickAccessButton7 = new ButtonData(null,"","","","true","", "#QuickAccessButton7","#QuickAccessButton7Img");
 
     private ArrayList<GuiButtonData> _quickAccessButtons = new ArrayList<>();
-    private GuiButtonData _equipedItemButton =  new GuiButtonData(null,"","","","false","","#QuickAccessButtonEquipped","#QuickAccessButtonEquippedImg");
-    private GuiButtonData _statusButton = new GuiButtonData(null,"Quick-Swap: Unknown?","","","false","","#QuickAccessButtonStatus","");
-    private GuiButtonData _helpButton = new GuiButtonData(null,"Help","","","false","","#QuickAccessButtonHelp","");
-    private GuiButtonData _settingsButton = new GuiButtonData(null,"Settings","","","false","","#QuickAccessButtonSettings","");
+    private GuiButtonData _equipedItemButton =  new GuiButtonData(null,"","","","false","","#QuickAccessButtonEquipped","#QuickAccessButtonEquippedImg","","");
+    private GuiButtonData _statusButton = new GuiButtonData(null,"Quick-Swap: Unknown?","","","false","","#QuickAccessButtonStatus","","","");
+    private GuiButtonData _helpButton = new GuiButtonData(null,"Help","","","false","","#QuickAccessButtonHelp","","","");
+    private GuiButtonData _settingsButton = new GuiButtonData(null,"Settings","","","false","","#QuickAccessButtonSettings","","","");
   
     private QuickAccessPlayerComponent _playerQaComp = null; // Player Specific Quick Access Settings
     private Integer _quickAccessItemHotbarPosition = 8;
@@ -108,11 +108,11 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
         // For all quick Access buttons
         // -- See if we have a stoed Item that could be set to a button
         // -- Update button data with item ID
-        for (int qaBtnIt=0; qaBtnIt<this._quickAccessButtons.length; qaBtnIt++) {
+        for (int qaBtnIt=0; qaBtnIt<this._quickAccessButtons.size(); qaBtnIt++) {
             if (qaBtnIt < storedItems.length) {
                 ItemStack associatedButtonItem = storedItems[qaBtnIt];
                 if (associatedButtonItem != null) {
-                    this._quickAccessButtons[qaBtnIt].buttonIcon = associatedButtonItem.getItemId();
+                    this._quickAccessButtons.get(qaBtnIt).buttonIcon = associatedButtonItem.getItemId();
                 }
             }else{
                 // We have no more stored items, so break loop.
@@ -124,10 +124,10 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     private void setupStaticButtons() {
         if (this._playerQaComp != null && this._playerQaComp.getIsEnabled()) {
             this._statusButton.buttonText = "Quick-Swap: Enabled";
-            this._statusButton.style = "Color (#00FF00FF)"
+            this._statusButton.buttonStyle = "Color (#00FF00FF)";
         } else {
             this._statusButton.buttonText = "Quick-Swap: Disabled";
-            this._statusButton.style = "Color (#FF0000FF)"
+            this._statusButton.buttonStyle = "Color (#FF0000FF)";
         }
         
         
@@ -143,30 +143,30 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
         
         for (int i=0; i<_NUM_QA_BUTTONS; i++) {
             GuiButtonData btnData = new GuiButtonData(null,"","","","true","", "#QuickAccessButton"+String.valueOf(i),"#QuickAccessButton"+String.valueOf(i)+"Img","HoverImg","PressImg");
-            this._quickAccessButtons.append(btnData);
+            this._quickAccessButtons.addLast(btnData);
         }
     }
     
     public GenericRadialSelectionUi(@Nonnull PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
-        super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, SelectionUiData.CODEC);
+        super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, RadialGuiInteractionData.CODEC);
 
         constructFileSpecificData();
         
         // Save data needed for display (QuickAccessItem Data, QuickAccessPlayerData, Player Event Data)
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("[Debug] Is item held: "+String.valueOf(is_item_held));
+        // WojosQuickAccessPlugin.LOGGER.atInfo().log("[Debug] Is item held: "+String.valueOf(is_item_held));
         this._playerQaComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
       
         Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
         InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
 
         // Try to get QuickAccessItem by pulling ItemStack from hotbars active slot or QuickAccess Configs equipped slot 
-        if (this._isQuickAccessItemHeld){
-            this._quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store);
-            this._quickAccessItemHotbarPosition = (int) hotbar.getActiveSlot();
-        }else{
-            this._quickAccessItemHotbarPosition = _playerQaComp.getEquippedPosition();
-            this._quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
-        }
+//        if (this._isQuickAccessItemHeld){
+//            this._quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store);
+//            this._quickAccessItemHotbarPosition = (int) hotbar.getActiveSlot();
+//        }else{
+//            this._quickAccessItemHotbarPosition = _playerQaComp.getEquippedPosition();
+//            this._quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
+//        }
 
         this._targetItem = QuickAccessUtils.getEquippedTargetItemOrNull(player_ref, store);
 
@@ -205,7 +205,7 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     }
 
     // Take the ButtonData Information and update the associated UI Files
-    private void setIconData(UICommandBuilder command_builder, ButtonData button_data) {
+    private void setIconData(UICommandBuilder command_builder, GuiButtonData button_data) {
         if (!Objects.equals(button_data.buttonIcon, "")){
             command_builder.set(button_data.iconHtmlId+".ItemId", button_data.buttonIcon);
             button_data.isButtonDisabled = "false";
@@ -218,7 +218,7 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
         command_builder.set(button_data.buttonHtmlId + ".Disabled", isDiabled);
     }
 
-    private void setItemData(UICommandBuilder command_builder, ButtonData button_data){
+    private void setItemData(UICommandBuilder command_builder, GuiButtonData button_data){
         if (button_data.buttonMsg != null) {
             command_builder.set(button_data.buttonHtmlId + ".Text", button_data.buttonMsg);
         } else {
@@ -234,9 +234,9 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
         // Setup UI Event Handlers
-        for (int qaBtnIt = 0; qaBtnIt < _quickAccessButtons.length; qaBtnIt++) {
-            String htmlID = _quickAccessButtons.buttonHtmlId;
-            String numId = String.value(qaBtnIt);
+        for (int qaBtnIt = 0; qaBtnIt < _quickAccessButtons.size(); qaBtnIt++) {
+            String htmlID = _quickAccessButtons.get(qaBtnIt).buttonHtmlId;
+            String numId = String.valueOf(qaBtnIt);
             // TODO: HandleBG Images
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating,   htmlID, new EventData().append("ButtonSelected", numId).append("BackgroundImage",""), true);
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"), true);
@@ -252,8 +252,8 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
         uiCommandBuilder.append(this._guiFile);
 
         // Apply Button Data to the UI Components
-        for (int qaBtnIt=0; qaBtnIt < this._quickAccessButtons.length; qaBtnIt++){
-            setIconData(uiCommandBuilder, this._quickAccessButtons[qaBtnIt]);
+        for (int qaBtnIt=0; qaBtnIt < this._quickAccessButtons.size(); qaBtnIt++){
+            setIconData(uiCommandBuilder, this._quickAccessButtons.get(qaBtnIt));
         }
 
         // Apply data to non-icon buttons.

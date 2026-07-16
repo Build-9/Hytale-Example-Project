@@ -2,7 +2,7 @@ $C = "../../Common.ui";
 
 Group {
   LayoutMode: Top;
-  Background: (Color: #41414133);
+  Background: (Color: #414141ED);
   Anchor: (Width: 600, Height: 600);
   Padding: (Top: 2, Left: 2, Right: 5, Bottom: 2);
   Group #R0 {
