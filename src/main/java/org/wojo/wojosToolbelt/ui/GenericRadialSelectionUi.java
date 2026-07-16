@@ -7,9 +7,6 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
-import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.asset.type.item.config.Item;
-import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
@@ -67,16 +64,6 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     // - 1 Equipped Item
     // - Status Button, Settings Button, Help Button
     // See: resources/Common/UI/Custom/Pages/Radials/*
-    
-  
-    // private ButtonData _quickAccessButton0 = new ButtonData(null,"","","","true","", "#QuickAccessButton0","#QuickAccessButton0Img");
-    // private ButtonData _quickAccessButton1 = new ButtonData(null,"","","","true","", "#QuickAccessButton1","#QuickAccessButton1Img");
-    // private ButtonData _quickAccessButton2 = new ButtonData(null,"","","","true","", "#QuickAccessButton2","#QuickAccessButton2Img");
-    // private ButtonData _quickAccessButton3 = new ButtonData(null,"","","","true","", "#QuickAccessButton3","#QuickAccessButton3Img");
-    // private ButtonData _quickAccessButton4 = new ButtonData(null,"","","","true","", "#QuickAccessButton4","#QuickAccessButton4Img");
-    // private ButtonData _quickAccessButton5 = new ButtonData(null,"","","","true","", "#QuickAccessButton5","#QuickAccessButton5Img");
-    // private ButtonData _quickAccessButton6 = new ButtonData(null,"","","","true","", "#QuickAccessButton6","#QuickAccessButton6Img");
-    // private ButtonData _quickAccessButton7 = new ButtonData(null,"","","","true","", "#QuickAccessButton7","#QuickAccessButton7Img");
 
     private ArrayList<GuiButtonData> _quickAccessButtons = new ArrayList<>();
     private GuiButtonData _equipedItemButton =  new GuiButtonData(null,"","","","false","","#QuickAccessButtonEquipped","#QuickAccessButtonEquippedImg","","");
