@@ -2,13 +2,21 @@
 Turn two hotbar slots into 20+! 
 This mod for **Hytale** adds custom items that allow Quck Access (Quick Swapping) using a radial menu.
 
+## User Guide
+- Quick-Access Items can be made at a workbench **Tier 1**
+    - There are multiple tiers of Quick-Access Items and each requires the previous tier to be made
+- Holding the item and using **Right-Click** will open chest style inventory to hold items
+    - NOTE: The quick swap feature may not work correctly unless they add an item into the storage at least once
+- Holding a Quick-Access item and using **Left-Click** key will open a radial menu allowing the user to select a button to swap an item from the **Target Hotbar Location** with whatever the selected button shows (----, Means the QuickAccess Item has nothing in that position).
+- **Enabling** the Quick-Swap feature in the _Settings_ turns the **Equipped Hotbar Position** into an equipment slot for the QuickAccess Item. If the user places their QuickAccess Item into the specified hotbar position while **Enabled**. Pressing that hotbar key will instantly open the radial menu without needing to equip the item and *Left-Click* to allow proper QuickAccess
+
 ### Description
 - Add new *Quick Access Items* that are used to implement the feature.
     - Holding the item and using **Right-Click** will open chest style inventory to hold items
     - Holding the item and using **Left-Click** will open a radial menu listing items in the inventory. Selecting an item on the UI will swap whatever is in hotbar position 0 (Configurable) with whatever is in the *Quick Access Item* at that spot.
 - Have different tiers and types of *Quick Accesss Items* that have different benifits and drawbacks.
 - A settings page can be opened through the command line or by using the settings button in the radial menu allowing the user to set different options
-- 
+
 ### Settings
 - **Equipped Position:** What *hotbar position* does the *Quick Access Item* need to be in for it to count as **Equipped**.
 - **Target Position:** When selecting an item in the radial menu, what hotbar location does it swap items to.
