@@ -59,6 +59,8 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     // These are updated per each file!
     private Integer _NUM_QA_BUTTONS = 8;
     private String _guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+    private String _currentBgFile = "";
+    private String _defaultBgFile = "";
     
     // NOTE: Radial UI's have the following formation
     // - X Selectable items
@@ -222,15 +224,15 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
             String htmlID = _quickAccessButtons.buttonHtmlId;
             String numId = String.value(qaBtnIt);
             // TODO: HandleBG Images
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, htmlID, new EventData().append("ButtonSelected", numId), true);
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("BackgroundImage", "HighlightAreaImgPth"), true);
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, htmlID, new EventData().append("BackgroundImage", "DefaultImgBgPath"), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating,   htmlID, new EventData().append("ButtonSelected", numId).append("BackgroundImage",""), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited,  htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "DefaultImgBgPath"), true);
         }
 
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonStatus", new EventData().append("ButtonSelected", "status"), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp",     new EventData().append("ButtonSelected", "help"    ).append("BackgroundImage",""), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped").append("BackgroundImage",""), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonStatus",   new EventData().append("ButtonSelected", "status"  ).append("BackgroundImage",""), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings").append("BackgroundImage",""), true);
 
         // Apply UI File
         uiCommandBuilder.append(this._guiFile);
@@ -248,11 +250,16 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     }
 
     @Override
-    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl SelectionUiData data) {
+    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl RadialGuiInteractionData data) {
         super.handleDataEvent(ref, store, data);
         WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data! "+data.buttonSelected);
         String buttonPressed = data.buttonSelected;
-
+        String backgroundImg = data.backgroundImage;
+        
+        if ( ! backgroundImg.equals("") && ! backgroundImg.equals(this._currentBgFile)) {
+            this._currentBgFile = backgroundImg;
+            return;
+        }
         if (buttonPressed.equals("N/A")) {
             WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
             this.close();
