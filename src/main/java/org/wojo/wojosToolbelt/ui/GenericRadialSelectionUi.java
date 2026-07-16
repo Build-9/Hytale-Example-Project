@@ -122,7 +122,15 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     }
 
     private void setupStaticButtons() {
-        this._statusButton.buttonText = "Quick-Swap: Unknown";
+        if (this._playerQaComp != null && this._playerQaComp.getIsEnabled()) {
+            this._statusButton.buttonText = "Quick-Swap: Enabled";
+            this._statusButton.style = "Color (#00FF00FF)"
+        } else {
+            this._statusButton.buttonText = "Quick-Swap: Disabled";
+            this._statusButton.style = "Color (#FF0000FF)"
+        }
+        
+        
         this._helpButton.buttonText = "Help";
         this._settingsButton.buttonText = "Settings";
     }
