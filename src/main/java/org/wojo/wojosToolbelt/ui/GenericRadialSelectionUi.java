@@ -78,7 +78,7 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     // private ButtonData _quickAccessButton6 = new ButtonData(null,"","","","true","", "#QuickAccessButton6","#QuickAccessButton6Img");
     // private ButtonData _quickAccessButton7 = new ButtonData(null,"","","","true","", "#QuickAccessButton7","#QuickAccessButton7Img");
 
-    private GuiButtonData[] _quickAccessButtons = new ArrayList<GuiButtonData>();
+    private ArrayList<GuiButtonData> _quickAccessButtons = new ArrayList<>();
     private GuiButtonData _equipedItemButton =  new GuiButtonData(null,"","","","false","","#QuickAccessButtonEquipped","#QuickAccessButtonEquippedImg");
     private GuiButtonData _statusButton = new GuiButtonData(null,"Quick-Swap: Unknown?","","","false","","#QuickAccessButtonStatus","");
     private GuiButtonData _helpButton = new GuiButtonData(null,"Help","","","false","","#QuickAccessButtonHelp","");
@@ -136,9 +136,15 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
     }
 
     private void constructFileSpecificData() {
-        private final Integer _NUM_QA_BUTTONS = 8;
-        private String _guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
-        this._quickAccessButtons.append(new GuiButtonData(null,"","","","true","", "#QuickAccessButton0","#QuickAccessButton0Img"));
+        this._NUM_QA_BUTTONS = 8;
+        this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+        this._defaultBgFile = "";
+        this._currentBgFile = "";
+        
+        for (int i=0; i<_NUM_QA_BUTTONS; i++) {
+            GuiButtonData btnData = new GuiButtonData(null,"","","","true","", "#QuickAccessButton"+String.valueOf(i),"#QuickAccessButton"+String.valueOf(i)+"Img","HoverImg","PressImg");
+            this._quickAccessButtons.append(btnData);
+        }
     }
     
     public GenericRadialSelectionUi(@Nonnull PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
