@@ -221,7 +221,10 @@ public class GenericRadialSelectionUi extends InteractiveCustomUIPage<GenericRad
         for (int qaBtnIt = 0; qaBtnIt < _quickAccessButtons.length; qaBtnIt++) {
             String htmlID = _quickAccessButtons.buttonHtmlId;
             String numId = String.value(qaBtnIt);
+            // TODO: HandleBG Images
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, htmlID, new EventData().append("ButtonSelected", numId), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("BackgroundImage", "HighlightAreaImgPth"), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, htmlID, new EventData().append("BackgroundImage", "DefaultImgBgPath"), true);
         }
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp", new EventData().append("ButtonSelected", "help"), true);
