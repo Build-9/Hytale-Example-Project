@@ -20,6 +20,7 @@ import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
 import org.wojo.wojosToolbelt.ui.ItemSelectionGui;
+import org.wojo.wojosToolbelt.ui.SelectionUiThreeByThree;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -198,7 +199,7 @@ public class QuickAccessUtils {
     
     // ------ Run GUI event ------
     PlayerRef playerRef = getPlayerRef(store, ref);
-    ItemSelectionGui guiPage = new ItemSelectionGui(playerRef, store, isItemHeld);
+    SelectionUiThreeByThree guiPage = new SelectionUiThreeByThree(playerRef, store, isItemHeld);
     player.getPageManager().openCustomPage(ref, store, guiPage);
   }
 
