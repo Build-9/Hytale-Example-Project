@@ -18,8 +18,23 @@ public class RadialGui8 extends GenericRadialSelectionUi {
         this._defaultBgFile = "";
         this._currentBgFile = "";
 
-        for (int i=0; i < _NUM_QA_BUTTONS; i++) {
-            GuiButtonData btnData = new GuiButtonData(null,"","","","true","", "#QuickAccessButton"+String.valueOf(i),"#QuickAccessButton"+String.valueOf(i)+"Img","HoverImg","PressImg");
+        for (int i=0; i < this._NUM_QA_BUTTONS; i++) {
+            Message msg = nulll;
+            String btnText = "";
+            String tooltipText = "";
+            String buttonItemIdForIcon = "";
+            String isDisabled = "true";
+            String style = "";
+            String htmlBtnId = "#QuickAccessButton"+String.valueOf(i);
+            String htmlIconId = "#QuickAccessButton"+String.valueOf(i)+"Img";
+            String hoverImg = "";
+            String pressImg = "";
+            
+            GuiButtonData btnData = new GuiButtonData(
+                msg, btnText, tooltipText, buttonItemIdForIcon, isDisabled, 
+                style, htmlBtnId, htmlIconId, hoverImg, pressImg
+            );
+            
             this._quickAccessButtons.addLast(btnData);
         }
     }
