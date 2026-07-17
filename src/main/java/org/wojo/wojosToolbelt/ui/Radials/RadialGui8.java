@@ -19,7 +19,7 @@ public class RadialGui8 extends GenericRadialSelectionUi {
         this._currentBgFile = "";
 
         for (int i=0; i < this._NUM_QA_BUTTONS; i++) {
-            Message msg = nulll;
+            Message msg = null;
             String btnText = "";
             String tooltipText = "";
             String buttonItemIdForIcon = "";
