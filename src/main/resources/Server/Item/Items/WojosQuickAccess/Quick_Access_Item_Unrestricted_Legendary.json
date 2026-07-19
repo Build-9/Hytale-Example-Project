@@ -65,7 +65,7 @@
         "Quantity": 10
       },
       {
-        "ItemId": "Quick_Access_Item_Epic_Unrestricted",
+        "ItemId": "Quick_Access_Item_Unrestricted_Epic",
         "Quantity": 1
       }
     ],
@@ -79,7 +79,7 @@
       }
     ],
     "PrimaryOutput": {
-      "ItemId": "Quick_Access_Item_Common_Unrestricted",
+      "ItemId": "Quick_Access_Item_Unrestricted_Legendary",
       "Quantity": 1
     }
   },

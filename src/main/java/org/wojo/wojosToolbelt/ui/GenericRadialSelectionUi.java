@@ -36,8 +36,15 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
 
     // ------ UI Interaction Data ------
     public static class RadialGuiInteractionData {
+        public String getDebugString() {
+            String output =
+                    "- Btn Selected: " + this.buttonSelected +
+                    "\n"+" - Bg Img: " +this.backgroundImage;
+            return output;
+        }
+
         public String buttonSelected = "N/A";
-        public String backgroundImage = "";
+        public String backgroundImage = "N/A";
         public static final BuilderCodec<RadialGuiInteractionData> CODEC = BuilderCodec.builder(RadialGuiInteractionData.class, RadialGuiInteractionData::new)
                 .append(
                         new KeyedCodec<>("ButtonSelected", Codec.STRING),
@@ -94,13 +101,12 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
         }
 
         // For all quick Access buttons
-        // -- See if we have a stoed Item that could be set to a button
+        // -- See if we have a stored Item that could be set to a button
         // -- Update button data with item ID
         for (int qaBtnIt=0; qaBtnIt<this._quickAccessButtons.size(); qaBtnIt++) {
             if (qaBtnIt < storedItems.length) {
-                ItemStack associatedButtonItem = storedItems[qaBtnIt];
-                if (associatedButtonItem != null) {
-                    this._quickAccessButtons.get(qaBtnIt).buttonIcon = associatedButtonItem.getItemId();
+                if (storedItems[qaBtnIt] != null) {
+                    this._quickAccessButtons.get(qaBtnIt).buttonIcon = storedItems[qaBtnIt].getItemId();
                 }
             }else{
                 // We have no more stored items, so break loop.
@@ -139,23 +145,14 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
     public GenericRadialSelectionUi(@Nonnull PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
         super(player_ref, CustomPageLifetime.CanDismissOrCloseThroughInteraction, RadialGuiInteractionData.CODEC);
 
+        this._quickAccessItem = quick_access_item;
+        this._quickAccessItemHotbarPosition = quick_access_item_hotbar_position;
+
         constructFileSpecificData();
         
         // Save data needed for display (QuickAccessItem Data, QuickAccessPlayerData, Player Event Data)
         // WojosQuickAccessPlugin.LOGGER.atInfo().log("[Debug] Is item held: "+String.valueOf(is_item_held));
         this._playerQaComp = store.getComponent(player_ref.getReference(), QuickAccessPlayerComponent.getComponentType());
-      
-        Player player = store.getComponent(player_ref.getReference(), Player.getComponentType());
-        InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(player_ref.getReference(), InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
-
-        // Try to get QuickAccessItem by pulling ItemStack from hotbars active slot or QuickAccess Configs equipped slot 
-//        if (this._isQuickAccessItemHeld){
-//            this._quickAccessItem = QuickAccessUtils.getHeldQaItemOrNull(player_ref, store);
-//            this._quickAccessItemHotbarPosition = (int) hotbar.getActiveSlot();
-//        }else{
-//            this._quickAccessItemHotbarPosition = _playerQaComp.getEquippedPosition();
-//            this._quickAccessItem = QuickAccessUtils.getEquippedQaItemOrNull(player_ref, store);
-//        }
 
         this._targetItem = QuickAccessUtils.getEquippedTargetItemOrNull(player_ref, store);
 
@@ -227,15 +224,15 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
             String htmlID = _quickAccessButtons.get(qaBtnIt).buttonHtmlId;
             String numId = String.valueOf(qaBtnIt);
             // TODO: HandleBG Images
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating,   htmlID, new EventData().append("ButtonSelected", numId).append("BackgroundImage",""), true);
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"), true);
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited,  htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "DefaultImgBgPath"), true);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating,   htmlID, new EventData().append("ButtonSelected", numId).append("BackgroundImage","N/A"), true);
+            //uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"), true);
+            //uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited,  htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "DefaultImgBgPath"), true);
         }
 
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp",     new EventData().append("ButtonSelected", "help"    ).append("BackgroundImage",""), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped").append("BackgroundImage",""), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonStatus",   new EventData().append("ButtonSelected", "status"  ).append("BackgroundImage",""), true);
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings").append("BackgroundImage",""), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp",     new EventData().append("ButtonSelected", "help"    ).append("BackgroundImage","N/A"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped").append("BackgroundImage","N/A"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonStatus",   new EventData().append("ButtonSelected", "status"  ).append("BackgroundImage","N/A"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings").append("BackgroundImage","N/A"), true);
 
         // Apply UI File
         uiCommandBuilder.append(this._guiFile);
@@ -255,39 +252,54 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @NonNullDecl RadialGuiInteractionData data) {
         super.handleDataEvent(ref, store, data);
-        WojosQuickAccessPlugin.LOGGER.atInfo().log("Output Data! "+data.buttonSelected);
+
+        WojosQuickAccessPlugin.LOGGER.atInfo().log("Handle Event Output Data:\n "+data.getDebugString());
         String buttonPressed = data.buttonSelected;
         String backgroundImg = data.backgroundImage;
-        
-        if ( ! backgroundImg.equals("") && ! backgroundImg.equals(this._currentBgFile)) {
-            this._currentBgFile = backgroundImg;
+
+        // No Data reveived
+        if (buttonPressed.equals("N/A") && backgroundImg.equals("N/A")) {
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[INFO] No data found");
             return;
         }
-        if (buttonPressed.equals("N/A")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("N/A");
-            this.close();
-        } else if (buttonPressed.equals("settings")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Settings Pressed");
-            PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
-            Player player = store.getComponent(ref, Player.getComponentType());
-            player.getPageManager().openCustomPage(ref, store, guiPage);
-        } else if (buttonPressed.equals("status")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Status Pressed");
-            PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
-            Player player = store.getComponent(ref, Player.getComponentType());
-            player.getPageManager().openCustomPage(ref, store, guiPage);
-        } else if (buttonPressed.equals("equipped")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Equipped Pressed");
-            this.close();
-        } else if (buttonPressed.equals("help")) {
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Help Pressed");
-            this.close();
-        } else{
-            this.close();
-            short containerPos = Short.parseShort(buttonPressed);
-            short equippedPos = _quickAccessItemHotbarPosition.shortValue();
-            short targetPos = (short)_playerQaComp.getTargetPosition();
-            SwapQuickAccessItemEvent.dispatch(playerRef.getReference(), store, containerPos, equippedPos, targetPos);
+
+        // Check Bg File Update
+        if (!backgroundImg.equals("N/A")) {
+            if (! backgroundImg.equals(this._currentBgFile)) {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[INFO] Updating Bg File");
+                this._currentBgFile = backgroundImg;
+            }
+            return;
+        }
+
+        switch (buttonPressed) {
+            case "settings" -> {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Settings Pressed");
+                PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
+                Player player = store.getComponent(ref, Player.getComponentType());
+                player.getPageManager().openCustomPage(ref, store, guiPage);
+            }
+            case "status" -> {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Status Pressed");
+                PlayerSettingsGui guiPage = new PlayerSettingsGui(playerRef, store);
+                Player player = store.getComponent(ref, Player.getComponentType());
+                player.getPageManager().openCustomPage(ref, store, guiPage);
+            }
+            case "equipped" -> {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Equipped Pressed");
+                this.close();
+            }
+            case "help" -> {
+                WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Help Pressed");
+                this.close();
+            }
+            default -> {
+                short containerPos = Short.parseShort(buttonPressed);
+                short equippedPos = _quickAccessItemHotbarPosition.shortValue();
+                short targetPos = (short) _playerQaComp.getTargetPosition();
+                SwapQuickAccessItemEvent.dispatch(playerRef.getReference(), store, containerPos, equippedPos, targetPos);
+                this.close();
+            }
         }
     }
 }

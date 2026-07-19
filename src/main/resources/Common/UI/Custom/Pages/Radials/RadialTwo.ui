@@ -10,12 +10,22 @@ Group {
     LayoutMode: Right;
     Background: (Color: #00000000);
     Anchor: (Height: 60);
+    $C.@TextButton #QuickAccessButtonStatus {
+          Background: (Color: #04CC00);
+          Anchor: (Width: 200, Height: 55);
+          Text: "Help";
+        }
+    Group #R0Spacer0 {
+      LayoutMode: Top;
+      Background: (Color: #00000000);
+      Anchor: (Width: 60, Height: 120);
+    }
     $C.@TextButton #QuickAccessButtonHelp {
       Background: (Color: #04CC00);
       Anchor: (Width: 120, Height: 55);
       Text: "Help";
     }
-    Group #R0Spacer0 {
+    Group #R0Spacer1 {
       LayoutMode: Top;
       Background: (Color: #00000000);
       Anchor: (Width: 60, Height: 120);
@@ -43,7 +53,7 @@ Group {
         Padding: (Full: 0);
         Visible: true;
         HitTestVisible: false;
-        TextTooltipShowDelay: 4.0;
+        TextTooltipShowDelay: 1.0;
         ItemScale: 0.9;
       }
     }
@@ -59,7 +69,7 @@ Group {
         Padding: (Full: 0);
         Visible: true;
         HitTestVisible: false;
-        TextTooltipShowDelay: 4.0;
+        TextTooltipShowDelay: 1.0;
         ItemScale: 0.9;
       }
     }
@@ -75,8 +85,9 @@ Group {
         Padding: (Full: 0);
         Visible: true;
         HitTestVisible: false;
-        TextTooltipShowDelay: 4.0;
+        TextTooltipShowDelay: 1.0;
         ItemScale: 0.9;
       }
     }
+  }
 }

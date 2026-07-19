@@ -83,7 +83,7 @@ public class SelectionUiThreeByThree extends InteractiveCustomUIPage<SelectionUi
     // - Status Button, Settings Button, Help Button
     // See: resources/Common/UI/Custom/Pages/Radials/ThreeByThreeQuickAccess.ui
     private final Integer _NUM_QA_BUTTONS = 8;
-    private String _guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+    private String _guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE;
     private ButtonData _quickAccessButton0 = new ButtonData(null,"","","","true","", "#QuickAccessButton0","#QuickAccessButton0Img");
     private ButtonData _quickAccessButton1 = new ButtonData(null,"","","","true","", "#QuickAccessButton1","#QuickAccessButton1Img");
     private ButtonData _quickAccessButton2 = new ButtonData(null,"","","","true","", "#QuickAccessButton2","#QuickAccessButton2Img");

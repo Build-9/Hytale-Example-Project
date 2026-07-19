@@ -30,13 +30,13 @@ public class RadialGui2 extends GenericRadialSelectionUi {
             String htmlIconId = "#QuickAccessButton"+String.valueOf(i)+"Img";
             String hoverImg = "";
             String pressImg = "";
-            
+
             GuiButtonData btnData = new GuiButtonData(
-                msg, btnText, tooltipText, buttonItemIdForIcon, isDisabled, 
+                msg, btnText, tooltipText, buttonItemIdForIcon, isDisabled,
                 style, htmlBtnId, htmlIconId, hoverImg, pressImg
             );
-            
-            this._quickAccessButtons.addLast(btnData);
+
+            this._quickAccessButtons.add(btnData);
         }
     }
 
