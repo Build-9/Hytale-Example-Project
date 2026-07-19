@@ -15,6 +15,7 @@ import org.bson.BsonDocument;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
+import org.wojo.wojosToolbelt.ui.Radials.RadialGui2;
 import org.wojo.wojosToolbelt.ui.Radials.RadialGui8;
 import org.wojo.wojosToolbelt.ui.SelectionUiThreeByThree;
 
@@ -44,7 +45,7 @@ public class QuickAccessUtils {
     String guiFile = component.getGuiFile();
     if (!Arrays.asList(QuickAccessConfig.SELECTION_GUI_FILES).contains(guiFile)){
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.guiFile is not one of the expected. Resetting to default (Three-By-Three Radial)");
-      component.setGuiFile(QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE);
+      component.setGuiFile(QuickAccessConfig.DEFAULT_SELECTION_GUI_FILE);
     }
     return component;
   }
@@ -169,6 +170,8 @@ public class QuickAccessUtils {
     InventoryComponent.Hotbar hotbar = (InventoryComponent.Hotbar) store.getComponent(ref, InventoryComponent.getComponentTypeById(InventoryComponent.HOTBAR_SECTION_ID));
     ItemStack heldItem = hotbar.getActiveItem();
     ItemStack equippedItem = hotbar.getInventory().getItemStack((short)qaPlayerComp.getEquippedPosition());
+    ItemStack quickAccessItem = null;
+    Integer qaItemHotbarPosition = 0;
 
     // ------ Verify Held or Equipped Item is a QuickAccessItem ------
     boolean isItemHeld = false;
@@ -178,24 +181,28 @@ public class QuickAccessUtils {
     }else if (QuickAccessUtils.isQuickAccessItem(heldItem)){
       // Priority to use held item over equipped item
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Held Items Quick Access Selection Gui");
-      isItemHeld = true;
+      qaItemHotbarPosition = (int) hotbar.getActiveSlot();
+      quickAccessItem = heldItem;
     }else{
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Opening Equipped Items Quick Access Selection Gui");
+      qaItemHotbarPosition = qaPlayerComp.getEquippedPosition();
+      quickAccessItem = equippedItem;
     }
 
     // ------ TODO: Update Selection GUI's to have a object for each UI instead of single monolithic UI file with multiple switch cases
     // ------ Get Needed GUI Object ------
     // -- Have a different class for each file type instead of a single UI file --
     // -- Get ANy Needed Vars needed for GUI File --
-    // PlayerRef playerRef = getPlayerRef(store, ref);
+    PlayerRef playerRef = getPlayerRef(store, ref);
     // InteractiveCustomUIPage<ItemSelectionGui.SelectionUiData> quickAccessSelectionUI = QuickAccessUtils.getSelectorGui(qaPlayerComp, playerRef, store, isItemHeld);
     // -- Open UI --
+    RadialGui2 guiPage = new RadialGui2(playerRef, store, quickAccessItem, qaItemHotbarPosition);
     // player.getPageManager().openCustomPage(ref, store, quickAccessSelectionUI)
     
     // ------ Run GUI event ------
-    PlayerRef playerRef = getPlayerRef(store, ref);
+    // PlayerRef playerRef = getPlayerRef(store, ref);
     //RadialGui8 guiPage = new RadialGui8(playerRef, store,);
-    SelectionUiThreeByThree guiPage = new SelectionUiThreeByThree(playerRef,store,isItemHeld);
+    // SelectionUiThreeByThree guiPage = new SelectionUiThreeByThree(playerRef,store,isItemHeld);
     player.getPageManager().openCustomPage(ref, store, guiPage);
   }
 

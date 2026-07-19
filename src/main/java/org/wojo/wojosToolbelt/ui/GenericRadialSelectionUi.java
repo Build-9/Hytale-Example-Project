@@ -56,7 +56,7 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
     
     // These are updated per each file!
     protected Integer _NUM_QA_BUTTONS = 8;
-    protected String _guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+    protected String _guiFile = QuickAccessConfig.DEFAULT_SELECTION_GUI_FILE;
     protected String _currentBgFile = "";
     protected String _defaultBgFile = "";
     

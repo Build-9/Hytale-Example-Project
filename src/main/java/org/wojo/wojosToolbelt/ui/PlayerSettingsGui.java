@@ -30,7 +30,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         public Boolean isEnabled = false;
         public Integer equippedPos = 8;
         public Integer targetPos = 0;
-        public String guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+        public String guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE;
         public String buttonSelected = "";
 
         public String getDebugString(){
@@ -218,16 +218,16 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             data = new SettingsUiData();
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
         }else if (data.buttonSelected.contains("TwoByTwo")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO;
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_TWO_BY_TWO;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to TwoByTwo\n");
         }else if (data.buttonSelected.contains("ThreeByThree")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE;
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to ThreeByThree\n");
         }else if (data.buttonSelected.contains("FourByFour")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR;
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FourByFour\n");
         }else if (data.buttonSelected.contains("FiveByFive")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE;
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FiveByFive\n");
         }
 

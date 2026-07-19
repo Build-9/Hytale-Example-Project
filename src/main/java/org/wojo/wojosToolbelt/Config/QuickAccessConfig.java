@@ -25,21 +25,21 @@ public class QuickAccessConfig {
     public static final int HOTBAR_GUI_BUTTON_DEFAULT = 8;            // Button 9
     public static final int HOTBAR_SWAP_LOCATION_DEFAULT = 0;         // Button 1
 
-    public static final String SELECTION_GUI_FILE_GRID_TWO_BY_TWO = "Pages/Radials/TwoByTwoQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_THREE_BY_THREE = "Pages/Radials/ThreeByThreeQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR = "Pages/Radials/FourByFourQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE = "Pages/Radials/FiveByFiveQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_TWO_BY_TWO = "Pages/Grids/TwoByTwoQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_THREE_BY_THREE = "Pages/Grids/ThreeByThreeQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR = "Pages/Grids/FourByFourQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE = "Pages/Grids/FiveByFiveQuickAccess.ui";
     public static final String[] SELECTION_GUI_FILES = {SELECTION_GUI_FILE_GRID_TWO_BY_TWO, SELECTION_GUI_FILE_GRID_THREE_BY_THREE, SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR, SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE};
 
     // Radial selection files, names for number of selectable options
-    public static final String SELECTION_GUI_FILE_RADIAL_TWO = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_THREE = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_FOUR = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_SIX = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_NINE = "";
-    public static final String SELECTION_GUI_FILE_RADIAL_TWELVE = "";
-    public static final String[] RADIAL_GUI_FILES = {SELECTION_GUI_FILE_RADIAL_TWO};
+    public static final String SELECTION_GUI_FILE_RADIAL_TWO = "Pages/Radials/RadialTwo.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_THREE = "Pages/Radials/RadialThree.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_FOUR = "Pages/Radials/RadialFour.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_SIX = "Pages/Radials/RadialSix.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "Pages/Grids/FourByFourQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_NINE = "Pages/Radials/RadialNine.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_TWELVE = "Pages/Radials/RadialTwelve.ui";
+    public static final String[] RADIAL_GUI_FILES = {SELECTION_GUI_FILE_RADIAL_TWO,SELECTION_GUI_FILE_RADIAL_THREE,SELECTION_GUI_FILE_RADIAL_FOUR,SELECTION_GUI_FILE_RADIAL_SIX,SELECTION_GUI_FILE_RADIAL_EIGHT,SELECTION_GUI_FILE_RADIAL_NINE,SELECTION_GUI_FILE_RADIAL_TWELVE};
 
     public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_GRID_THREE_BY_THREE; // Default to 3x3 grid with 8 selections
     public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
@@ -130,12 +130,12 @@ public class QuickAccessConfig {
 
     public static ITEM_TYPE getQuickAccessItemType(String item_id) {
         switch (item_id){
-            case "Quick_Access_Item_Common_Unrestricted":
-            case "Quick_Access_Item_Uncommon_Unrestricted":
-            case "Quick_Access_Item_Rare_Unrestricted":
-            case "Quick_Access_Item_Epic_Unrestricted":
-            case "Quick_Access_Item_Legendary_Unrestricted":
-            case "Quick_Access_Item_Debug_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Common":
+            case "Quick_Access_Item_Unrestricted_Uncommon":
+            case "Quick_Access_Item_Unrestricted_Rare":
+            case "Quick_Access_Item_Unrestricted_Epic":
+            case "Quick_Access_Item_Unrestricted_Legendary":
+            case "Quick_Access_Item_Unrestricted_Debug":
                 return ITEM_TYPE.UNRESTRICTED;
             default:
                 return ITEM_TYPE.UNKNOWN;
@@ -144,17 +144,17 @@ public class QuickAccessConfig {
 
     public static ITEM_TIER getQuickAccessItemTier(String item_id) {
         switch (item_id){
-            case "Quick_Access_Item_Common_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Common":
                 return ITEM_TIER.COMMON;
-            case "Quick_Access_Item_Uncommon_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Uncommon":
                 return ITEM_TIER.UNCOMMON;
-            case "Quick_Access_Item_Rare_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Rare":
                 return ITEM_TIER.RARE;
-            case "Quick_Access_Item_Epic_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Epic":
                 return ITEM_TIER.EPIC;
-            case "Quick_Access_Item_Legendary_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Legendary":
                 return ITEM_TIER.LEGENDARY;
-            case "Quick_Access_Item_Debug_Unrestricted":
+            case "Quick_Access_Item_Unrestricted_Debug":
                 return ITEM_TIER.DEBUG;
             default:
                 return ITEM_TIER.UNKNOWN;

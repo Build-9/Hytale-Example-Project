@@ -15,8 +15,11 @@ public class GuiButtonData {
         public String buttonStyle = "";
         public String buttonHtmlId = "";
         public String iconHtmlId = "";
-        public String buttonHighlightImage = "";  // Background image to show when hovering over Icon
-        public String buttonPressImage = "";      // Background image to show when pressing the button
+        public String buttonHighlightImage = "";// Background image to show when hovering over Icon
+        public String buttonPressImage = "";    // Background image to show when pressing the button
+
+        public boolean isSubButton = false;     // Button doesn't have Icon and is used to link an area of display to a different Icon Button;
+        public String associatedSlectionButtonHtmlId = "0";
 
         public GuiButtonData (Message msg, String text, String tooltip, String icon, String is_disabled, String style, String btn_html_id, String icn_html_id, String btn_highlight_img, String btn_press_img){
             this.buttonMsg = msg;

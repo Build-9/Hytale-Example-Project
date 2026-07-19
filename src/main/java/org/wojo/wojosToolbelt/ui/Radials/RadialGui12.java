@@ -15,7 +15,7 @@ public class RadialGui12 extends GenericRadialSelectionUi {
     @Override
     protected void constructFileSpecificData() {
         this._NUM_QA_BUTTONS = 12;
-        this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_TWELVE;
+        this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_TWELVE;
         this._defaultBgFile = "";
         this._currentBgFile = "";
 

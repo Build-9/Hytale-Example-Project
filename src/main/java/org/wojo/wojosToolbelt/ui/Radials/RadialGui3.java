@@ -15,7 +15,7 @@ public class RadialGui3 extends GenericRadialSelectionUi {
     @Override
     protected void constructFileSpecificData() {
         this._NUM_QA_BUTTONS = 3;
-        this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_THREE;
+        this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_THREE;
         this._defaultBgFile = "";
         this._currentBgFile = "";
 
