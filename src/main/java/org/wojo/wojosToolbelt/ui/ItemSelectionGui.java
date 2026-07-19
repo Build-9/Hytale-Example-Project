@@ -249,7 +249,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
     @Override
     public void build(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl UICommandBuilder uiCommandBuilder, @NonNullDecl UIEventBuilder uiEventBuilder, @NonNullDecl Store<EntityStore> store) {
         switch(this._guiFile){
-            case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE:
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton23", new EventData().append("ButtonSelected", "23"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton22", new EventData().append("ButtonSelected", "22"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton21", new EventData().append("ButtonSelected", "21"), true);
@@ -260,7 +260,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton16", new EventData().append("ButtonSelected", "16"), true);
 
 
-            case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR:
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton15", new EventData().append("ButtonSelected", "15"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton14", new EventData().append("ButtonSelected", "14"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton13", new EventData().append("ButtonSelected", "13"), true);
@@ -270,7 +270,7 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton9", new EventData().append("ButtonSelected", "9"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton8", new EventData().append("ButtonSelected", "8"), true);
 
-            case QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE:
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE:
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton7", new EventData().append("ButtonSelected", "7"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton6", new EventData().append("ButtonSelected", "6"), true);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButton5", new EventData().append("ButtonSelected", "5"), true);
@@ -286,31 +286,31 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings"), true);
         }
 
-        if (Objects.equals(this._guiFile, QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE) || Objects.equals(this._guiFile, QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE)){
+        if (Objects.equals(this._guiFile, QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE) || Objects.equals(this._guiFile, QuickAccessConfig.SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE)){
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped"), true);
         }
 
         uiCommandBuilder.append(this._guiFile);
 
         switch (this._guiFile){
-            case QuickAccessConfig.SELECTION_GUI_FILE_FIVE_BY_FIVE: // Five By Five
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE: // Five By Five
                 for (int i=0; i<24; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
                 setItemData(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_FOUR_BY_FOUR: // Four By Four
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR: // Four By Four
                 for (int i=0; i<16; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_THREE_BY_THREE: // Three By Three
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE: // Three By Three
                 for (int i=0; i<8; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
                 setItemData(uiCommandBuilder, "#QuickAccessButtonEquipped", this._equipedItemButton);
                 break;
-            case QuickAccessConfig.SELECTION_GUI_FILE_TWO_BY_TWO: // Two By Two
+            case QuickAccessConfig.SELECTION_GUI_FILE_GRID_TWO_BY_TWO: // Two By Two
                 for (int i=0; i<4; i++){
                     setItemData(uiCommandBuilder, _QUICK_SWAP_BUTTON_IDS[i], this._quickAccessButtons.get(i));
                 }
@@ -344,6 +344,8 @@ public class ItemSelectionGui extends InteractiveCustomUIPage<ItemSelectionGui.S
             this.close();
         } else{
             this.close();
+
+            // DEBUG: Running command manually for testing
 //            String cmd = String.format("wqa item swap --container-pos %s --equipped-pos %d --target-pos %d",
 //                buttonPressed,
 //                _quickAccessItemHotbarPosition,

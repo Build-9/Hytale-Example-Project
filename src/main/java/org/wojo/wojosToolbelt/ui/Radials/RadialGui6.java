@@ -1,6 +1,7 @@
 package org.wojo.wojosToolbelt.ui.Radials;
 
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -9,7 +10,7 @@ import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.ui.GenericRadialSelectionUi;
 import org.wojo.wojosToolbelt.ui.GuiButtonData;
 
-public class RadialGui3 extends GenericRadialSelectionUi {
+public class RadialGui6 extends GenericRadialSelectionUi {
 
     @Override
     protected void constructFileSpecificData() {
@@ -39,7 +40,7 @@ public class RadialGui3 extends GenericRadialSelectionUi {
         }
     }
 
-    public RadialGui8(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
+    public RadialGui6(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
         super(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
     }
 }
