@@ -49,7 +49,7 @@ Group {
       Disabled: true;
       Background: (Color: #FF00000F);
       ItemPreviewComponent #QuickAccessButton0Img {
-        Anchor: (Width: 230, Height: 230);
+        Anchor: (Width: 200, Height: 200);
         Padding: (Full: 0);
         Visible: true;
         HitTestVisible: false;
@@ -75,13 +75,13 @@ Group {
     }
 
     Button #QuickAccessButton1 {
-      Anchor: (Width: 500, Height: 250, Bottom: 0);
+      Anchor: (Width: 500, Height: 200, Bottom: 0);
       Padding: (Full: 0);
       TooltipText: "BTN 1";
       Disabled: true;
       Background: (Color: #0000FF0F);
       ItemPreviewComponent #QuickAccessButton1Img {
-        Anchor: (Width: 230, Height: 230);
+        Anchor: (Width: 200, Height: 200);
         Padding: (Full: 0);
         Visible: true;
         HitTestVisible: false;

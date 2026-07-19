@@ -223,14 +223,16 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
         for (int qaBtnIt = 0; qaBtnIt < _quickAccessButtons.size(); qaBtnIt++) {
             String htmlID = _quickAccessButtons.get(qaBtnIt).buttonHtmlId;
             String numId = String.valueOf(qaBtnIt);
-            // TODO: HandleBG Images
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating,   htmlID, new EventData().append("ButtonSelected", numId).append("BackgroundImage","N/A"), true);
-            //uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"), true);
-            //uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited,  htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "DefaultImgBgPath"), true);
+
+            // TODO: HandleBG Images
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, htmlID, new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPth"+String.valueOf(qaBtnIt) ), false);
         }
 
-        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp",     new EventData().append("ButtonSelected", "help"    ).append("BackgroundImage","N/A"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "equipped").append("BackgroundImage","N/A"), true);
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseEntered, "#QuickAccessButtonEquipped", new EventData().append("ButtonSelected", "N/A").append("BackgroundImage", "HighlightAreaImgPthEquipped"), false);
+
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonHelp",     new EventData().append("ButtonSelected", "help"    ).append("BackgroundImage","N/A"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonStatus",   new EventData().append("ButtonSelected", "status"  ).append("BackgroundImage","N/A"), true);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#QuickAccessButtonSettings", new EventData().append("ButtonSelected", "settings").append("BackgroundImage","N/A"), true);
 
@@ -268,6 +270,7 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
             if (! backgroundImg.equals(this._currentBgFile)) {
                 WojosQuickAccessPlugin.LOGGER.atInfo().log("[INFO] Updating Bg File");
                 this._currentBgFile = backgroundImg;
+                this.rebuild();
             }
             return;
         }
