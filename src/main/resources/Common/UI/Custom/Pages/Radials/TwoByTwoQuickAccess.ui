@@ -29,18 +29,38 @@ Group {
     LayoutMode: CenterMiddle;
     Background: (Color: #000000aa);
     Anchor: (Width: 600, Height: 200);
-    $C.@TextButton #QuickAccessButton0 {
+    Button #QuickAccessButton0 {
       Anchor: (Width: 250, Height: 250, Bottom: -60);
-      Text: "BTN 0";
+      Padding: (Full: 0);
+      TooltipText: "BTN 0";
       Disabled: true;
+      Background: (Color: #FF00000F);
+      ItemPreviewComponent #QuickAccessButton0Img {
+        Anchor: (Width: 230, Height: 230);
+        Padding: (Full: 0);
+        Visible: true;
+        HitTestVisible: false;
+        TextTooltipShowDelay: 4.0;
+        ItemScale: 0.9;
+      }
     }
     Group #ButtonSpacer {
       Anchor: (Width: 10, Height: 200);
     }
-    $C.@TextButton #QuickAccessButton1 {
+    Button #QuickAccessButton1 {
       Anchor: (Width: 250, Height: 250, Left: 0, Right: 0, Bottom: -60);
-      Text: "BTN 1";
+      Padding: (Full: 0);
+      TooltipText: "BTN 1";
       Disabled: true;
+      Background: (Color: #FF00000F);
+      ItemPreviewComponent #QuickAccessButton1Img {
+        Anchor: (Width: 230, Height: 230);
+        Padding: (Full: 0);
+        Visible: true;
+        HitTestVisible: false;
+        TextTooltipShowDelay: 4.0;
+        ItemScale: 0.9;
+      }
     }
   }
   Group #R2Equipped {
@@ -51,18 +71,36 @@ Group {
     LayoutMode: CenterMiddle;
     Background: (Color: #000000aa);
     Anchor: (Width: 600, Height: 200);
-    $C.@TextButton #QuickAccessButton3 {
+    Button #QuickAccessButton3 {
       Anchor: (Width: 250, Height: 250, Top: -60);
-      Text: "BTN 3";
+      TooltipText: "BTN 3";
       Disabled: true;
+      Background: (Color: #FF00000F);
+      ItemPreviewComponent #QuickAccessButton3Img {
+        Anchor: (Width: 230, Height: 230);
+        Padding: (Full: 0);
+        Visible: true;
+        HitTestVisible: false;
+        TextTooltipShowDelay: 4.0;
+        ItemScale: 0.9;
+      }
     }
     Group #ButtonSpacer {
       Anchor: (Width: 10, Height: 200);
     }
-    $C.@TextButton #QuickAccessButton2 {
+    Button #QuickAccessButton2 {
       Anchor: (Width: 250, Height: 250, Top: -60);
-      Text: "BTN 2";
+      TooltipText: "BTN 2";
       Disabled: true;
+      Background: (Color: #FF00000F);
+      ItemPreviewComponent #QuickAccessButton2Img {
+          Anchor: (Width: 230, Height: 230);
+          Padding: (Full: 0);
+          Visible: true;
+          HitTestVisible: false;
+          TextTooltipShowDelay: 4.0;
+          ItemScale: 0.9;
+        }
     }
   }
 }
