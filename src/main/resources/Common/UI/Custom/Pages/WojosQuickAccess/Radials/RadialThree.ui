@@ -43,7 +43,7 @@ Group {
 
         Group #HighlightDefault {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Default.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_Default.png"));
             Visible: false;
         }
         Group #HighlightEquipped {
