@@ -61,7 +61,7 @@ Group {
             Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_1.png"));
             Visible: false;
         }
-        Group #Highlight3 {
+        Group #Highlight2 {
             Anchor: (Width: 700, Height: 700);
             Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_2.png"));
             Visible: false;
@@ -121,7 +121,7 @@ Group {
             Background: (Color: #0000FF0F);
             LayoutMode: MiddleCenter;
 
-            ItemPreviewComponent #QuickAccessButton1Img {
+            ItemPreviewComponent #QuickAccessButton2Img {
                 Anchor: (Width: 200, Height: 200);
                 Visible: true;
                 HitTestVisible: false;
