@@ -137,23 +137,23 @@ When a user presses the eqipped hotbar location the code checks to see if the us
 
 ### TODO:
 ##### High Priority (No set order)
+- [ ] Update Radial UI to look better
 - [ ] Fix permissions issues - Default perms should allow player to use item
 - [ ] Custom Item model
 - [ ] Allow item to be placed in world & used like chest
-- [ ] Update Radial UI to look better
-- [ ] Add hud elements to show item buttons to user
-- [ ] All Unrestricted item tiers
-- [ ] Crafting reciepe design for all QuickAccessUnrestricted items
+- [ ] Add hud elements to show item buttons to user when holding Quick Access Item
+- [X] All Unrestricted item tiers
+- [X] Crafting reciepe design for all QuickAccessUnrestricted items
 
 ##### Low Priority (No set order)
 - [ ] Allow swap item to/from Selected hotbar instead of specific value 
-- [ ] Creative mode tab settings
+- [ ] Creative mode tab?
 - [ ] Add animation to using item
 - [ ] Implement other QuickAccessItemTypes
 - [ ] Allow equipping items in utility slot
 - [ ] Have way to *wear* QuickAccess items so others can see when player has it equipped
 - [ ] Add server configurations to modify config values
-  - [ ] Add configurable equip costs 
+    - [ ] Add configurable equip costs 
     - [ ] Swap speed
     - [ ] Move Speed while swapping
     - [ ] Stamina Cost
