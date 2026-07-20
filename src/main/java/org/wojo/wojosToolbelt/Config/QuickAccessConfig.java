@@ -19,11 +19,9 @@ public class QuickAccessConfig {
         "Quick_Access_Item_Unrestricted_Debug"
     );
     
-    // The max number of items any toolbelt could possibly hold. (Used to define array size in Component)
-    // NOTE: UI's are made with pre-defined component counts. Editing these values may require making new UI files.
-    // TODO: These can be changed so set names to 'DEFAULT'
-    public static final int HOTBAR_GUI_BUTTON_DEFAULT = 8;            // Button 9
-    public static final int HOTBAR_SWAP_LOCATION_DEFAULT = 0;         // Button 1
+    
+    public static final int HOTBAR_EQIPPED_LOCATION_DEFAULT = 8;    // Button 9 - Hotbar location to eqip and use the qa-item
+    public static final int HOTBAR_TARGET_LOCATION_DEFAULT = 0;     // Button 1 - Hotbar location to send stored qa-item to
 
     public static final String SELECTION_GUI_FILE_GRID_THREE_BY_THREE = "Pages/WojosQuickAccess/Grids/ThreeByThreeQuickAccess.ui";
     public static final String SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE = "Pages/WojosQuickAccess/Grids/FiveByFiveQuickAccess.ui";
@@ -65,7 +63,7 @@ public class QuickAccessConfig {
         SELECTION_GUI_FILE_RADIAL_TWELVE
     }
 
-    public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_GRID_THREE_BY_THREE; // Default to 3x3 grid with 8 selections
+    public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_RADIAL_THREE;
     public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
     public static final String HELP_GUI_FILE = "Pages/QuickAccessHelp.ui";
 
