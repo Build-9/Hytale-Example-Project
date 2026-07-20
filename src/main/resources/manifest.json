@@ -17,11 +17,11 @@
         
     },
     "Documents": [
-        "Common/UI/Custom/Pages/Radials/TwoByTwoQuickAccess.ui",
-        "Common/UI/Custom/Pages/Radials/ThreeByThreeQuickAccess.ui",
-        "Common/UI/Custom/Pages/Radials/FourByFourQuickAccess.ui",
-        "Common/UI/Custom/Pages/Radials/FiveByFiveQuickAccess.ui",
-        "Common/UI/Custom/Pages/QuickAccessSettings.ui"
+        "Common/UI/Custom/Pages/WojosQuickAccess/*",
+        "Common/UI/Custom/Pages/WojosQuickAccess/Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Default.png",
+        "Common/UI/Custom/Pages/WojosQuickAccess/Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Equipped.png",
+        "Common/UI/Custom/Pages/WojosQuickAccess/Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_0.png",
+        "Common/UI/Custom/Pages/WojosQuickAccess/Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_1.png"
     ],
     "DisabledByDefault": false,
     "Main": "org.wojo.wojosToolbelt.WojosQuickAccessPlugin",

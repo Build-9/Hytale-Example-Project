@@ -16,8 +16,8 @@ public class RadialGui2 extends GenericRadialSelectionUi {
     protected void constructFileSpecificData() {
         this._NUM_QA_BUTTONS = 2;
         this._guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_TWO;
-        this._defaultBgFile = "";
-        this._currentBgFile = "";
+        this._defaultBgFile = "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two.png";
+        this._currentBgFile = "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two.png";
 
         for (int i=0; i < this._NUM_QA_BUTTONS; i++) {
             Message msg = null;
@@ -28,7 +28,7 @@ public class RadialGui2 extends GenericRadialSelectionUi {
             String style = "";
             String htmlBtnId = "#QuickAccessButton"+String.valueOf(i);
             String htmlIconId = "#QuickAccessButton"+String.valueOf(i)+"Img";
-            String hoverImg = "";
+            String hoverImg = "QuickAccessRadialMenuDrawing_Two_"+String.valueOf(i)+".png";
             String pressImg = "";
 
             GuiButtonData btnData = new GuiButtonData(
@@ -38,6 +38,8 @@ public class RadialGui2 extends GenericRadialSelectionUi {
 
             this._quickAccessButtons.add(btnData);
         }
+
+        this._equipedItemButton.buttonHighlightImage = "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Equipped.png";
     }
 
     public RadialGui2(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {

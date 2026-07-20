@@ -1,4 +1,4 @@
-$C = "../../Common.ui";
+$C = "../../../Common.ui";
 Group {
   LayoutMode: Top;
   Background: (Color: #41414133);

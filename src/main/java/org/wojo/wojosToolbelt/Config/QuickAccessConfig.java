@@ -25,20 +25,20 @@ public class QuickAccessConfig {
     public static final int HOTBAR_GUI_BUTTON_DEFAULT = 8;            // Button 9
     public static final int HOTBAR_SWAP_LOCATION_DEFAULT = 0;         // Button 1
 
-    public static final String SELECTION_GUI_FILE_GRID_TWO_BY_TWO = "Pages/Grids/TwoByTwoQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_THREE_BY_THREE = "Pages/Grids/ThreeByThreeQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR = "Pages/Grids/FourByFourQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE = "Pages/Grids/FiveByFiveQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_TWO_BY_TWO = "Pages/WojosQuickAccess/Grids/TwoByTwoQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_THREE_BY_THREE = "Pages/WojosQuickAccess/Grids/ThreeByThreeQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR = "Pages/WojosQuickAccess/Grids/FourByFourQuickAccess.ui";
+    public static final String SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE = "Pages/WojosQuickAccess/Grids/FiveByFiveQuickAccess.ui";
     public static final String[] SELECTION_GUI_FILES = {SELECTION_GUI_FILE_GRID_TWO_BY_TWO, SELECTION_GUI_FILE_GRID_THREE_BY_THREE, SELECTION_GUI_FILE_GRID_FOUR_BY_FOUR, SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE};
 
     // Radial selection files, names for number of selectable options
-    public static final String SELECTION_GUI_FILE_RADIAL_TWO = "Pages/Radials/RadialTwo.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_THREE = "Pages/Radials/RadialThree.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_FOUR = "Pages/Radials/RadialFour.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_SIX = "Pages/Radials/RadialSix.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "Pages/Grids/FourByFourQuickAccess.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_NINE = "Pages/Radials/RadialNine.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_TWELVE = "Pages/Radials/RadialTwelve.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_TWO = "Pages/WojosQuickAccess/Radials/RadialTwo.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_THREE = "Pages/WojosQuickAccess/Radials/RadialThree.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_FOUR = "Pages/WojosQuickAccess/Radials/RadialFour.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_SIX = "Pages/WojosQuickAccess/Radials/RadialSix.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "Pages/WojosQuickAccess/Grids/RadialEight.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_NINE = "Pages/WojosQuickAccess/Radials/RadialNine.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_TWELVE = "Pages/WojosQuickAccess/Radials/RadialTwelve.ui";
     public static final String[] RADIAL_GUI_FILES = {SELECTION_GUI_FILE_RADIAL_TWO,SELECTION_GUI_FILE_RADIAL_THREE,SELECTION_GUI_FILE_RADIAL_FOUR,SELECTION_GUI_FILE_RADIAL_SIX,SELECTION_GUI_FILE_RADIAL_EIGHT,SELECTION_GUI_FILE_RADIAL_NINE,SELECTION_GUI_FILE_RADIAL_TWELVE};
 
     public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_GRID_THREE_BY_THREE; // Default to 3x3 grid with 8 selections
