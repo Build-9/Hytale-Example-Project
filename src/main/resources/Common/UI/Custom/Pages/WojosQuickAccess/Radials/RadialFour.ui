@@ -61,12 +61,12 @@ Group {
             Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Four_1.png"));
             Visible: false;
         }
-        Group #Highlight3 {
+        Group #Highlight2 {
             Anchor: (Width: 700, Height: 700);
             Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Four_2.png"));
             Visible: false;
         }
-        Group #Highlight4 {
+        Group #Highlight3 {
             Anchor: (Width: 700, Height: 700);
             Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Four_3.png"));
             Visible: false;
