@@ -103,7 +103,7 @@ The Item is just a data object that holds info that I was unable to add to the i
       - Item tier (Common, Uncommon, Rare, etc)
       - Container Size
     - Config Info
-      - Quick Access Size (Must be <= Container Size; likely same as Container Size)
+      - Quick Access Size (Must be <= Container Size; likely same as Container Size but doesn't need to be)
       - Item type (Unrestricted, Toolbelt, sling, etc)
       
 When a user presses the eqipped hotbar location the code checks to see if the user has QuickSwap Enabled (Hash Map Value). If so, grab the data of the items in the component and open the gui. When the user selects an item on the gui swap that item with whatever is in the defined location.
