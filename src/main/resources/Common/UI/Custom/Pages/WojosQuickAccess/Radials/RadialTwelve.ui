@@ -1,0 +1,278 @@
+$C = "../../../Common.ui";
+
+Group {
+    LayoutMode: Top;
+    Background: (Color: #41414133);
+    Anchor: (Width: 700, Height: 760);
+    Padding: (Left: 2, Right: 5, Top: 2);
+    Group #R0 {
+        LayoutMode: Right;
+        Background: (Color: #00000000);
+        Anchor: (Height: 60);
+        $C.@TextButton #QuickAccessButtonStatus {
+            Background: (Color: #04CC00);
+            Anchor: (Width: 200, Height: 55);
+            Text: "Quick-Access: Unknown";
+        }
+        Group #R0Spacer0 {
+            LayoutMode: Top;
+            Background: (Color: #00000000);
+            Anchor: (Width: 60, Height: 120);
+        }
+        $C.@TextButton #QuickAccessButtonHelp {
+            Background: (Color: #04CC00);
+            Anchor: (Width: 120, Height: 55);
+            Text: "Help";
+        }
+        Group #R0Spacer1 {
+            LayoutMode: Top;
+            Background: (Color: #00000000);
+            Anchor: (Width: 60, Height: 120);
+        }
+        $C.@TextButton #QuickAccessButtonSettings {
+            Background: (Color: #04CC00);
+            Anchor: (Width: 120, Height: 55);
+            Text: "Settings";
+        }
+    }
+                         
+    Group #RadialContainer {
+        Background: (Color: #000000aa);
+        Anchor: (Width: 700, Height: 700);
+        LayoutMode: MiddleCenter;
+
+        Group #HighlightDefault {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Default.png"));
+            Visible: false;
+        }
+        Group #Highlight0 {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_0.png"));
+            Visible: false;
+        }
+        Group #Highlight1 {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_1.png"));
+            Visible: false;
+        }
+        Group #HighlightEquipped {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Equipped.png"));
+            Visible: false;
+        }
+
+        Button #QuickAccessButton0 {
+            Anchor: (Width: 700, Height: 300, Left: 0, Top: -700);
+            TooltipText: "BTN 0";
+            Disabled: true;
+            Background: (Color: #FF00000F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton0Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+
+        Button #QuickAccessButtonEquipped {
+            Anchor: (Width: 500, Height: 100, Left: 0, Top: 0);
+            TooltipText: "Equipped";
+            Disabled: true;
+            Background: (Color: #00FF000F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButtonEquippedImg {
+                Anchor: (Width: 90, Height: 90);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+
+        Button #QuickAccessButton1 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 1";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton1Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton2 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 2";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton2Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton3 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 3";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton3Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton4 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 4";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton4Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton5 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 5";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton5Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton6 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 6";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton6Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton7 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 7";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton7Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton8 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 8";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton8Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton9 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 7";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton9Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton10 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 7";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton10Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton11 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 7";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton11Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+        Button #QuickAccessButton12 {
+            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            TooltipText: "BTN 7";
+            Disabled: true;
+            Background: (Color: #0000FF0F);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton12Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
+    }
+}
