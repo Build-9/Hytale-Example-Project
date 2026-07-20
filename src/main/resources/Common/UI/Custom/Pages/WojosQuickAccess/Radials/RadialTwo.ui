@@ -67,6 +67,8 @@ Group {
         TooltipText: "BTN 0";
         Disabled: true;
         Background: (Color: #FF00000F);
+        LayoutMode: MiddleCenter;
+
         ItemPreviewComponent #QuickAccessButton0Img {
           Anchor: (Width: 200, Height: 200);
           Visible: true;
@@ -81,8 +83,10 @@ Group {
         TooltipText: "Equipped";
         Disabled: true;
         Background: (Color: #00FF000F);
+        LayoutMode: MiddleCenter;
+
         ItemPreviewComponent #QuickAccessButtonEquippedImg {
-          Anchor: (Width: 230, Height: 90);
+          Anchor: (Width: 90, Height: 90);
           Visible: true;
           HitTestVisible: false;
           TextTooltipShowDelay: 1.0;
@@ -95,6 +99,8 @@ Group {
         TooltipText: "BTN 1";
         Disabled: true;
         Background: (Color: #0000FF0F);
+        LayoutMode: MiddleCenter;
+
         ItemPreviewComponent #QuickAccessButton1Img {
           Anchor: (Width: 200, Height: 200);
           Visible: true;
