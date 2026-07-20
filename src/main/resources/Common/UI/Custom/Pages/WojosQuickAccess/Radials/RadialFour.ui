@@ -138,7 +138,7 @@ Group {
                          
         Button #QuickAccessButton3 {
             Anchor: (Width: 250, Height: 250, Left: 350, Top: -250);
-            TooltipText: "BTN 2";
+            TooltipText: "BTN 3";
             Disabled: true;
             Background: (Color: #0000FF0F);
             LayoutMode: MiddleCenter;
