@@ -23,6 +23,8 @@ public class GuiSelectionFactory {
             String guiFile = quickAccessPlayerComponent.getGuiFile();
 
             return switch (guiFile) {
+                case QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_THREE ->
+                        new RadialGui3(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
                 case QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_FOUR ->
                         new RadialGui4(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
 
