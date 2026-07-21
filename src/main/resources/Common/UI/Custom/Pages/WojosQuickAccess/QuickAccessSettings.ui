@@ -122,6 +122,14 @@ Group {
         }
         Group {
           LayoutMode: Left;
+          $C.@TextButton #RadialThree {
+            Anchor: (Width: 250, Height: 50);
+            Padding: (Full: 0);
+            Text: "Radial - Three";
+          }
+        }
+        Group {
+          LayoutMode: Left;
           $C.@TextButton #RadialFour {
             Anchor: (Width: 250, Height: 50);
             Padding: (Full: 0);
