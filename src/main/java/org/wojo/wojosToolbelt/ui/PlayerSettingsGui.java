@@ -141,36 +141,20 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         );
 
         uiEventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating, "#TwoByTwoUiButton",
+                CustomUIEventBindingType.Activating, "#RadialTwo",
                 EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","TwoByTwo"), false
+                        .append("ButtonSelected","RadialTwo"), false
         );
         uiEventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating, "#ThreeByThreeUiButton",
+                CustomUIEventBindingType.Activating, "#RadialFour",
                 EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
                         .append("@TargetNumberField","#TargetNumberField.Value")
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","ThreeByThree"), false
-        );
-        uiEventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating, "#FourByFourUiButton",
-                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
-                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
-                        .append("@TargetNumberField","#TargetNumberField.Value")
-                        .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","FourByFour"), false
-        );
-        uiEventBuilder.addEventBinding(
-                CustomUIEventBindingType.Activating, "#FiveByFiveUiButton",
-                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
-                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
-                        .append("@TargetNumberField","#TargetNumberField.Value")
-                        .append("@GuiFileTextField","#GuiFileTextField.Value")
-                        .append("ButtonSelected","FiveByFive"), false
+                        .append("ButtonSelected","RadialFour"), false
         );
 
         uiEventBuilder.addEventBinding(
@@ -217,11 +201,11 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         }else if (data.buttonSelected.contains("ResetButton")) {
             data = new SettingsUiData();
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
-        }else if (data.buttonSelected.contains("ThreeByThree")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_THREE_BY_THREE;
+        }else if (data.buttonSelected.contains("RadialTwo")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_TWO;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to ThreeByThree\n");
-        }else if (data.buttonSelected.contains("FiveByFive")) {
-            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_GRID_FIVE_BY_FIVE;
+        }else if (data.buttonSelected.contains("RadialFour")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_FOUR;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FiveByFive\n");
         }
 

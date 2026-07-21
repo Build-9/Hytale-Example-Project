@@ -114,34 +114,18 @@ Group {
         }
         Group {
           LayoutMode: Left;
-          $C.@TextButton #TwoByTwoUiButton {
+          $C.@TextButton #RadialTwo {
             Anchor: (Width: 250, Height: 50);
             Padding: (Full: 0);
-            Text: "Two-By-Two Radial";
+            Text: "Radial - Two";
           }
         }
         Group {
           LayoutMode: Left;
-          $C.@TextButton #ThreeByThreeUiButton {
+          $C.@TextButton #RadialFour {
             Anchor: (Width: 250, Height: 50);
             Padding: (Full: 0);
-            Text: "Three-By-Three Radial";
-          }
-        }
-        Group {
-          LayoutMode: Left;
-          $C.@TextButton #FourByFourUiButton {
-            Anchor: (Width: 250, Height: 50);
-            Padding: (Full: 0);
-            Text: "Four-By-Four Radial";
-          }
-        }
-        Group {
-          LayoutMode: Left;
-          $C.@TextButton #FiveByFiveUiButton {
-            Anchor: (Width: 250, Height: 50);
-            Padding: (Full: 0);
-            Text: "Five-By-Five Radial";
+            Text: "Radial - Four";
           }
         }
       }

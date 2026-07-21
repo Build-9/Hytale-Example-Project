@@ -15,12 +15,16 @@ import org.bson.BsonDocument;
 import org.wojo.wojosToolbelt.Components.QuickAccessPlayerComponent;
 import org.wojo.wojosToolbelt.Config.QuickAccessConfig;
 import org.wojo.wojosToolbelt.WojosQuickAccessPlugin;
+import org.wojo.wojosToolbelt.ui.GenericRadialSelectionUi;
+import org.wojo.wojosToolbelt.ui.GuiSelectionFactory;
 import org.wojo.wojosToolbelt.ui.Radials.RadialGui2;
 import org.wojo.wojosToolbelt.ui.Radials.RadialGui8;
 import org.wojo.wojosToolbelt.ui.SelectionUiThreeByThree;
 
 import java.util.Arrays;
 import java.util.UUID;
+
+import static org.wojo.wojosToolbelt.ui.GuiSelectionFactory.createGui;
 
 public class QuickAccessUtils {
 
@@ -196,7 +200,8 @@ public class QuickAccessUtils {
     PlayerRef playerRef = getPlayerRef(store, ref);
     // InteractiveCustomUIPage<ItemSelectionGui.SelectionUiData> quickAccessSelectionUI = QuickAccessUtils.getSelectorGui(qaPlayerComp, playerRef, store, isItemHeld);
     // -- Open UI --
-    RadialGui2 guiPage = new RadialGui2(playerRef, store, quickAccessItem, qaItemHotbarPosition);
+    GenericRadialSelectionUi guiPage = GuiSelectionFactory.createGui(playerRef, store, quickAccessItem, qaItemHotbarPosition);
+    //RadialGui2 guiPage = new RadialGui2(playerRef, store, quickAccessItem, qaItemHotbarPosition);
     // player.getPageManager().openCustomPage(ref, store, quickAccessSelectionUI)
     
     // ------ Run GUI event ------
