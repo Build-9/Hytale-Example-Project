@@ -133,7 +133,7 @@ public class QuickAccessConfig {
     public static Integer[] QUIVER_ARRAY =           {0,2,3,4,5,6,8,8};
 
     // Unrestricted array can hold anything
-    public static Integer[] UNRESTRICTED_ARRAY =     {0,4,8,12,16,20,24};
+    public static Integer[] UNRESTRICTED_ARRAY =     {0,2,3,4,6,8,12};
 
     // Get the number of different items the QuickAccess Item can swap between
     public static Integer getQuickAccessSize(QuickAccessItemComponent item) {
