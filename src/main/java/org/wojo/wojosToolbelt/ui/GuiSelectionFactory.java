@@ -14,8 +14,6 @@ import org.wojo.wojosToolbelt.ui.Radials.RadialGui6;
 
 public class GuiSelectionFactory {
 
-    //public RadialGui2(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position)
-
     public static GenericRadialSelectionUi createGui(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {
         QuickAccessPlayerComponent quickAccessPlayerComponent = store.getComponent(player_ref.getReference(),QuickAccessPlayerComponent.getComponentType());
 
