@@ -43,7 +43,7 @@ public class QuickAccessUtils {
     }
 
     String guiFile = component.getGuiFile();
-    if (!Arrays.asList(QuickAccessConfig.SELECTION_GUI_FILES).contains(guiFile)){
+    if (!Arrays.asList(QuickAccessConfig.ALL_SELECTION_GUI_FILES).contains(guiFile)){
       WojosQuickAccessPlugin.LOGGER.atInfo().log("[ERROR]: QuickAccessComponent.guiFile is not one of the expected. Resetting to default (Three-By-Three Radial)");
       component.setGuiFile(QuickAccessConfig.DEFAULT_SELECTION_GUI_FILE);
     }

@@ -61,11 +61,11 @@ public class QuickAccessConfig {
         SELECTION_GUI_FILE_RADIAL_EIGHT,
         SELECTION_GUI_FILE_RADIAL_NINE,
         SELECTION_GUI_FILE_RADIAL_TWELVE
-    }
+    };
 
     public static final String DEFAULT_SELECTION_GUI_FILE = SELECTION_GUI_FILE_RADIAL_THREE;
-    public static final String SETTINGS_GUI_FILE = "Pages/QuickAccessSettings.ui";
-    public static final String HELP_GUI_FILE = "Pages/QuickAccessHelp.ui";
+    public static final String SETTINGS_GUI_FILE = "Pages/WojosQuickAccess/QuickAccessSettings.ui";
+    public static final String HELP_GUI_FILE = "Pages/WojosQuickAccess/QuickAccessHelp.ui";
 
     // Possible Item Tiers. Mythic is not craftable.
     public static enum ITEM_TIER {

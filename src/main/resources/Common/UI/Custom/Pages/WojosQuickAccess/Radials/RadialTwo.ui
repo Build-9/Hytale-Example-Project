@@ -2,9 +2,9 @@ $C = "../../../Common.ui";
 
 Group {
     LayoutMode: Top;
-    Background: (Color: #41414133);
     Anchor: (Width: 700, Height: 760);
     Padding: (Left: 2, Right: 5, Top: 2);
+    Background: (Color: #0000FF05);
     Group #R0 {
         LayoutMode: Right;
         Background: (Color: #00000000);
@@ -37,7 +37,7 @@ Group {
     }
                          
     Group #RadialContainer {
-        Background: (Color: #000000aa);
+        Background: (Color: #00000000);
         Anchor: (Width: 700, Height: 700);
         LayoutMode: MiddleCenter;
 
@@ -66,7 +66,7 @@ Group {
             Anchor: (Width: 700, Height: 300, Left: 0, Top: -700);
             TooltipText: "BTN 0";
             Disabled: true;
-            Background: (Color: #FF00000F);
+            Background: (Color: #FF000000);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButton0Img {
@@ -79,10 +79,10 @@ Group {
         }
 
         Button #QuickAccessButtonEquipped {
-            Anchor: (Width: 500, Height: 100, Left: 0, Top: 0);
+            Anchor: (Width: 250, Height: 100, Left: 0, Top: 0);
             TooltipText: "Equipped";
             Disabled: true;
-            Background: (Color: #00FF000F);
+            Background: (Color: #00FF0000);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButtonEquippedImg {
@@ -95,10 +95,10 @@ Group {
         }
 
         Button #QuickAccessButton1 {
-            Anchor: (Width: 500, Height: 300, Left: 0, Top: 0);
+            Anchor: (Width: 700, Height: 300, Left: 0, Top: 0);
             TooltipText: "BTN 1";
             Disabled: true;
-            Background: (Color: #0000FF0F);
+            Background: (Color: #0000FF00);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButton1Img {
