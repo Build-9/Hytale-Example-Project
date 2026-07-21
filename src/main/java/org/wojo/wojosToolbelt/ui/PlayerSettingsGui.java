@@ -149,6 +149,14 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("ButtonSelected","RadialTwo"), false
         );
         uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#RadialThree",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","RadialThree"), false
+        );
+        uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#RadialFour",
                 EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
                         .append("@EquippedNumberField", "#EquippedNumberField.Value")
@@ -203,10 +211,13 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Reset settings values\n");
         }else if (data.buttonSelected.contains("RadialTwo")) {
             data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_TWO;
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to ThreeByThree\n");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Two\n");
+        }else if (data.buttonSelected.contains("RadialFour")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_THREE;
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Three\n");
         }else if (data.buttonSelected.contains("RadialFour")) {
             data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_FOUR;
-            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to FiveByFive\n");
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Four\n");
         }
 
         this._uiData.update(data);
