@@ -212,7 +212,7 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         }else if (data.buttonSelected.contains("RadialTwo")) {
             data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_TWO;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Two\n");
-        }else if (data.buttonSelected.contains("RadialFour")) {
+        }else if (data.buttonSelected.contains("RadialThree")) {
             data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_THREE;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Three\n");
         }else if (data.buttonSelected.contains("RadialFour")) {

@@ -43,22 +43,22 @@ Group {
 
         Group #HighlightDefault {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Default.png"));
-            Visible: false;
-        }
-        Group #Highlight0 {
-            Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_0.png"));
-            Visible: false;
-        }
-        Group #Highlight1 {
-            Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_1.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Eight/QuickAccessRadialMenuDrawing_Eight_Default.png"));
             Visible: false;
         }
         Group #HighlightEquipped {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Two_Equipped.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Eight/QuickAccessRadialMenuDrawing_Eight_Equipped.png"));
+            Visible: false;
+        }
+        Group #Highlight0 {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Eight/QuickAccessRadialMenuDrawing_Eight_0.png"));
+            Visible: false;
+        }
+        Group #Highlight1 {
+            Anchor: (Width: 700, Height: 700);
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Eight/QuickAccessRadialMenuDrawing_Eight_1.png"));
             Visible: false;
         }
 

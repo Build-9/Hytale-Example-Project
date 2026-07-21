@@ -2,12 +2,12 @@ $C = "../../../Common.ui";
 
 Group {
     LayoutMode: Top;
-    Background: (Color: #41414133);
     Anchor: (Width: 700, Height: 760);
     Padding: (Left: 2, Right: 5, Top: 2);
+    Background: (Color: #41414103);
     Group #R0 {
         LayoutMode: Right;
-        Background: (Color: #00000000);
+        Background: (Color: #41414133);
         Anchor: (Height: 60);
         $C.@TextButton #QuickAccessButtonStatus {
             Background: (Color: #04CC00);
@@ -37,41 +37,41 @@ Group {
     }
                          
     Group #RadialContainer {
-        Background: (Color: #000000aa);
+        Background: (Color: #0000FF02);
         Anchor: (Width: 700, Height: 700);
-        LayoutMode: MiddleCenter;
+        LayoutMode: Top;
 
         Group #HighlightDefault {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_Default.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Three/QuickAccessRadialMenuDrawing_Three_Default.png"));
             Visible: false;
         }
         Group #HighlightEquipped {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_Equipped.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Three/QuickAccessRadialMenuDrawing_Three_Equipped.png"));
             Visible: false;
         }
         Group #Highlight0 {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_0.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Three/QuickAccessRadialMenuDrawing_Three_0.png"));
             Visible: false;
         }
         Group #Highlight1 {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_1.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Three/QuickAccessRadialMenuDrawing_Three_1.png"));
             Visible: false;
         }
         Group #Highlight2 {
             Anchor: (Width: 700, Height: 700);
-            Background: (PatchStyle(TexturePath: "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Three_2.png"));
+            Background: (PatchStyle(TexturePath: "../Radials/Images/Three/QuickAccessRadialMenuDrawing_Three_2.png"));
             Visible: false;
         }
 
         Button #QuickAccessButton0 {
-            Anchor: (Width: 700, Height: 200, Left: 0, Top: -700);
+            Anchor: (Width: 350, Height: 400, Left: 0, Top: -700);
             TooltipText: "BTN 0";
             Disabled: true;
-            Background: (Color: #FF00000F);
+            Background: (Color: #FF000000);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButton0Img {
@@ -82,12 +82,27 @@ Group {
                 ItemScale: 0.9;
             }
         }
+        Button #QuickAccessButton1 {
+            Anchor: (Width: 350, Height: 400, Top: -400, Left: 350);
+            TooltipText: "BTN 1";
+            Disabled: true;
+            Background: (Color: #0000FF00);
+            LayoutMode: MiddleCenter;
+
+            ItemPreviewComponent #QuickAccessButton1Img {
+                Anchor: (Width: 200, Height: 200);
+                Visible: true;
+                HitTestVisible: false;
+                TextTooltipShowDelay: 1.0;
+                ItemScale: 0.9;
+            }
+        }
 
         Button #QuickAccessButtonEquipped {
-            Anchor: (Width: 500, Height: 100, Left: 0, Top: 0);
+            Anchor: (Width: 200, Height: 200, Left: 250, Top: -150);
             TooltipText: "Equipped";
             Disabled: true;
-            Background: (Color: #00FF000F);
+            Background: (Color: #00FF0000);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButtonEquippedImg {
@@ -99,26 +114,11 @@ Group {
             }
         }
 
-        Button #QuickAccessButton1 {
-            Anchor: (Width: 250, Height: 250, Left: -100, Top: 0);
-            TooltipText: "BTN 1";
-            Disabled: true;
-            Background: (Color: #0000FF0F);
-            LayoutMode: MiddleCenter;
-
-            ItemPreviewComponent #QuickAccessButton1Img {
-                Anchor: (Width: 200, Height: 200);
-                Visible: true;
-                HitTestVisible: false;
-                TextTooltipShowDelay: 1.0;
-                ItemScale: 0.9;
-            }
-        }
         Button #QuickAccessButton2 {
-            Anchor: (Width: 250, Height: 250, Left: 350, Top: -250);
+            Anchor: (Width: 700, Height: 250, Left: 0, Top: 0);
             TooltipText: "BTN 2";
             Disabled: true;
-            Background: (Color: #0000FF0F);
+            Background: (Color: #0000FF00);
             LayoutMode: MiddleCenter;
 
             ItemPreviewComponent #QuickAccessButton2Img {
