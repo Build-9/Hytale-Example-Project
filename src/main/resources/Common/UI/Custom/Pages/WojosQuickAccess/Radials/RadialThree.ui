@@ -4,10 +4,10 @@ Group {
     LayoutMode: Top;
     Anchor: (Width: 700, Height: 760);
     Padding: (Left: 2, Right: 5, Top: 2);
-    Background: (Color: #41414103);
+    Background: (Color: #0000FF02);
     Group #R0 {
         LayoutMode: Right;
-        Background: (Color: #41414133);
+        Background: (Color: #0000FF02);
         Anchor: (Height: 60);
         $C.@TextButton #QuickAccessButtonStatus {
             Background: (Color: #04CC00);

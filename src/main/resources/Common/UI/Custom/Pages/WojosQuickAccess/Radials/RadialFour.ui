@@ -2,12 +2,12 @@ $C = "../../../Common.ui";
 
 Group {
     LayoutMode: Top;
-    Background: (Color: #41414133);
     Anchor: (Width: 700, Height: 760);
     Padding: (Left: 2, Right: 5, Top: 2);
+    Background: (Color: #0000FF02);
     Group #R0 {
         LayoutMode: Right;
-        Background: (Color: #00000000);
+        Background: (Color: #0000FF02);
         Anchor: (Height: 60);
         $C.@TextButton #QuickAccessButtonStatus {
             Background: (Color: #04CC00);
@@ -37,7 +37,7 @@ Group {
     }
                          
     Group #RadialContainer {
-        Background: (Color: #000000aa);
+        Background: (Color: #0000FF02);
         Anchor: (Width: 700, Height: 700);
         LayoutMode: Top;
 
@@ -89,7 +89,7 @@ Group {
         }
 
         Button #QuickAccessButton1 {
-            Anchor: (Width: 350, Height: 350, Left: 0, Top: -350);
+            Anchor: (Width: 350, Height: 350, Left: 350, Top: -350);
             TooltipText: "BTN 1";
             Disabled: true;
             Background: (Color: #0000FF0F);
@@ -104,7 +104,7 @@ Group {
             }
         }
                          
-        Button #QuickAccessButton2 {
+        Button #QuickAccessButton3 {
             Anchor: (Width: 350, Height: 350, Left: 0, Top: 0);
             TooltipText: "BTN 2";
             Disabled: true;
@@ -120,8 +120,8 @@ Group {
             }
         }
                          
-        Button #QuickAccessButton3 {
-            Anchor: (Width: 350, Height: 350, Left: 0, Top: -350);
+        Button #QuickAccessButton2 {
+            Anchor: (Width: 350, Height: 350, Left: 350, Top: -350);
             TooltipText: "BTN 3";
             Disabled: true;
             Background: (Color: #0000FF0F);
@@ -137,7 +137,7 @@ Group {
         }
 
         Button #QuickAccessButtonEquipped {
-            Anchor: (Width: 200, Height: 200, Left: 100, Top: -550);
+            Anchor: (Width: 200, Height: 200, Left: 250, Top: -450);
             TooltipText: "Equipped";
             Disabled: true;
             Background: (Color: #00FF0000);
