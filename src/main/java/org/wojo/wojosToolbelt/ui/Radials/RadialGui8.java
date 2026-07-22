@@ -28,16 +28,16 @@ public class RadialGui8 extends GenericRadialSelectionUi {
             String style = "";
             String htmlBtnId = "#QuickAccessButton"+String.valueOf(i);
             String htmlIconId = "#QuickAccessButton"+String.valueOf(i)+"Img";
-            String hoverImg = "";
+            String hoverImg = "QuickAccessRadialMenuDrawing_Eight_"+String.valueOf(i)+".png";
             String pressImg = "";
             
             GuiButtonData btnData = new GuiButtonData(
                 msg, btnText, tooltipText, buttonItemIdForIcon, isDisabled, 
                 style, htmlBtnId, htmlIconId, hoverImg, pressImg
             );
-            
             this._quickAccessButtons.addLast(btnData);
         }
+        this._equipedItemButton.buttonHighlightImage = "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Eight_Equipped.png";
     }
 
     public RadialGui8(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {

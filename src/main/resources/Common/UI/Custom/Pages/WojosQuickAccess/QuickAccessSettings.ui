@@ -115,7 +115,7 @@ Group {
         Group {
           LayoutMode: Left;
           $C.@TextButton #RadialTwo {
-            Anchor: (Width: 250, Height: 50);
+            Anchor: (Width: 250, Height: 40);
             Padding: (Full: 0);
             Text: "Radial - Two";
           }
@@ -123,7 +123,7 @@ Group {
         Group {
           LayoutMode: Left;
           $C.@TextButton #RadialThree {
-            Anchor: (Width: 250, Height: 50);
+            Anchor: (Width: 250, Height: 40);
             Padding: (Full: 0);
             Text: "Radial - Three";
           }
@@ -131,7 +131,7 @@ Group {
         Group {
           LayoutMode: Left;
           $C.@TextButton #RadialFour {
-            Anchor: (Width: 250, Height: 50);
+            Anchor: (Width: 250, Height: 40);
             Padding: (Full: 0);
             Text: "Radial - Four";
           }
@@ -139,7 +139,7 @@ Group {
         Group {
           LayoutMode: Left;
           $C.@TextButton #RadialSix {
-            Anchor: (Width: 250, Height: 50);
+            Anchor: (Width: 250, Height: 40);
             Padding: (Full: 0);
             Text: "Radial - Six";
           }
@@ -147,7 +147,7 @@ Group {
         Group {
           LayoutMode: Left;
           $C.@TextButton #RadialEight {
-            Anchor: (Width: 250, Height: 50);
+            Anchor: (Width: 250, Height: 40);
             Padding: (Full: 0);
             Text: "Radial - Eight";
           }

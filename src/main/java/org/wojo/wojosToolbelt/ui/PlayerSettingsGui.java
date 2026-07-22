@@ -172,6 +172,14 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
                         .append("ButtonSelected","RadialSix"), false
         );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#RadialEight",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","RadialEight"), false
+        );
 
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#ResetButton",
