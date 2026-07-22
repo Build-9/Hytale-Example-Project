@@ -111,7 +111,7 @@ Group {
             Background: (Color: #0000FF0F);
             LayoutMode: MiddleCenter;
 
-            ItemPreviewComponent #QuickAccessButton2Img {
+            ItemPreviewComponent #QuickAccessButton3Img {
                 Anchor: (Width: 200, Height: 200);
                 Visible: true;
                 HitTestVisible: false;
@@ -127,7 +127,7 @@ Group {
             Background: (Color: #0000FF0F);
             LayoutMode: MiddleCenter;
 
-            ItemPreviewComponent #QuickAccessButton3Img {
+            ItemPreviewComponent #QuickAccessButton2Img {
                 Anchor: (Width: 200, Height: 200);
                 Visible: true;
                 HitTestVisible: false;

@@ -25,6 +25,8 @@ public class GuiSelectionFactory {
                         new RadialGui3(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
                 case QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_FOUR ->
                         new RadialGui4(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
+                case QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_SIX ->
+                        new RadialGui6(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
 
                 default -> new RadialGui2(player_ref, store, quick_access_item, quick_access_item_hotbar_position);
             };

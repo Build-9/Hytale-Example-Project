@@ -136,6 +136,14 @@ Group {
             Text: "Radial - Four";
           }
         }
+        Group {
+          LayoutMode: Left;
+          $C.@TextButton #RadialSix {
+            Anchor: (Width: 250, Height: 50);
+            Padding: (Full: 0);
+            Text: "Radial - Six";
+          }
+        }
       }
     }
     Group #BodyR4Button {

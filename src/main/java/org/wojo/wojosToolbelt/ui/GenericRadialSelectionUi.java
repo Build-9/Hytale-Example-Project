@@ -7,6 +7,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
@@ -329,6 +330,9 @@ public abstract class GenericRadialSelectionUi extends InteractiveCustomUIPage<G
             }
             case "help" -> {
                 WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: Help Pressed");
+                String cmd = "echo \"WIP - See https://github.com/jacobwojoski/hytale.wojos-toolbelt for README\"";
+                CommandManager.get().handleCommand(playerRef,cmd);
+                // https://github.com/jacobwojoski/hytale.wojos-toolbelt
                 this.close();
             }
             default -> {

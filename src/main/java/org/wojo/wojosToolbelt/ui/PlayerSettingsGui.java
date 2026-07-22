@@ -164,6 +164,14 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
                         .append("@GuiFileTextField","#GuiFileTextField.Value")
                         .append("ButtonSelected","RadialFour"), false
         );
+        uiEventBuilder.addEventBinding(
+                CustomUIEventBindingType.Activating, "#RadialSix",
+                EventData.of("@IsEnabledCheckbox", "#IsEnabledCheckbox #CheckBox.Value")
+                        .append("@EquippedNumberField", "#EquippedNumberField.Value")
+                        .append("@TargetNumberField","#TargetNumberField.Value")
+                        .append("@GuiFileTextField","#GuiFileTextField.Value")
+                        .append("ButtonSelected","RadialSix"), false
+        );
 
         uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating, "#ResetButton",
@@ -218,6 +226,9 @@ public class PlayerSettingsGui extends InteractiveCustomUIPage<PlayerSettingsGui
         }else if (data.buttonSelected.contains("RadialFour")) {
             data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_FOUR;
             WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Four\n");
+        }else if (data.buttonSelected.contains("RadialSix")) {
+            data.guiFile = QuickAccessConfig.SELECTION_GUI_FILE_RADIAL_SIX;
+            WojosQuickAccessPlugin.LOGGER.atInfo().log("[DEBUG]: PlayerSettingsGui - Update Gui File to Radial Six\n");
         }
 
         this._uiData.update(data);
