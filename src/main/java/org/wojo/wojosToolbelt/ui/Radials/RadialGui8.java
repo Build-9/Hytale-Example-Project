@@ -37,7 +37,7 @@ public class RadialGui8 extends GenericRadialSelectionUi {
             );
             this._quickAccessButtons.addLast(btnData);
         }
-        this._equipedItemButton.buttonHighlightImage = "../Radials/Images/Two/QuickAccessRadialMenuDrawing_Eight_Equipped.png";
+        this._equipedItemButton.buttonHighlightImage = "../Radials/Images/Eight/QuickAccessRadialMenuDrawing_Eight_Equipped.png";
     }
 
     public RadialGui8(@NonNullDecl PlayerRef player_ref, Store<EntityStore> store, ItemStack quick_access_item, Integer quick_access_item_hotbar_position) {

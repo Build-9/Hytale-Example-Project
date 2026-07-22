@@ -37,7 +37,7 @@ public class QuickAccessConfig {
     public static final String SELECTION_GUI_FILE_RADIAL_THREE = "Pages/WojosQuickAccess/Radials/RadialThree.ui";
     public static final String SELECTION_GUI_FILE_RADIAL_FOUR = "Pages/WojosQuickAccess/Radials/RadialFour.ui";
     public static final String SELECTION_GUI_FILE_RADIAL_SIX = "Pages/WojosQuickAccess/Radials/RadialSix.ui";
-    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "Pages/WojosQuickAccess/Grids/RadialEight.ui";
+    public static final String SELECTION_GUI_FILE_RADIAL_EIGHT = "Pages/WojosQuickAccess/Radials/RadialEight.ui";
     public static final String SELECTION_GUI_FILE_RADIAL_NINE = "Pages/WojosQuickAccess/Radials/RadialNine.ui";
     public static final String SELECTION_GUI_FILE_RADIAL_TWELVE = "Pages/WojosQuickAccess/Radials/RadialTwelve.ui";
     public static final String[] SELECTION_GUI_FILES_RADIAL = {
